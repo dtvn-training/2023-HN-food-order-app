@@ -1,6 +1,7 @@
 package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.mapper.BaseMapper;
+import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.request.UserChangePasswordRequest;
 import com.dtvn.foodorderbackend.model.request.UserRegisterRequest;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -55,4 +58,12 @@ public class UserService implements UserDetailsService {
         // TODO
     }
 
+    public List<UserDTO> getUserByCriteria(String fullName, String username, Integer minLoan, Integer maxLoan, User.Role role, User.Status status) {
+        List<User> users =  userRepository.getUserByCriteria(fullName,username,minLoan,maxLoan,role,status);
+        return mapper.mapList(users,UserDTO.class);
+    }
+
+    public void changeStatusByUsername(String username,User.Status status) {
+        userRepository.changeStatusByUsername(username,status);
+    }
 }

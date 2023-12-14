@@ -6,6 +6,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
@@ -13,13 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 @Service
+@RequiredArgsConstructor
 public class JwtService {
+    final UserService userService;
 
-    private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970AAAAAAAAAAAAAAAAAAAAAA";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -27,10 +31,11 @@ public class JwtService {
 
     public Integer extractUserId(String token) {
         return extractClaim(token, claims -> (Integer) claims.get("id"));
+//        return Integer.valueOf( extractClaim(token,Claims::getId));
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) throws SignatureException {
+        Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
@@ -53,9 +58,20 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    /**
+     * @param token not null String
+     * @return null if token not valid
+     * username if token is valid
+     */
+    public String checkValidAndReturnUsername(@NonNull String token) {
+        try {
+            String username = extractUsername(token);
+            if ((username.equals(userService.loadUserByUsername(username).getUsername())) && !isTokenExpired(token)) {
+                return username;
+            }
+        } catch (Throwable ignore) {
+        }
+        return null;
     }
 
     private boolean isTokenExpired(String token) {
@@ -66,7 +82,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
+    private Claims extractAllClaims(String token) throws SignatureException {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())

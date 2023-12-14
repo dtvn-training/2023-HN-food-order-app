@@ -17,20 +17,16 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("all")
 public class User implements UserDetails {
     public enum Role {
         USER,
         ADMIN
     }
-
     public enum Status {
         VERIFIED,
         NOT_VERIFY
     }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    public Role role;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,14 +46,16 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private User.Status status;
 
-    @Column(name = "loan",columnDefinition = "BIGINT(19) NOT NULL DEFAULT 0")
-    private Long loan;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    public User.Role role;
 
+    @Column(name = "loan")
+    private Long loan;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
