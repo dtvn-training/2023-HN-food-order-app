@@ -17,7 +17,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@SuppressWarnings("all")
 public class User implements UserDetails {
     public enum Role {
         USER,
@@ -50,8 +49,8 @@ public class User implements UserDetails {
     @Column(name = "role")
     public User.Role role;
 
-    @Column(name = "loan")
-    private Long loan;
+    @Column(name = "balance")
+    public Integer balance;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

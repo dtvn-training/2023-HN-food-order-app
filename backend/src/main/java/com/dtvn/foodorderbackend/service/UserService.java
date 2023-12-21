@@ -30,12 +30,10 @@ public class UserService implements UserDetailsService {
     void setMapper(BaseMapper mapper) {
         this.mapper = mapper;
     }
-
     @Autowired
     void setEncoder(PasswordEncoder encoder) {
         this.encoder = encoder;
     }
-
     public boolean checkUserExist(String username) {
         return userRepository.existsUserByUsername(username);
     }
@@ -49,17 +47,17 @@ public class UserService implements UserDetailsService {
         User user = mapper.map(request, User.class);
         user.setRole(User.Role.USER);
         user.setStatus(User.Status.NOT_VERIFY);
-        user.setLoan(0L);
+        user.setBalance(0);
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
         return request;
     }
     public void changePassword(UserChangePasswordRequest request){
-        // TODO
+        // TODO;
     }
 
-    public List<UserDTO> getUserByCriteria(String fullName, String username, Integer minLoan, Integer maxLoan, User.Role role, User.Status status) {
-        List<User> users =  userRepository.getUserByCriteria(fullName,username,minLoan,maxLoan,role,status);
+    public List<UserDTO> getUserByCriteria(String fullName, String username, User.Role role, User.Status status) {
+        List<User> users =  userRepository.getUserByCriteria(fullName,username,role,status);
         return mapper.mapList(users,UserDTO.class);
     }
 

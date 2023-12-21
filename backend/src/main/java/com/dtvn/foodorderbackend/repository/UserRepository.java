@@ -29,8 +29,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
                         from User u
                         where (:fullName is null or u.fullName = :fullName)
                         and (:username is null or u.username = :username)
-                        and (:minLoan is null or u.loan >=:minLoan)
-                        and (:maxLoan is null or u.loan <=:maxLoan)
                         and (:role is null or u.role =:role)
                         and (:status is null or u.status = :status)
                     """
@@ -38,8 +36,6 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     List<User> getUserByCriteria(
             String fullName,
             String username,
-            Integer minLoan,
-            Integer maxLoan,
             User.Role role,
             User.Status status
     );

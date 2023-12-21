@@ -27,7 +27,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String[] WHITE_LIST = {
             "**/**",
-            "/api/v1/auth/**"
+            "/api/v1/auth/**",
+            "/test"
     };
 
     @Override

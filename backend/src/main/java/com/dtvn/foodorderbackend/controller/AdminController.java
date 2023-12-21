@@ -28,13 +28,11 @@ public class AdminController {
     public ResponseEntity<List<UserDTO>> getUserNotVerify(
             @RequestParam(value = "fullName", required = false) @ValidFullName String fullName,
             @RequestParam(value = "username", required = false) @ValidUsername String username,
-            @RequestParam(value = "min_loan", required = false) Integer minLoan,
-            @RequestParam(value = "max_loan", required = false) Integer maxLoan,
             @RequestParam(value = "role", required = false) User.Role role,
             @RequestParam(value = "status", required = false) User.Status status
     ) {
         if (userService.loadUserByUsername(String.valueOf(request.getAttribute("username"))).getAuthorities().contains(ADMIN)) {
-            return ResponseEntity.ok().body(userService.getUserByCriteria(fullName, username, minLoan, maxLoan, role, status));
+            return ResponseEntity.ok().body(userService.getUserByCriteria(fullName, username, role, status));
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
