@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
+  <div id="app" style="all:unset; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+    <!-- <img src="./assets/logo.png"> -->
     <router-view/>
   </div>
 </template>
