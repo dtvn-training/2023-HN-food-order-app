@@ -1,3 +1,3 @@
 <template>
-    <img src="../../assets/restaurant.png" style="width: 22.5px;height: 25px;" alt="">
+    <img src="../../assets/restaurant.png" style="width: 22px;height: 24px;" alt="">
 </template>

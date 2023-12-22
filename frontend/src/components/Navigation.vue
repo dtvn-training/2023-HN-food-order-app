@@ -1,72 +1,199 @@
 
 <template>
-    <div class="container">
-        <div class="header">
-            <Logo class="logo" />
-            <img class="view-headline" src="../assets/view_headline.png" alt="" @click="handleCollapse">
-            <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-                <el-radio-button :label="false">expand</el-radio-button>
-                <el-radio-button :label="true">collapse</el-radio-button>
-            </el-radio-group> -->
+    <nav :class="sidebarStyle">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <Logo />
+                </span>
+            </div>
+            <span class="toggle" @click="handleCollapse">
+                <ViewHeadline />
+            </span>
+        </header>
+        <hr>
+        <div class="menu-bar">
+            <ul class="menu-links">
+                <li :class="restaurantSelected" @click="handleNavClick(0)">
+                    <a>
+                        <span class="icon">
+                            <Restaurant />
+                        </span>
+                        <span class="text nav-text">Danh sách quán ăn</span>
+                    </a>
+                </li>
+                <li :class="foodSelected" @click="handleNavClick(1)">
+                    <a>
+                        <span class="icon">
+                            <Food />
+                        </span>
+                        <span class="text nav-text">Món ngon hôm nay</span>
+                    </a>
+                </li>
+                <li :class="paymentSelected" @click="handleNavClick(2)">
+                    <a>
+                        <span class=" icon">
+                            <Payment />
+                        </span>
+                        <span class="text nav-text">Danh sách thanh toán</span>
+                    </a>
+                </li>
+                <li :class="groupSelected" @click="handleNavClick(3)">
+                    <a>
+                        <span class=" icon">
+                            <Group />
+                        </span>
+                        <span class="text nav-text">Nhóm</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="bottom-content">
+                <li class="nav-link signout">
+                    <span class="text nav-text">{{ adminName }}</span>
+                    <span class="icon">
+                        <Signout />
+                    </span>
+                </li>
+            </div>
         </div>
-        <hr />
-        <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-            :collapse="isCollapse">
-            <el-menu-item index="1">
-                <Restaurant />
-                <span slot="title">Danh sách quán ăn</span>
-            </el-menu-item>
-            <el-menu-item index="2">
-                <Food />    
-                <span slot="title">Món ngon hôm nay</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-                <Payment />
-                <span slot="title">Danh sách thanh toán</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-                <Group />
-                <span slot="title">Nhóm</span>
-            </el-menu-item>
-        </el-menu>
-    </div>
+    </nav>
 </template>
   
 <style scoped>
-.container {
-    width: 320px;
-    border: 1px solid rgb(83, 83, 83);
+.nav {
+    /* height: 100vh; */
 }
-span {
-    font-size: 18px;
-}
-el-menu-item {
-    padding-left: 30px;
-}
-.header {
-    height: 88px;
-    padding-left: 20px;
-    padding-right: 20px;
+
+.sidebar .image-text .image {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    margin-left: 30px;
+    transition: all 0.2s ease;
+}
+
+.close .image-text .image {
+    opacity: 0;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 320px;
+    background: #F3F3F3;
+    transition: all 0.3s ease;
+}
+
+.sidebar.close {
+    width: 85px;
 }
 
 hr {
-    width: 282px;
-    width: 282px;
-    border: 0.2px solid #d1d1d1;
+    margin-bottom: 10px;
 }
 
-.view-headline {
-    width: 20px;
-    height: 20px;
+.sidebar header {
+    position: relative;
+    height: 88px;
+    display: flex;
+    align-items: center;
 }
 
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
+.sidebar header .toggle {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    right: 22.5px;
+    transform: translateY(-50%);
+}
+
+.sidebar header .toggle:hover {
+    background: white;
+}
+
+.sidebar ul {
+    padding: 0;
+}
+
+.sidebar li {
+    height: 60px;
+    padding-left: 30px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.sidebar li .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 25px;
+    margin-right: 20px;
+}
+
+.sidebar li .text {
+    font-size: 18px;
+    color: rgb(71, 71, 71);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.close li .text {
+    opacity: 0;
+}
+
+.sidebar .menu-links li:hover {
+    background: white;
+    cursor: pointer;
+}
+
+.sidebar .menu-bar .cur-page {
+    background: white;
+}
+
+.sidebar .menu-bar .cur-page {
+    font-weight: 600;
+}
+
+.bottom-content .signout {
+    background-color: #9D0000 !important;
+}
+
+.bottom-content .signout .text {
+    color: white;
+}
+
+.bottom-content .signout .icon {
+    width: 40px;
+    margin: 0;
+    position: absolute;
+    right: 24px;
+    height: auto;
+}
+
+.bottom-content .signout .icon:hover {
+    cursor: pointer;
+}
+
+.sidebar .menu-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 100px);
 }
 </style>
   
@@ -76,11 +203,20 @@ import Restaurant from "./icons/Restaurant.vue"
 import Food from "./icons/Food.vue"
 import Payment from "./icons/Payment.vue"
 import Group from "./icons/Group.vue"
+import ViewHeadline from "./icons/ViewHeadline.vue"
+import Signout from "./icons/Signout.vue"
 
 export default {
     data() {
         return {
-            isCollapse: true
+            sidebarStyle: 'sidebar',
+            isCollapse: true,
+            adminName: 'Ta Quang Linh',
+            page: 0,
+            restaurantSelected: '',
+            foodSelected: '',
+            paymentSelected: '',
+            groupSelected: '',
         };
     },
     components: {
@@ -89,16 +225,40 @@ export default {
         Food,
         Payment,
         Group,
+        ViewHeadline,
+        Signout
     },
     methods: {
-        handleOpen(key, keyPath) {
-            console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-            console.log(key, keyPath);
-        },
         handleCollapse() {
-            this.isCollapse = !this.isCollapse;
+            console.log(1);
+            if (this.isCollapse === false) {
+                this.sidebarStyle = 'sidebar';
+                this.isCollapse = true;
+            }
+            else {
+                this.sidebarStyle = 'sidebar close';
+                this.isCollapse = false;
+            }
+        },
+        handleNavClick(page) {
+            this.restaurantSelected = '';
+            this.foodSelected = '';
+            this.paymentSelected = '';
+            this.groupSelected = '';
+            switch (page) {
+                case 0:
+                    this.restaurantSelected = 'cur-page';
+                    break;
+                case 1:
+                    this.foodSelected = 'cur-page';
+                    break;
+                case 2:
+                    this.paymentSelected = 'cur-page';
+                    break;
+                case 3:
+                    this.groupSelected = 'cur-page';
+                    break;
+            }
         }
     }
 }

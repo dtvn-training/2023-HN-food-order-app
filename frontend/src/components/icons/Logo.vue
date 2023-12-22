@@ -1,3 +1,3 @@
 <template>
-    <img src="../../assets/logo.png" style="width: 120px;height: 60px;" alt="">
+    <img src="../../assets/logo.png" style="min-width: 110px;height: 50px;" alt="">
 </template>
