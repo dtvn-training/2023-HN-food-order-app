@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <div class="bottom-content">
-                <li class="nav-link signout">
+                <li class="signout">
                     <span class="text nav-text">{{ adminName }}</span>
                     <span class="icon">
                         <Signout />
@@ -60,10 +60,9 @@
 </template>
   
 <style scoped>
-.nav {
-    /* height: 100vh; */
+nav {
+    height: 100%;
 }
-
 .sidebar .image-text .image {
     display: flex;
     align-items: center;
@@ -76,7 +75,7 @@
 }
 
 .sidebar {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     height: 100%;
@@ -180,9 +179,9 @@ hr {
 .bottom-content .signout .icon {
     width: 40px;
     margin: 0;
-    position: absolute;
-    right: 24px;
     height: auto;
+    position: absolute;
+    right: 23px;
 }
 
 .bottom-content .signout .icon:hover {
