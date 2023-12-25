@@ -33,7 +33,7 @@ export default {
 }
 </script>
 <style scoped>
-.body {
+.body { 
     display: flex;
     flex-direction: row;
 }

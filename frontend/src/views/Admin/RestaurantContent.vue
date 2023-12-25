@@ -11,17 +11,22 @@
             />
         </div>
         <div class="data">
-            <h1 style="font-weight: 200;">Data of Restaurant</h1>
+            <RestaurantList v-if="active === 0"/>
+            <Votes v-if="active === 1"/>
         </div>
     </div>
 </template>
 
 <script>
     import Tab from "../../components/Tab.vue"
+    import RestaurantList from "../../components/RestaurantList.vue"
+    import Votes from "../../components/Votes.vue"
 
     export default {
         components: {
             Tab,
+            RestaurantList,
+            Votes
         },
         data () {
             return {
@@ -40,7 +45,7 @@
         },
         watch: {
             active () {
-                // console.log(this.active);
+                console.log(this.active);
             }
         }
     }
