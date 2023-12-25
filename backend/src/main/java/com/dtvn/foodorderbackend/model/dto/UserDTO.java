@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
     String fullName;
-    String username;
+    String email;
     User.Status status;
     User.Role role;
     Long loan;

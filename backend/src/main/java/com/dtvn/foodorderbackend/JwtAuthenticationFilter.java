@@ -26,9 +26,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     final UserService userService;
 
     public static final String[] WHITE_LIST = {
-            "**/**",
+            "/test",
             "/api/v1/auth/**",
-            "/test"
+            "/api/v2/auth/**"
     };
 
     @Override
@@ -37,10 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String auth = request.getHeader("Authorization");
         String jwtToken = auth.substring(7);
 
-        String username = jwtService.checkValidAndReturnUsername(jwtToken);
-        request.setAttribute("username", username);
+        String email = jwtService.checkValidAndReturnEmail(jwtToken);
+        request.setAttribute("email", email);
 
-        if (username == null) {
+        if (email == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.getWriter().write("{\"message\":\"TOKEN NOT VALID\"}");

@@ -1,10 +1,7 @@
 package com.dtvn.foodorderbackend.config;
 
-import com.dtvn.foodorderbackend.JwtAuthenticationFilter;
-import com.dtvn.foodorderbackend.repository.UserRepository;
 import com.dtvn.foodorderbackend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.el.util.ExceptionUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
