@@ -25,7 +25,7 @@ public class JwtService {
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970AAAAAAAAAAAAAAAAAAAAAA";
 
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -63,9 +63,9 @@ public class JwtService {
      * @return null if token not valid
      * username if token is valid
      */
-    public String checkValidAndReturnUsername(@NonNull String token) {
+    public String checkValidAndReturnEmail(@NonNull String token) {
         try {
-            String username = extractUsername(token);
+            String username = extractEmail(token);
             if ((username.equals(userService.loadUserByUsername(username).getUsername())) && !isTokenExpired(token)) {
                 return username;
             }

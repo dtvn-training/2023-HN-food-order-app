@@ -1,11 +1,9 @@
 package com.dtvn.foodorderbackend.repository;
 
 import com.dtvn.foodorderbackend.model.entity.User;
-import com.mysql.cj.x.protobuf.MysqlxCursor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,33 +12,33 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Integer> {
     Optional<User> findUserById(Integer id);
 
-    Optional<User> findUserByUsername(String username);
-    boolean existsUserByUsername(String username);
-    User findUserByUsernameAndStatus(String username, User.Status status);
+    Optional<User> findUserByEmail(String email);
+    boolean existsUserByEmail(String email);
+    User findUserByEmailAndStatus(String email, User.Status status);
 
-    @Query("update User u set u.status = :status where u.username =:username")
+    @Query("update User u set u.status = :status where u.email =:email")
     @Modifying
     @Transactional
-    void changeStatusByUsername(String username,User.Status status);
+    void changeStatusByEmail(String email, User.Status status);
 
     @Query(
             """
                         select u
                         from User u
                         where (:fullName is null or u.fullName = :fullName)
-                        and (:username is null or u.username = :username)
-                        and (:minLoan is null or u.loan >=:minLoan)
-                        and (:maxLoan is null or u.loan <=:maxLoan)
+                        and (:email is null or u.email = :email)
                         and (:role is null or u.role =:role)
                         and (:status is null or u.status = :status)
                     """
     )
     List<User> getUserByCriteria(
             String fullName,
-            String username,
-            Integer minLoan,
-            Integer maxLoan,
+            String email,
             User.Role role,
             User.Status status
     );
+    @Modifying
+    @Transactional
+    @Query(value = "update User u set u.status = :status where u.email = :email")
+    void updateStatusByEmail(User.Status status, String email);
 }
