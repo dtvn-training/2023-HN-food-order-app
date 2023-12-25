@@ -3,8 +3,11 @@ package com.dtvn.foodorderbackend.service;
 import com.dtvn.foodorderbackend.model.entity.Dish;
 import com.dtvn.foodorderbackend.model.entity.DishCategory;
 import com.dtvn.foodorderbackend.ulti.GsonUtil;
+import com.dtvn.foodorderbackend.ulti.StringUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -16,12 +19,12 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Vector;
 
 @Service
 @RequiredArgsConstructor
 public class ShopeeFoodService {
-    Logger logger = LoggerFactory.getLogger(ShopeeFoodService.class);
 
     public RestaurantDetails getDishOfRestaurant(int deliveryId) throws Exception {
         HttpGet httpGet = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=" + deliveryId);
@@ -51,19 +54,17 @@ public class ShopeeFoodService {
         }
     }
 
+    @Getter
     public static class RestaurantDetails {
-        Logger logger = LoggerFactory.getLogger(RestaurantDetails.class);
-        Vector<DishCategoryDetails> menuInfos = new Vector<>();
+        List<DishCategoryDetails> menuInfos = new Vector<>();
 
         RestaurantDetails(JsonObject data) {
 
             if (data == null || data.get("result") == null || !data.get("result").getAsString().equals("success")) {
-                logger.info("Failed to extract data from shopee food: {}", data);
                 return;
             }
             data = data.get("reply").getAsJsonObject();
             if (data.get("menu_infos") == null) {
-                logger.info("Failed to extract data from shopee food,while menu_infos not found: {}", data);
                 return;
             }
             JsonArray array = data.get("menu_infos").getAsJsonArray();
@@ -72,14 +73,13 @@ public class ShopeeFoodService {
                 DishCategoryDetails dishCategoryDetails = new DishCategoryDetails(arrayElement);
                 menuInfos.add(dishCategoryDetails);
             }
-            logger.info("Successfully extract data from shopee food");
         }
     }
 
+    @Getter
     public static class DishCategoryDetails {
-        Logger logger = LoggerFactory.getLogger(DishCategoryDetails.class);
         DishCategory dishCategory;
-        Vector<Dish> listDishes = new Vector<>();
+        List<Dish> listDishes = new Vector<>();
 
         DishCategoryDetails(JsonObject data) {
             if (data == null) {
@@ -106,9 +106,13 @@ public class ShopeeFoodService {
                 dish.setPrice(data.get("discount_price").getAsJsonObject().get("value").getAsInt());
             }
             dish.setDescription(data.get("description").getAsString());
+            String likeString = data.get("total_like").getAsString();
+            if (!StringUtil.isNumber(likeString.charAt(likeString.length() - 1))) {
+                likeString = likeString.substring(0, likeString.length() - 1);
+            }
+            dish.setLike(Integer.parseInt(likeString));
             JsonArray photos = data.get("photos").getAsJsonArray();
             dish.setImage(photos.get(photos.size() - 1).getAsJsonObject().get("value").getAsString());
-            logger.info("Successfully loaded dish, id: {}, name: {}",dish.getId(),dish.getName());
             return dish;
         }
     }

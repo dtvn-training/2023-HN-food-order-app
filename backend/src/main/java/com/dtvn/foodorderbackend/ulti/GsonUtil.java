@@ -1,5 +1,6 @@
 package com.dtvn.foodorderbackend.ulti;
 
+import com.dtvn.foodorderbackend.model.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 

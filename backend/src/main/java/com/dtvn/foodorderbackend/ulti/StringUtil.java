@@ -16,4 +16,8 @@ public class StringUtil {
         }
         return builder.toString();
     }
+
+    public static boolean isNumber(char x) {
+        return '0' <= x && x <= '9';
+    }
 }
