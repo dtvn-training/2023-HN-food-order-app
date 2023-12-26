@@ -1,6 +1,7 @@
 package com.dtvn.foodorderbackend.controller;
 
 import com.dtvn.foodorderbackend.annotation.ValidFullName;
+import com.dtvn.foodorderbackend.mapper.BaseMapper;
 import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.service.UserService;
@@ -22,6 +23,7 @@ public class AdminController {
     final UserService userService;
     final HttpServletRequest request;
     final HttpServletResponse response;
+    final BaseMapper baseMapper;
     static SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(User.Role.ADMIN.name());
 
     @GetMapping("/get_users")
@@ -37,14 +39,24 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
-    @PostMapping("/verify_user")
+    @PostMapping("/approved_user")
     public ResponseEntity<?> verifyUserByEmail(
             @RequestParam(value = "email") @Email(message = "EMAIL NOT VALID") String email
     ) {
         if (userService.loadUserByUsername(String.valueOf(request.getAttribute("email"))).getAuthorities().contains(ADMIN)) {
-            userService.changeStatusByEmail(email, User.Status.VERIFIED);
+            userService.changeApprovedByEmail(email, true);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @GetMapping("/get_user_not_approved")
+    public ResponseEntity<?> getUserNotApproved() {
+        return ResponseEntity.ok().body(baseMapper.mapList(userService.getUserNotApproved(), UserDTO.class));
+    }
+
+    @GetMapping("/get_user_approved")
+    public ResponseEntity<?> getUserApproved() {
+        return ResponseEntity.ok().body(baseMapper.mapList(userService.getUserApproved(), UserDTO.class));
     }
 }

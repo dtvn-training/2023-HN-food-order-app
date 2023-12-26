@@ -22,7 +22,7 @@ public class OtpService {
 
 
     public String sendRegisterOTP(RegisterOtp registerOtp) {
-        return emailService.send(registerOtp.getEmail(), "OTP for registration Volunteer app", registerOtp.getOTP());
+        return emailService.send(registerOtp.getEmail(), "OTP for registration Foody app", registerOtp.getOTP());
     }
 
     void save(RegisterOtp registerOtp) {
@@ -30,7 +30,7 @@ public class OtpService {
     }
 
     public boolean checkRegisterOTP(String email, String OTP) {
-        return registerOtpRepository.checkRegisterOTP(email, OTP, System.currentTimeMillis());
+       return registerOtpRepository.checkRegisterOTP(email, OTP, System.currentTimeMillis()).isPresent();
     }
 
     public void destroyRegisterOTP(String email, String OTP) {

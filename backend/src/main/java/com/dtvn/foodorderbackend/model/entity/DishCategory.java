@@ -22,24 +22,24 @@ public class DishCategory {
     @Column(name = "name")
     String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     Restaurant restaurant;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     List<Dish> dishList;
 
-    public DishCategory(JsonObject data,Restaurant restaurant) {
+    public DishCategory(JsonObject data, Restaurant restaurant) {
         if (data == null) {
             return;
         }
-        setRestaurant(restaurant);
+        this.restaurant = restaurant;
         id = data.get("dish_type_id").getAsLong();
         name = data.get("dish_type_name").getAsString();
         JsonArray dishArray = data.get("dishes").getAsJsonArray();
         dishList = new Vector<>();
         for (int i = 0; i < dishArray.size(); i++) {
-            Dish dish = new Dish(dishArray.get(i).getAsJsonObject(),this);
+            Dish dish = new Dish(dishArray.get(i).getAsJsonObject(), this);
             dishList.add(dish);
         }
     }

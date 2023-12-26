@@ -25,7 +25,7 @@ public class Dish {
     @Column(name = "image")
     String image;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     DishCategory category;
 

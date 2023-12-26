@@ -5,17 +5,14 @@ import com.dtvn.foodorderbackend.mapper.BaseMapper;
 import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.RegisterOtp;
 import com.dtvn.foodorderbackend.model.entity.User;
-import com.dtvn.foodorderbackend.model.request.UserChangePasswordRequest;
-import com.dtvn.foodorderbackend.model.request.UserRegisterRequest;
+import com.dtvn.foodorderbackend.model.request.*;
 import com.dtvn.foodorderbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,11 +58,13 @@ public class UserService implements UserDetailsService {
 
     public String register(UserRegisterRequest request) {
         try {
+            logger.info("request is: {}",request);
             User user = mapper.map(request, User.class);
             user.setRole(User.Role.USER);
             user.setStatus(User.Status.NOT_VERIFY);
             user.setBalance(0);
             user.setPassword(encoder.encode(user.getPassword()));
+            logger.info("user mapped is; {}",user);
             userRepository.save(user);
             RegisterOtp otp = otpService.generateAndSaveRegisterOTP(user.getEmail());
             otpService.sendRegisterOTP(otp);
@@ -87,11 +86,19 @@ public class UserService implements UserDetailsService {
         return mapper.mapList(users, UserDTO.class);
     }
 
-    public void changeStatusByEmail(String email, User.Status status) {
-        userRepository.changeStatusByEmail(email, status);
-    }
 
     public void verifiedRegister(String email) {
         userRepository.updateStatusByEmail(User.Status.VERIFIED, email);
+    }
+
+    public List<User> getUserNotApproved(){
+        return userRepository.findUserByApprovedAndStatus(false, User.Status.VERIFIED);
+    }
+    public List<User> getUserApproved(){
+        return userRepository.findUserByApprovedAndStatus(true,User.Status.VERIFIED);
+    }
+
+    public void changeApprovedByEmail(String email, boolean approved) {
+        userRepository.changeApprovedByEmail(email,approved);
     }
 }

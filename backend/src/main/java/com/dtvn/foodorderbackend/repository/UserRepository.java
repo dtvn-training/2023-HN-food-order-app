@@ -41,4 +41,11 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Transactional
     @Query(value = "update User u set u.status = :status where u.email = :email")
     void updateStatusByEmail(User.Status status, String email);
+
+    List<User> findUserByApprovedAndStatus(boolean approved,User.Status status);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update User u set u.approved = :approved where u.email = :email")
+    void changeApprovedByEmail(String email, boolean approved);
 }
