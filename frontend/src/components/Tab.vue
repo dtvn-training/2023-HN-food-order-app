@@ -116,6 +116,7 @@ export default {
 
 hr {
     width: 100%;
+    margin: 0;
 }
 
 .tab .export {

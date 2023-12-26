@@ -1,6 +1,6 @@
 <template>
     <div class="home" style="height: 500px;position: relative;">
-        <div class="body" style="height: 955px;">
+        <div class="body">
             <Navigation />
             <div class="content">
                 <div class="wrapper">
@@ -8,7 +8,7 @@
                 </div>
             </div>
         </div>
-        <Footer />
+        <Footer class="footer" />
     </div>
 </template>
 <script>
@@ -34,8 +34,8 @@ export default {
 </script>
 <style scoped>
 .body { 
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
 
 .content {
@@ -50,6 +50,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: start;
+}
+.footer {
+    grid-column: 1 / -1;
 }
 
 hr {

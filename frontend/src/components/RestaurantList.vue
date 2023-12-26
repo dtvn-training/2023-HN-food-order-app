@@ -22,9 +22,15 @@
         </div>
         <hr>
         <Table 
+            style="margin-top: 10px"
             :columns="columns"
             :datas="datas"
             :actions="actions"
+        />
+        <Pagination 
+            :totalPages="22"
+            :total="215"
+            :currentPage="1"
         />
     </div>
 </template>
@@ -52,12 +58,14 @@
 import Search from "./Search1.vue"
 import Select from "./Select.vue"
 import Table from "./Table.vue"
+import Pagination from "./Pagination.vue"
 
 export default {
     components: {
         Search,
         Select,
         Table,
+        Pagination,
     },
     data() {
         return {
@@ -159,7 +167,7 @@ export default {
                 },
                 {
                     id: 5,
-                    no: 3,
+                    no: 9,
                     name: 'Bún chả mẹ Nga',
                     description: 'Quán bún chả ngon nhất',
                     url: 'https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA',
@@ -167,7 +175,7 @@ export default {
                 },
                 {
                     id: 5,
-                    no: 3,
+                    no: 10,
                     name: 'Bún chả mẹ Nga',
                     description: 'Quán bún chả ngon nhất',
                     url: 'https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA',
