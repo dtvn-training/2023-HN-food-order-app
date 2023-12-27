@@ -5,7 +5,7 @@ import Restaurant from '@/views/admin/RestaurantContent.vue'
 import Food from '@/views/admin/FoodContent.vue'
 import Payment from '@/views/admin/PaymentContent.vue'
 import Group from '@/views/admin/GroupContent.vue'
-import Pagination from '@/components/Pagination.vue'
+import RestaurantMenu from '@/popup/RestaurantMenu.vue'
 
 Vue.use(Router)
 
@@ -13,7 +13,7 @@ export default new Router({
   routes: [
     {
       path: '/test',
-      component: Pagination,
+      component: RestaurantMenu,
     },
     {
       path: '/admin',

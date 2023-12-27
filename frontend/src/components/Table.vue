@@ -1,27 +1,40 @@
 <template>
-    <div class="table">
-        <div class="header">
-            <div class="header-item cell" v-for="column in columns" :style="column.style">
-                {{ column.header }}
+    <div class="container">
+        <div class="table">
+            <div class="header">
+                <div class="index">No.</div>
+                <div class="header-item cell" v-for="column in columns" :style="column.style">
+                    {{ column.header }}
+                </div>
+                <div class="cell header-item header-action" :style="{ 'width': actions.length * 70 + 'px' }">Actions</div>
             </div>
-            <div class="header-item cell header-action" :style="{ 'width': actions.length * 70 + 'px' }">Actions</div>
-        </div>
-        <div class="data">
-            <div class="row" v-for="row in datas">
-                <div class="cell" v-for="column in columns" :style="column.style">{{ row[column.key] }}</div>
-                <div class="action" v-if="actions.length > 0" :style="{ 'width': actions.length * 70 + 'px' }">
-                    <div class="cell-action" v-for="action in actions" @click="handleAction(action, row.id)">
-                        <Accept v-if="action == 'accept'" />
-                        <Checked v-if="action == 'check' && row.selected == 1" />
-                        <Uncheck v-if="action == 'check' && row.selected == 0" />
-                        <Delete v-if="action == 'delete'" />
-                        <Eye v-if="action == 'view'" />
-                        <RadioChecked v-if="action == 'radioChecked'" />
-                        <RadioUncheck v-if="action == 'radioUncheck'" />
+            <hr/>
+            <div class="data">
+                <div class="row" v-for="(row, index) in dataPages">
+                    <div class="index">{{ (currentPage - 1)*10 + index + 1 }}</div>
+                    <!-- Row of data -->
+                    <div class="cell" v-for="column in columns" :style="column.style" v-html="row[column.key]"></div>
+                    <!-- Action -->
+                    <div class="action" v-if="actions.length > 0" :style="{ 'width': actions.length * 70 + 'px' }">
+                        <div class="cell-action" v-for="action in actions" @click="handleAction(action, row.id)">
+                            <Accept v-if="action == 'accept'" />
+                            <Checked v-if="action == 'check' && row.selected == 1" />
+                            <Uncheck v-if="action == 'check' && row.selected == 0" />
+                            <Delete v-if="action == 'delete'" />
+                            <Eye v-if="action == 'view'" />
+                            <RadioChecked v-if="action == 'radio' && row.selected == 1" />
+                            <RadioUncheck v-if="action == 'radio' && row.selected == 0" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <Pagination 
+                :totalPages="Math.floor(datas.length / 10) + 1" 
+                :total="datas.length" 
+                :currentPage="1" 
+                @pagechanged="currentPage = $event"
+        />
     </div>
 </template>
 
@@ -34,6 +47,7 @@ import Delete from "./icons/Delete.vue"
 import Eye from "./icons/Eye.vue"
 import RadioChecked from "./icons/RadioChecked.vue"
 import RadioUncheck from "./icons/RadioUncheck.vue"
+import Pagination from "./Pagination.vue"
 
 export default {
     components: {
@@ -44,6 +58,7 @@ export default {
         RadioChecked,
         RadioUncheck,
         Uncheck,
+        Pagination,
     },
     props: [
         'columns',
@@ -52,12 +67,29 @@ export default {
     ],
     data() {
         return {
+            currentPage: 1,
+            offset: 10,
+        }
+    },
+    computed: {
+        dataPages () {
+            const dataPages = []
+            for (   var i = (this.currentPage - 1)*10;
+                    i < Math.min((this.currentPage - 1) * 10 + this.offset, this.datas.length);
+                    i++){
+                dataPages.push(this.datas[i]);
+            }
+            return dataPages;
         }
     },
     methods: {
-        handleAction(action, id) {
-            console.log(action + " id: " +id);
-            this.$emit('actionHandler', {action, id})
+        handleAction(name, id) {
+            const action = {
+                name,
+                id
+            }
+            // console.log(action);
+            this.$emit('onClickAction', action)
         }
     },
 }
@@ -65,6 +97,12 @@ export default {
 </script>
 
 <style scoped>
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+}
 .table {
     all: unset;
     display: flex;
@@ -75,6 +113,11 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+.index {
+    min-width: 50px;
+    text-align: left;
+    padding: 5px;
 }
 
 .header-item {
@@ -90,27 +133,28 @@ export default {
 }
 
 .row {
-    widows: auto;
+    width: auto;
     /* background-color: yellow; */
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    margin: 8px 0 8px;
 }
 
 .action {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-left: 40px;
+    padding-left: 30px;
 }
 .cell {
     height: auto;
-    overflow: auto;
+
     padding: 5px;
 }
 .header-action{
-    padding-left: 40px;
+    padding-left: 30px;
 }
 
 .cell::-webkit-scrollbar {
@@ -129,6 +173,11 @@ export default {
 }
 
 .cell-action {
-    margin: 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+.cell-action:hover {
+    background: rgb(238, 238, 238);
 }
 </style>

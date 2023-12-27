@@ -4,14 +4,14 @@
         <li>
             <button class="directional" type="button" @click="onClickFirstPage"
                 :style="{ 'visibility': isInFirstPage ? 'hidden' : '' }">
-                &lt&lt
+                <DoubleArrow style="transform: rotate(180deg);"/>
             </button>
         </li>
 
         <li>
             <button class="directional" type="button" @click="onClickPreviousPage"
                 :style="{ 'visibility': current === 1 ? 'hidden' : '' }">
-                &lt
+                <Arrow style="transform: rotate(180deg);"/>
             </button>
         </li>
 
@@ -27,14 +27,14 @@
         <li>
             <button class="directional" type="button" @click="onClickNextPage"
                 :style="{ 'visibility': current === totalPages ? 'hidden' : '' }">
-                &gt
+                <Arrow/>
             </button>
         </li>
 
         <li>
             <button class="directional" type="button" @click="onClickLastPage"
                 :style="{ 'visibility': isInLastPage ? 'hidden' : '' }">
-                &gt&gt
+                <DoubleArrow/>
             </button>
         </li>
     </ul>
@@ -101,7 +101,14 @@ button:hover{
 
 
 <script>
+import Arrow from "./icons/Arrow.vue";
+import DoubleArrow from "./icons/DoubleArrow.vue"
+
 export default {
+    components: {
+        Arrow,
+        DoubleArrow,
+    },
     data() {
         return {
             // maxVisibleButtons: 5,
@@ -138,8 +145,8 @@ export default {
             const range = [];
             if (this.nextPage == this.startPage - 1) this.startPage = this.startPage - 1;
             if (this.nextPage == this.startPage + this.maxVisibleButtons) this.startPage = this.startPage + 1;
-
             this.current = this.nextPage;
+            
             for (let i = this.startPage;
                 i <= Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
                 i += 1) {
@@ -154,7 +161,8 @@ export default {
             return this.startPage === 1;
         },
         isInLastPage() {
-            return this.startPage == this.totalPages - this.maxVisibleButtons + 1;
+            if (this.totalPages <= this.maxVisibleButtons)return true;
+            return this.startPage == Math.min(this.totalPages - this.maxVisibleButtons + 1, this.totalPages);
         },
     },
     methods: {

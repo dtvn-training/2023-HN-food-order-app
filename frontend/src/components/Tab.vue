@@ -49,7 +49,7 @@ export default {
 <style scoped>
 .tab {
     background: rgb(255, 255, 255);
-    height: 89.5px;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;

@@ -1,5 +1,163 @@
 <template>
     <div>
-        <h1>This is Votes Component</h1>
+        <Table 
+        :columns="columns" 
+        :datas="datas" 
+        :actions="actions" 
+        @onClickAction="action = $event" 
+    />
     </div>
 </template>
+
+<script>
+    import Table from "../components/Table.vue"
+
+    export default {
+        components: {
+            Table,
+        },
+        data(){
+            return {
+                columns: [
+                {
+                    key: 'employee',
+                    header: 'Nhân viên',
+                    style: {
+                        width: '30%',
+                    },
+                },
+                {
+                    key: 'restaurant',
+                    header: 'Tên quán',
+                    style: {
+                        width: '30%',
+                    },
+                },
+                {
+                    key: 'description',
+                    header: 'Mô tả',
+                    style: {
+                        width: '30%',
+                    },
+                },
+                {
+                    key: 'vote',
+                    header: 'Bình chọn',
+                    style: {
+                        'text-align': 'center',
+                        width: '15%',
+                    },
+                },
+            ],
+            datas: [
+                {
+                    id: 1,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 2,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 3,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 4,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 5,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 6,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 7,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 8,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 9,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 10,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 11,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 12,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 13,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 14,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+                {
+                    id: 15,
+                    employee: 'Nguyen Van Manh An',
+                    restaurant: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+                    description: 'Quán bún chả ngon nhất',
+                    vote: "25/35"
+                },
+            ],
+            actions: ['accept', 'delete'],
+            }
+        }
+    }
+</script>

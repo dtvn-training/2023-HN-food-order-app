@@ -41,7 +41,6 @@
 
 <style scoped>
 .footer {
-    position: absolute;
     /* bottom: 0; */
     width: 100%;
     background: #D6D6D6;

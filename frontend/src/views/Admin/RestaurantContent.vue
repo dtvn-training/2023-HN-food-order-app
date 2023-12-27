@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="grid-template-rows: 89.5px auto;display: grid;height:100%">
         <div class="tab">
             <Tab 
                 header="DANH SÁCH QUÁN ĂN"

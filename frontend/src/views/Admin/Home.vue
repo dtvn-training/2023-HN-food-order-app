@@ -1,5 +1,5 @@
 <template>
-    <div class="home" style="height: 500px;position: relative;">
+    <div class="home" style="position: relative;">
         <div class="body">
             <Navigation />
             <div class="content">
@@ -33,7 +33,7 @@ export default {
 }
 </script>
 <style scoped>
-.body { 
+.body {
     display: grid;
     grid-template-columns: auto 1fr;
 }
@@ -50,7 +50,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: start;
+    height: 100%;
 }
+
 .footer {
     grid-column: 1 / -1;
 }

@@ -87,7 +87,7 @@ export default {
         Signout
     },
     beforeMount() {
-        this.page = this.$route.name;
+        // this.page = this.$route.name;
     },
     methods: {
         handleCollapse() {
@@ -133,7 +133,7 @@ nav {
     position: relative;
     top: 0;
     left: 0;
-    height: 100%;
+    min-height: 646px;
     width: 320px;
     background: #F3F3F3;
     transition: all 0.3s ease;
