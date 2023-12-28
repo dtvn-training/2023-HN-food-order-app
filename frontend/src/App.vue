@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="all:unset; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+  <div id="app" style="all:unset; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
     <!-- <img src="./assets/logo.png"> -->
     <router-view />
   </div>
@@ -19,20 +19,34 @@ export default {
   margin: 0;
   box-sizing: border-box;
 }
-/* :root {
-  --body-color: #e4e9f7
 
-  --tran-02: all 0.2s ease;
-  --tran-03: all 0.3s ease;
-  --tran-04: all 0.4s ease;
-  --tran-05: all 0.5s ease;
-} */
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0; 
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a7a7a7; 
+}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  background: rgb(255, 255, 255);
 }
 </style>
+

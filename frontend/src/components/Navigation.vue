@@ -14,41 +14,41 @@
         <hr>
         <div class="menu-bar">
             <ul class="menu-links">
-                <li :class="restaurantSelected" @click="handleNavClick(0)">
-                    <a>
+                <li :class="{ active: page === 'restaurants'}" @click="handleActive('restaurants')">
+                    <router-link to="/admin/restaurants">
                         <span class="icon">
                             <Restaurant />
                         </span>
                         <span class="text nav-text">Danh sách quán ăn</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li :class="foodSelected" @click="handleNavClick(1)">
-                    <a>
+                <li :class="{ active: page === 'foods'}" @click="handleActive('foods')">
+                    <router-link to="/admin/foods">
                         <span class="icon">
                             <Food />
                         </span>
                         <span class="text nav-text">Món ngon hôm nay</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li :class="paymentSelected" @click="handleNavClick(2)">
-                    <a>
+                <li :class="{ active: page === 'payments'}" @click="handleActive('payments')">
+                    <router-link to="/admin/payments">
                         <span class=" icon">
                             <Payment />
                         </span>
                         <span class="text nav-text">Danh sách thanh toán</span>
-                    </a>
+                    </router-link>
                 </li>
-                <li :class="groupSelected" @click="handleNavClick(3)">
-                    <a>
+                <li :class="{ active: page === 'groups'}" @click="handleActive('groups')">
+                    <router-link to="/admin/groups">
                         <span class=" icon">
                             <Group />
                         </span>
                         <span class="text nav-text">Nhóm</span>
-                    </a>
+                    </router-link>
                 </li>
             </ul>
             <div class="bottom-content">
-                <li class="nav-link signout">
+                <li class="signout">
                     <span class="text nav-text">{{ adminName }}</span>
                     <span class="icon">
                         <Signout />
@@ -59,11 +59,65 @@
     </nav>
 </template>
   
-<style scoped>
-.nav {
-    /* height: 100vh; */
-}
+<script>
+import Logo from "./icons/Logo.vue"
+import Restaurant from "./icons/Restaurant.vue"
+import Food from "./icons/Food.vue"
+import Payment from "./icons/Payment.vue"
+import Group from "./icons/Group.vue"
+import ViewHeadline from "./icons/ViewHeadline.vue"
+import Signout from "./icons/Signout.vue"
 
+export default {
+    data() {
+        return {
+            sidebarStyle: 'sidebar',
+            isCollapse: true,
+            adminName: 'Ta Quang Linh',
+            page: 'restaurants',
+        };
+    },
+    components: {
+        Logo,
+        Restaurant,
+        Food,
+        Payment,
+        Group,
+        ViewHeadline,
+        Signout
+    },
+    beforeMount() {
+        // this.page = this.$route.name;
+    },
+    methods: {
+        handleCollapse() {
+            if (this.isCollapse === false) {
+                this.sidebarStyle = 'sidebar';
+                this.isCollapse = true;
+            }
+            else {
+                this.sidebarStyle = 'sidebar close';
+                this.isCollapse = false;
+            }
+        },
+        handleActive(page) {
+           this.page = page;
+        }
+    },
+    watch: {
+        $route(to, from) {
+            this.page = to.name;
+            console.log(to);
+            console.log(from);
+        }
+    }
+}
+</script>
+
+<style scoped>
+nav {
+    height: 100%;
+}
 .sidebar .image-text .image {
     display: flex;
     align-items: center;
@@ -76,10 +130,10 @@
 }
 
 .sidebar {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
-    height: 100%;
+    min-height: 646px;
     width: 320px;
     background: #F3F3F3;
     transition: all 0.3s ease;
@@ -133,6 +187,7 @@ hr {
     display: flex;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 .sidebar li .icon {
@@ -154,19 +209,18 @@ hr {
 
 .close li .text {
     opacity: 0;
+    display: none;
 }
+
 
 .sidebar .menu-links li:hover {
     background: white;
     cursor: pointer;
 }
 
-.sidebar .menu-bar .cur-page {
-    background: white;
-}
-
-.sidebar .menu-bar .cur-page {
+.sidebar .menu-bar .active {
     font-weight: 600;
+    background: white;
 }
 
 .bottom-content .signout {
@@ -180,9 +234,9 @@ hr {
 .bottom-content .signout .icon {
     width: 40px;
     margin: 0;
-    position: absolute;
-    right: 24px;
     height: auto;
+    position: absolute;
+    right: 23px;
 }
 
 .bottom-content .signout .icon:hover {
@@ -191,75 +245,9 @@ hr {
 
 .sidebar .menu-bar {
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: space-between;
     height: calc(100% - 100px);
 }
 </style>
-  
-<script>
-import Logo from "./icons/Logo.vue"
-import Restaurant from "./icons/Restaurant.vue"
-import Food from "./icons/Food.vue"
-import Payment from "./icons/Payment.vue"
-import Group from "./icons/Group.vue"
-import ViewHeadline from "./icons/ViewHeadline.vue"
-import Signout from "./icons/Signout.vue"
-
-export default {
-    data() {
-        return {
-            sidebarStyle: 'sidebar',
-            isCollapse: true,
-            adminName: 'Ta Quang Linh',
-            page: 0,
-            restaurantSelected: '',
-            foodSelected: '',
-            paymentSelected: '',
-            groupSelected: '',
-        };
-    },
-    components: {
-        Logo,
-        Restaurant,
-        Food,
-        Payment,
-        Group,
-        ViewHeadline,
-        Signout
-    },
-    methods: {
-        handleCollapse() {
-            console.log(1);
-            if (this.isCollapse === false) {
-                this.sidebarStyle = 'sidebar';
-                this.isCollapse = true;
-            }
-            else {
-                this.sidebarStyle = 'sidebar close';
-                this.isCollapse = false;
-            }
-        },
-        handleNavClick(page) {
-            this.restaurantSelected = '';
-            this.foodSelected = '';
-            this.paymentSelected = '';
-            this.groupSelected = '';
-            switch (page) {
-                case 0:
-                    this.restaurantSelected = 'cur-page';
-                    break;
-                case 1:
-                    this.foodSelected = 'cur-page';
-                    break;
-                case 2:
-                    this.paymentSelected = 'cur-page';
-                    break;
-                case 3:
-                    this.groupSelected = 'cur-page';
-                    break;
-            }
-        }
-    }
-}
-</script>
