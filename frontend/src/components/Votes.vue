@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="votes">
         <Table 
         :columns="columns" 
         :datas="datas" 
         :actions="actions" 
-        @onClickAction="action = $event" 
+        @onClickAction="handleAction" 
     />
     </div>
 </template>
@@ -158,6 +158,28 @@
             ],
             actions: ['accept', 'delete'],
             }
+        },
+        methods: {
+            handleAction(e){
+                switch(e.action){
+                    case 'accept':
+                        // api accept vote
+                        break;
+                    case 'delete':
+                        // api delete vote
+                        break;
+                }
+                this.datas = this.datas.filter(item => item.id != e.id);
+            }
         }
     }
 </script>
+
+<style scoped>
+.votes {
+    height: 100%;
+    display: grid;
+    grid-auto-rows:  auto;
+}
+
+</style>

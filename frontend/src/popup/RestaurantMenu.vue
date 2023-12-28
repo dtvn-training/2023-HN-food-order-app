@@ -50,7 +50,7 @@ export default {
     data() {
         return {
             header: 'No.12   Bún chả mẹ Nga',
-            categoriesResult: [...this.categories],
+            categoriesResult: JSON.parse(JSON.stringify(this.categories)),
         }
     },
     methods: {
@@ -63,11 +63,6 @@ export default {
                     }
                 })
             });
-            // this.categoriesResult.forEach(item => {
-            //     item.foods.forEach(food => {
-            //         console.log(food.selected);
-            //     });
-            // })
         },
         cancel() {
             this.categoriesResult = [];
@@ -77,19 +72,7 @@ export default {
             this.$emit("onClickSave", this.categoriesResult);
         },
         reset() {
-            this.categoriesResult = this.categories;
-            // console.log(this.categoriesResult);
-            // console.log(this.categories);
-            // this.categoriesResult.forEach(item => {
-            //     item.foods.forEach(food => {
-            //         console.log(food.selected);
-            //     });
-            // })
-            // this.categories.forEach(item => {
-            //     item.foods.forEach(food => {
-            //         console.log(food.selected);
-            //     });
-            // })
+            this.categoriesResult = JSON.parse(JSON.stringify(this.categories));
         }
     }
 

@@ -43,6 +43,7 @@ export default {
     display: flex;
     flex-grow: 1;
     justify-content: center;
+    min-height: 830px;
 }
 .home .wrapper {
     background: rgb(255, 255, 255);
