@@ -29,4 +29,5 @@ public class RestaurantService {
     public Restaurant getRestaurantById(long deliveryId){
         return restaurantRepository.findById(deliveryId).orElse(null);
     }
+
 }
