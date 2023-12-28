@@ -1,7 +1,11 @@
 package com.dtvn.foodorderbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,16 +37,19 @@ public class Restaurant {
     @Column(name = "rating")
     double rating;
 
-    @Column(name = "uri")
+    @Column(name = "url")
     String uri;
 
     @Column(name = "image")
     String image;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    @Column(name = "selected")
+    boolean selected = false;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<DishCategory> dishCategoryList;
 
-    public Restaurant(JsonObject data,JsonObject dishDeliveryData) {
+    public Restaurant(JsonObject data, JsonObject dishDeliveryData) {
         System.out.println(data);
         if (data.get("result") == null || !data.get("result").getAsString().equals("success")) {
             return;
@@ -62,6 +69,5 @@ public class Restaurant {
         for (int i = 0; i < dishCategoryArray.size(); i++) {
             dishCategoryList.add(new DishCategory(dishCategoryArray.get(i).getAsJsonObject(), this));
         }
-        System.out.println(dishCategoryList.size());
     }
 }

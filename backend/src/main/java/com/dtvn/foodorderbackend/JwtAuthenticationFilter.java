@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
@@ -20,7 +21,7 @@ import java.util.Arrays;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    static Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     final PathMatcher pathMatcher;
     final JwtService jwtService;
     final UserService userService;
@@ -32,26 +33,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     };
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws IOException, ServletException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) {
+        try {
+            String auth = request.getHeader("Authorization");
+            if (auth == null) {
+                reject(response, "Authorization must be Bearer Token");
+                return;
+            }
+            String jwtToken = auth.substring(7);
+            String email = jwtService.checkValidAndReturnEmail(jwtToken);
+            request.setAttribute("email", email);
 
-        String auth = request.getHeader("Authorization");
-        String jwtToken = auth.substring(7);
+            if (email == null) {
+                reject(response, "TOKEN NOT VALID");
+                return;
+            }
+            filterChain.doFilter(request, response);
 
-        String email = jwtService.checkValidAndReturnEmail(jwtToken);
-        request.setAttribute("email", email);
-
-        if (email == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"message\":\"TOKEN NOT VALID\"}");
-            return;
+        } catch (Exception ignore) {
         }
-        filterChain.doFilter(request, response);
     }
 
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
         return Arrays.stream(WHITE_LIST)
                 .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
+    }
+
+    private void reject(HttpServletResponse response, String message) throws Exception {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(message);
     }
 }

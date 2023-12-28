@@ -1,6 +1,7 @@
 package com.dtvn.foodorderbackend.model.entity;
 
 import com.dtvn.foodorderbackend.ulti.StringUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import jakarta.persistence.*;
@@ -27,6 +28,7 @@ public class Dish {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     DishCategory category;
 
     public Dish(JsonObject data, DishCategory dishCategory) {
