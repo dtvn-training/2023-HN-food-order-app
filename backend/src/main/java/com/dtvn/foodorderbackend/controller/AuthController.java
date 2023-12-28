@@ -29,10 +29,13 @@ public class AuthController {
     final AuthenticationManager authenticationManager;
     final AuthService authService;
     final OtpService otpService;
-    private final static Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UserRegisterRequest request) {
+        if(request.getEmail() == null || request.getPassword() == null || request.getFullName() == null){
+            return ResponseEntity.status(BAD_REQUEST).body("You must fill all field");
+        }
         if (userService.checkUserExist(request.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("email exist");
         }

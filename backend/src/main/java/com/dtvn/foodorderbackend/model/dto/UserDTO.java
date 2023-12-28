@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    long id;
     String fullName;
     String email;
     User.Status status;
     User.Role role;
-    Long loan;
+    Long balance;
 }

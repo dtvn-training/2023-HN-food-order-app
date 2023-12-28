@@ -1,5 +1,9 @@
 package com.dtvn.foodorderbackend.ulti;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 public class StringUtil {
@@ -19,5 +23,16 @@ public class StringUtil {
 
     public static boolean isNumber(char x) {
         return '0' <= x && x <= '9';
+    }
+
+    public static String getFromInputStream(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        StringBuilder builder = new StringBuilder();
+        while ((line = bufferedReader.readLine())!=null){
+            builder.append(line);
+            builder.append(System.lineSeparator());
+        }
+        return builder.toString();
     }
 }

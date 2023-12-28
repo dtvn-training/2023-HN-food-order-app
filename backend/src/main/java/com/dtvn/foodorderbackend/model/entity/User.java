@@ -30,7 +30,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -47,10 +47,13 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    public User.Role role;
+    User.Role role;
 
     @Column(name = "balance")
-    public Integer balance;
+    Integer balance;
+
+    @Column(name = "approved")
+    boolean approved = false;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
