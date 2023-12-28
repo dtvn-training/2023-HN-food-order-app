@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-        <img src="../assets/search.png" alt="">
+        <img src="../../assets/search.png" alt="">
         <input type="text" name="seach" :style="{'width': width}" :placeholder="placeholder" @v-model="input">
     </div>
 </template>

@@ -23,21 +23,21 @@
                     key: 'employee',
                     header: 'Nhân viên',
                     style: {
-                        width: '30%',
+                        width: '20%',
                     },
                 },
                 {
                     key: 'restaurant',
                     header: 'Tên quán',
                     style: {
-                        width: '30%',
+                        width: '25%',
                     },
                 },
                 {
                     key: 'description',
                     header: 'Mô tả',
                     style: {
-                        width: '30%',
+                        width: '25%',
                     },
                 },
                 {

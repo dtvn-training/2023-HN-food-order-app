@@ -3,10 +3,12 @@
         <div class="table">
             <div class="header">
                 <div class="index">No.</div>
-                <div class="header-item cell" v-for="column in columns" :style="column.style">
+                <div class="header-item cell" v-for="column in columns" :style="{
+                    'width': column.style.width,'text-align': column.style['text-align']
+                }">
                     {{ column.header }}
                 </div>
-                <div class="cell header-item header-action" :style="{ 'width': actions.length * 70 + 'px' }">Actions</div>
+                <div class="cell header-item" :style="{ 'width': actions.length === 1 ?  actions.length * 70 + 30 + 'px' :  actions.length * 75 + 'px'}">Actions</div>
             </div>
             <hr/>
             <div class="data">
@@ -15,12 +17,13 @@
                     <!-- Row of data -->
                     <div class="cell" v-for="column in columns" :style="column.style" v-html="row[column.key]"></div>
                     <!-- Action -->
-                    <div class="action" v-if="actions.length > 0" :style="{ 'width': actions.length * 70 + 'px' }">
+                    <div class="action" v-if="actions.length > 0" :style="{ 'width': actions.length === 1 ?  actions.length * 70 + 30 + 'px' :  actions.length * 75 + 'px'}">
                         <div class="cell-action" v-for="action in actions" @click="handleAction(action, row.id)">
                             <Accept v-if="action == 'accept'" />
                             <Checked v-if="action == 'check' && row.selected == 1" />
                             <Uncheck v-if="action == 'check' && row.selected == 0" />
                             <Delete v-if="action == 'delete'" />
+                            <Remove v-if="action == 'remove'" />
                             <Eye v-if="action == 'view'" />
                             <RadioChecked v-if="action == 'radio' && row.selected == 1" />
                             <RadioUncheck v-if="action == 'radio' && row.selected == 0" />
@@ -30,7 +33,7 @@
             </div>
         </div>
         <Pagination 
-                :totalPages="Math.floor(datas.length / 10) + 1" 
+                :totalPages="datas.length % 10 == 0 ? Math.floor(datas.length / 10) : Math.floor(datas.length / 10) + 1" 
                 :total="datas.length" 
                 :currentPage="1" 
                 @pagechanged="currentPage = $event"
@@ -48,6 +51,7 @@ import Eye from "./icons/Eye.vue"
 import RadioChecked from "./icons/RadioChecked.vue"
 import RadioUncheck from "./icons/RadioUncheck.vue"
 import Pagination from "./Pagination.vue"
+import Remove from "./icons/Remove.vue"
 
 export default {
     components: {
@@ -59,6 +63,7 @@ export default {
         RadioUncheck,
         Uncheck,
         Pagination,
+        Remove,
     },
     props: [
         'columns',
@@ -139,22 +144,19 @@ export default {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin: 8px 0 8px;
+    margin: 10px 0 10px;
 }
 
 .action {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding-left: 30px;
+    justify-content: space-around;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .cell {
     height: auto;
-
     padding: 5px;
-}
-.header-action{
-    padding-left: 30px;
 }
 
 .cell::-webkit-scrollbar {
@@ -174,10 +176,8 @@ export default {
 
 .cell-action {
     display: flex;
-    align-items: center;
+    align-items: start;
     padding: 5px;
-}
-.cell-action:hover {
-    background: rgb(238, 238, 238);
+    cursor: pointer;
 }
 </style>
