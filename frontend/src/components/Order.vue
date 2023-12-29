@@ -18,14 +18,30 @@
         </div>
         <hr>
         <div class="data">
-            <Table v-if="isPayment === 0"
+            <Table 
+                v-if="isPayment === 0"
                 :datas="datas"
                 :columns="columns"
                 :actions="actions"
+                :pagination=1
                 @onClickAction="handleAction"
             />
             <div class="payment" v-if="isPayment === 1">
-
+                <Table 
+                    :datas="fee"
+                    :columns="columnsPayment"
+                    :actions="[]"
+                    :pagination=0
+                    @valueInputBinding="handleValueInput"
+                />
+                <hr>
+                    <div class="discount">
+                        <span>Giảm giá</span>
+                        <div class="right">
+                            <input type="text" v-model="discount" class="discount">
+                        </div>
+                    </div>
+                <hr>
             </div>
         </div>
     </div>
@@ -36,7 +52,29 @@
     display: grid;
     grid-auto-rows: 50px 1px auto;
 }
-
+.discount{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.discount .right{
+    display: flex;
+    width: 120px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0 10px;
+}
+.discount input {
+    text-align: center;
+    width: 100px;
+}
+.discount span {
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+}
 .back-btn{
     width: 90px;
     height: 30px;
@@ -111,15 +149,25 @@ import Vector from './icons/Vector.vue';
 import Table from './Table.vue'
 
 export default {
+    components: {
+        Checked,
+        Uncheck,
+        Table,
+        Vector,
+    },
     data() {
         return {
             columnsPayment: [
                 {
-                    key: 'retaurantName',
+                    key: 'restaurantName',
                     header: 'Quán ăn',
                     style: {
                         width: '35%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
                 {
                     key: 'address',
@@ -127,29 +175,45 @@ export default {
                     style: {
                         width: '40%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
                 {
-                    key: 'shipfee',
+                    key: 'fee',
                     header: 'Phí ship',
                     style: {
-                        width: '150px',
+                        width: '120px',
+                        display: 'flex',
+                        'justify-content': 'center',
                     },
+                    tag: {
+                        name: 'input',
+                        style: {
+                            width: '100px',
+                            height: '30px',
+                        }
+                    }
                 },
             ],
             fee: [
                 {
-                    restaurantName: 'Bún chả phố cổ',
-                    address: 'Pho Co, Hà noi',
-                    price: 33000,
-                    fee: '<input type="number" v-model=>'
-                },
-                {
+                    id: 1,
                     restaurantName: 'Bún chả phố cổ',
                     address: 'Pho Co, Hà noi',
                     price: 33000,
                     fee: ''
                 },
                 {
+                    id: 2,
+                    restaurantName: 'Bún chả phố cổ',
+                    address: 'Pho Co, Hà noi',
+                    price: 33000,
+                    fee: ''
+                },
+                {
+                    id: 3,
                     restaurantName: 'Bún chả phố cổ',
                     address: 'Pho Co, Hà noi',
                     price: 33000,
@@ -164,6 +228,10 @@ export default {
                         width: '150px',
                         "text-align":'center'
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
                 {
                     key: 'employee',
@@ -171,6 +239,10 @@ export default {
                     style: {
                         width: '20%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
                 {
                     key: 'dish',
@@ -178,6 +250,10 @@ export default {
                     style: {
                         width: '25%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
                 {
                     key: 'quantity',
@@ -186,6 +262,10 @@ export default {
                         width: '100px',
                         "text-align": 'center'
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
                 {
                     key: 'price',
@@ -194,6 +274,10 @@ export default {
                         width: '120px',
                         'text-align': 'center',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {}
+                    }
                 },
 
             ],
@@ -318,14 +402,9 @@ export default {
             ],
             actions: ['check', 'remove'],
             isSelectAll: 0,
-            isPayment: 0,
+            isPayment: 0,   
+            discount: 0,
         }
-    },
-    components: {
-        Checked,
-        Uncheck,
-        Table,
-        Vector,
     },
     methods: {
         selectAll() {
@@ -360,6 +439,14 @@ export default {
                     this.datas = this.datas.filter(item => e.id !== item.id);
                     break;
             }
+        },
+        handleValueInput(e){
+            this.fee.forEach(item => {
+                if (item.id == e.id){
+                    item.fee = e.value;
+                    return;
+                }
+            })
         }
     }
 }

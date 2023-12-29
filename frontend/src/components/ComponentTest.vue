@@ -1,28 +1,29 @@
 <template>
-    <div class="food-list">
-        <Table 
+    <div>
+        <Table
             :columns="columns"
             :datas="datas"
             :actions="actions"
-            @onClickAction="handleAction"
         />
+        <!-- <Tag :tag="tag" value="HelloWorld" /> -->
     </div>
 </template>
 
-<style scoped>
-.food-list {
-    height: 100%;
-    display: grid;
-    grid-auto-rows:  auto;
-}
-</style>
-
 <script>
-import Table from "../components/Table.vue"
+import Table from './Table.vue'
+import Tag from './Tag.vue'
 
 export default {
+    components: {
+        Table,
+        Tag,
+    },
     data() {
         return {
+            tag: {
+                name: 'span',
+                style: '',
+            },
             columns: [
                 {
                     key: 'image',
@@ -184,19 +185,7 @@ export default {
                 },
             ],
             actions: ['remove']
-
-        }
-    },
-    components: {
-        Table,
-    },
-    methods: {
-        handleAction(e) {
-            // call api remove food from food-group
-            this.datas = this.datas.filter(item => item.id != e.id)
-
         }
     }
 }
-
 </script>

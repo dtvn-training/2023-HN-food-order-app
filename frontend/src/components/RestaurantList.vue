@@ -47,6 +47,10 @@ export default {
                     style: {
                         width: '35%',
                     },
+                    tag: {
+                        name: '',
+                        style: ''
+                    }
                 },
                 {
                     key: 'description',
@@ -54,6 +58,10 @@ export default {
                     style: {
                         width: '45%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: ''
+                    }
                 },
             ],
             datas: [

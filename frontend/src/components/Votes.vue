@@ -25,6 +25,10 @@
                     style: {
                         width: '20%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {},
+                    }
                 },
                 {
                     key: 'restaurant',
@@ -32,6 +36,10 @@
                     style: {
                         width: '25%',
                     },
+                    tag: {
+                        name: '',
+                        style: {},
+                    }
                 },
                 {
                     key: 'description',
@@ -39,6 +47,10 @@
                     style: {
                         width: '25%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {},
+                    }
                 },
                 {
                     key: 'vote',
@@ -47,6 +59,10 @@
                         'text-align': 'center',
                         width: '15%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {},
+                    }
                 },
             ],
             datas: [
