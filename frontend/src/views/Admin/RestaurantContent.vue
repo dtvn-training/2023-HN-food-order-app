@@ -5,14 +5,14 @@
                 header="DANH SÁCH QUÁN ĂN"
                 :tabs="tabs"
                 :isExport="isExport"
-                :activedTab="active"
+                :activedTab="tab"
                 @excelExported="exportExcel(content[active])"
-                @tabActived="active = $event"
+                @tabActived="tab = $event"
             />
         </div>
         <div class="data">
-            <RestaurantList v-if="active === 0"/>
-            <Votes v-if="active === 1"/>
+            <RestaurantList v-if="tab === 0"/>
+            <Votes v-if="tab === 1"/>
         </div>
     </div>
 </template>
@@ -33,7 +33,7 @@
                 tabs: ["Quán ăn", "Bình chọn"],
                 isExport: [true, true],
                 content: ['restaurant', 'votes'],
-                active: 0,
+                tab: 0,
             }
         },
         methods: {
@@ -44,8 +44,8 @@
             }
         },
         watch: {
-            active () {
-                console.log(this.active);
+            tab () {
+                console.log(this.tab);
             }
         }
     }

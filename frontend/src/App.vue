@@ -19,6 +19,17 @@ export default {
   margin: 0;
   box-sizing: border-box;
 }
+input{
+  border: 1px rgb(99, 99, 99) solid;
+  border-radius: 5px;
+  height: 30px;
+  font-size: 16px;
+  padding-left: 10px;
+  color: rgb(41, 41, 41);
+}
+input:focus {
+  outline: none;
+}
 
 /* width */
 ::-webkit-scrollbar {

@@ -26,7 +26,7 @@
 
         <li>
             <button class="directional" type="button" @click="onClickNextPage"
-                :style="{ 'visibility': current === totalPages ? 'hidden' : '' }">
+                :style="{ 'visibility': current === totalPages || total == 0 ? 'hidden' : '' }">
                 <Arrow/>
             </button>
         </li>
