@@ -27,7 +27,8 @@
                 @onClickAction="handleAction"
             />
             <div class="payment" v-if="isPayment === 1">
-                <Table 
+                <Table
+                    style="margin-bottom: 20px;"
                     :datas="fee"
                     :columns="columnsPayment"
                     :actions="[]"
@@ -42,11 +43,33 @@
                         </div>
                     </div>
                 <hr>
+                <button class="save">Save</button>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
+.save {
+    border-radius: 5px;
+    color: white;
+    background: #00A2D6;
+    font-size: 15px;
+    font-weight: 400;
+    width: 120px;
+    height: 35px;
+    border: none;
+    margin: 0 auto;
+    margin-top: 80px;
+    cursor: pointer;
+}
+.save:hover{
+    background: #30abd4;
+}
+.payment{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .order {
     height: 100%;
     display: grid;
@@ -56,6 +79,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    height: 45px;
 }
 .discount .right{
     display: flex;
@@ -63,15 +88,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 10px 0 10px;
+    margin: 7px 0 7px;
 }
 .discount input {
     text-align: center;
-    width: 100px;
+    width: 110px;
+    height: 30px;
 }
 .discount span {
-    align-items: center;
-    display: flex;
     font-size: 18px;
     font-weight: 500;
 }
@@ -191,8 +215,9 @@ export default {
                     tag: {
                         name: 'input',
                         style: {
-                            width: '100px',
+                            width: '110px',
                             height: '30px',
+                            'text-align':'center'
                         }
                     }
                 },
@@ -403,7 +428,7 @@ export default {
             actions: ['check', 'remove'],
             isSelectAll: 0,
             isPayment: 0,   
-            discount: 0,
+            discount: '',
         }
     },
     methods: {
