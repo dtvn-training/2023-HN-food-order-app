@@ -74,7 +74,7 @@ export default {
             sidebarStyle: 'sidebar',
             isCollapse: true,
             adminName: 'Ta Quang Linh',
-            page: 'restaurants',
+            page: '',
         };
     },
     components: {
@@ -107,8 +107,6 @@ export default {
     watch: {
         $route(to, from) {
             this.page = to.name;
-            console.log(to);
-            console.log(from);
         }
     }
 }

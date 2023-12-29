@@ -2,7 +2,7 @@
     <div class="restaurant-list">
         <div class="filter">
             <div class="search" style="width: 31.5%;">
-                <Search class="search" width="100%" placeholder="Tìm quán ăn" />
+                <Search class="search" width="100%" placeholder="Tìm quán ăn..." />
             </div>
             <div class="select">
                 <Select class="status" title="Trạng thái" :options="statusOptions" :value="statusValue" />
@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import Search from "./Search1.vue"
-import Select from "./Select.vue"
+import Search from "./actions/Search1.vue"
+import Select from "./actions/Select.vue"
 import Table from "./Table.vue"
 import RestaurantMenu from "../popup/RestaurantMenu.vue"
 
@@ -47,6 +47,10 @@ export default {
                     style: {
                         width: '35%',
                     },
+                    tag: {
+                        name: '',
+                        style: ''
+                    }
                 },
                 {
                     key: 'description',
@@ -54,6 +58,10 @@ export default {
                     style: {
                         width: '45%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: ''
+                    }
                 },
             ],
             datas: [

@@ -23,22 +23,34 @@
                     key: 'employee',
                     header: 'Nhân viên',
                     style: {
-                        width: '30%',
+                        width: '20%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {},
+                    }
                 },
                 {
                     key: 'restaurant',
                     header: 'Tên quán',
                     style: {
-                        width: '30%',
+                        width: '25%',
                     },
+                    tag: {
+                        name: '',
+                        style: {},
+                    }
                 },
                 {
                     key: 'description',
                     header: 'Mô tả',
                     style: {
-                        width: '30%',
+                        width: '25%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {},
+                    }
                 },
                 {
                     key: 'vote',
@@ -47,6 +59,10 @@
                         'text-align': 'center',
                         width: '15%',
                     },
+                    tag: {
+                        name: 'span',
+                        style: {},
+                    }
                 },
             ],
             datas: [
