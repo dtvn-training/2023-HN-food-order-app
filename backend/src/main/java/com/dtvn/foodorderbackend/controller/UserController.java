@@ -22,6 +22,4 @@ public class UserController {
     public ResponseEntity<?> getDetailRestaurant(@RequestParam("id") long deliveryId) {
         return ResponseEntity.ok().body(restaurantService.getRestaurantById(deliveryId));
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.dtvn.foodorderbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class User implements UserDetails {
         USER,
         ADMIN
     }
+
     public enum Status {
         VERIFIED,
         NOT_VERIFY
@@ -55,6 +57,11 @@ public class User implements UserDetails {
 
     @Column(name = "approved")
     boolean approved = false;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<UserCart> carts;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

@@ -1,7 +1,5 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.mapper.BaseMapper;
-import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.request.RegisterVerifyRequest;
 import com.dtvn.foodorderbackend.model.request.UserLoginRequest;
 import com.dtvn.foodorderbackend.model.request.UserRegisterRequest;
@@ -16,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
@@ -29,6 +26,7 @@ public class AuthController {
     final AuthenticationManager authenticationManager;
     final AuthService authService;
     final OtpService otpService;
+    @SuppressWarnings("unused")
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/register")

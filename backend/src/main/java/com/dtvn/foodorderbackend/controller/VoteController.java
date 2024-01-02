@@ -5,11 +5,12 @@ import com.dtvn.foodorderbackend.service.VoteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import static com.dtvn.foodorderbackend.model.response.BaseResponse.createError;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,10 +23,10 @@ public class VoteController {
     @PostMapping("/create_vote")
     public ResponseEntity<?> createVote(@RequestBody VoteCreateRequest voteRequest) {
         long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
-        if (voteService.createVote(voteRequest.getRestaurantUrl(), userId, voteRequest.getRestaurantName(), voteRequest.getDescription())) {
-            return ResponseEntity.ok().build();
+        if (!voteService.createVote(voteRequest.getRestaurantUrl(), userId, voteRequest.getRestaurantName(), voteRequest.getDescription())) {
+            return createError(HttpStatus.CONFLICT, "Vote đã có");
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get_vote_present")
@@ -39,6 +40,12 @@ public class VoteController {
         if (voteService.insertVoteAction(userId, presentVoteId)) {
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Không tìm thấy quán ăn này hoặc bạn đã vote quán này rồi");
+        return createError(HttpStatus.NOT_ACCEPTABLE, "Không tìm thấy quán ăn này hoặc bạn đã vote quán này rồi");
+    }
+
+    @GetMapping("/get_my_vote")
+    public ResponseEntity<?> getMyVote() {
+        long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
+        return ResponseEntity.ok().body(voteService.getPresentVote(userId));
     }
 }

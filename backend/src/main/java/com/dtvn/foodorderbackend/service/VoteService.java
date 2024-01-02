@@ -67,4 +67,8 @@ public class VoteService {
     public List<PresentVote> getVotePresent() {
         return presentVoteRepository.findAllByActiveTrue();
     }
+
+    public List<PresentVote> getPresentVote(long userId){
+        return presentVoteRepository.findByUserIdCreated(userId);
+    }
 }

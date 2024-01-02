@@ -1,7 +1,7 @@
 package com.dtvn.foodorderbackend.controller;
 
 import com.dtvn.foodorderbackend.annotation.ValidFullName;
-import com.dtvn.foodorderbackend.mapper.BaseMapper;
+import com.dtvn.foodorderbackend.mapper.Mapper;
 import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
@@ -29,9 +29,10 @@ public class AdminController {
     final UserService userService;
     final HttpServletRequest request;
     final HttpServletResponse response;
-    final BaseMapper baseMapper;
+    final Mapper mapper;
     final ShopeeFoodService shopeeFoodService;
     final RestaurantService restaurantService;
+    @SuppressWarnings("unused")
     final Logger logger = LoggerFactory.getLogger(AdminController.class);
     static SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(User.Role.ADMIN.name());
 
@@ -81,12 +82,12 @@ public class AdminController {
 
     @GetMapping("/get_user_not_approved")
     public ResponseEntity<?> getUserNotApproved() {
-        return ResponseEntity.ok().body(baseMapper.mapList(userService.getUserNotApproved(), UserDTO.class));
+        return ResponseEntity.ok().body(mapper.mapList(userService.getUserNotApproved(), UserDTO.class));
     }
 
     @GetMapping("/get_user_approved")
     public ResponseEntity<?> getUserApproved() {
-        return ResponseEntity.ok().body(baseMapper.mapList(userService.getUserApproved(), UserDTO.class));
+        return ResponseEntity.ok().body(mapper.mapList(userService.getUserApproved(), UserDTO.class));
     }
 
     @PostMapping("/pick_restaurant")

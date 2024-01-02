@@ -47,6 +47,20 @@ CREATE TABLE IF NOT EXISTS `dish_category` (
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table food_order.present_vote
+CREATE TABLE IF NOT EXISTS `present_vote` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `active` bit(1) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `restaurant_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `total_vote` int DEFAULT NULL,
+  `user_id_created` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table food_order.register_otp
 CREATE TABLE IF NOT EXISTS `register_otp` (
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
@@ -65,7 +79,8 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
   `image` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `rating` double DEFAULT NULL,
-  `uri` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `selected` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -73,15 +88,27 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
 
 -- Dumping structure for table food_order.user
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `balance` int DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `full_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `role` enum('USER','ADMIN') COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` enum('VERIFIED','NOT_VERIFY') COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `approved` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table food_order.user_vote
+CREATE TABLE IF NOT EXISTS `user_vote` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `present_vote_id` bigint DEFAULT NULL,
+  `user_id` bigint DEFAULT NULL,
+  `vote_time` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Data exporting was unselected.
 

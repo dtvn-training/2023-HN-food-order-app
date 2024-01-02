@@ -12,5 +12,7 @@ public interface PresentVoteRepository extends JpaRepository<PresentVote,Long> {
 
     List<PresentVote> findAllByActiveTrue();
 
-    Optional<PresentVote> findByActiveTrueAndId(long id);
+    Optional<PresentVote> findByActiveTrueAndId(long votePresentId);
+
+    List<PresentVote> findByUserIdCreated(long userId);
 }
