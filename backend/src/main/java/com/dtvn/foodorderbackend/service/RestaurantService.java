@@ -1,6 +1,6 @@
 package com.dtvn.foodorderbackend.service;
 
-import com.dtvn.foodorderbackend.mapper.BaseMapper;
+import com.dtvn.foodorderbackend.mapper.Mapper;
 import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.model.entity.Restaurant;
 import com.dtvn.foodorderbackend.repository.RestaurantRepository;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestaurantService {
     final RestaurantRepository restaurantRepository;
-    final BaseMapper mapper;
+    final Mapper mapper;
     Logger logger = LoggerFactory.getLogger(RestaurantService.class);
     public List<SimpleRestaurantResponse> getAllPresentRestaurant() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
@@ -29,4 +29,5 @@ public class RestaurantService {
     public Restaurant getRestaurantById(long deliveryId){
         return restaurantRepository.findById(deliveryId).orElse(null);
     }
+
 }

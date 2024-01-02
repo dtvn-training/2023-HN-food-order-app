@@ -1,7 +1,7 @@
 package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.config.ApplicationConfig;
-import com.dtvn.foodorderbackend.mapper.BaseMapper;
+import com.dtvn.foodorderbackend.mapper.Mapper;
 import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.RegisterOtp;
 import com.dtvn.foodorderbackend.model.entity.User;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 public class UserService implements UserDetailsService {
     UserRepository userRepository;
-    BaseMapper mapper;
+    Mapper mapper;
     PasswordEncoder encoder;
 
     OtpService otpService;
@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Autowired
-    void setMapper(BaseMapper mapper) {
+    void setMapper(Mapper mapper) {
         this.mapper = mapper;
     }
 

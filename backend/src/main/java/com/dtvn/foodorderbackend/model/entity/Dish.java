@@ -26,7 +26,7 @@ public class Dish {
     @Column(name = "image")
     String image;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     @JsonIgnore
     DishCategory category;

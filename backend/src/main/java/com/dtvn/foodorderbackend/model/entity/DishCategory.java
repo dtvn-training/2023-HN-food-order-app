@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 @Entity
@@ -23,12 +22,12 @@ public class DishCategory {
     @Column(name = "name")
     String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     Restaurant restaurant;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Dish> dishList;
 
     public DishCategory(JsonObject data, Restaurant restaurant) {
