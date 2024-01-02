@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import static com.dtvn.foodorderbackend.model.response.BaseResponse.createError;
+import static com.dtvn.foodorderbackend.model.response.BaseResponse.success;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class VoteController {
         if (!voteService.createVote(voteRequest.getRestaurantUrl(), userId, voteRequest.getRestaurantName(), voteRequest.getDescription())) {
             return createError(HttpStatus.CONFLICT, "Vote đã có");
         }
-        return ResponseEntity.ok().build();
+        return success();
     }
 
     @GetMapping("/get_vote_present")
@@ -38,7 +39,7 @@ public class VoteController {
     public ResponseEntity<?> voteRestaurant(@RequestParam("present_vote_id") int presentVoteId) {
         long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
         if (voteService.insertVoteAction(userId, presentVoteId)) {
-            return ResponseEntity.ok().build();
+            return success();
         }
         return createError(HttpStatus.NOT_ACCEPTABLE, "Không tìm thấy quán ăn này hoặc bạn đã vote quán này rồi");
     }

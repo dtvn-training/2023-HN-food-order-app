@@ -4,6 +4,7 @@ import com.dtvn.foodorderbackend.model.request.RegisterVerifyRequest;
 import com.dtvn.foodorderbackend.model.request.UserLoginRequest;
 import com.dtvn.foodorderbackend.model.request.UserRegisterRequest;
 import com.dtvn.foodorderbackend.model.response.AuthResponse;
+import com.dtvn.foodorderbackend.model.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.AuthService;
 import com.dtvn.foodorderbackend.service.OtpService;
 import com.dtvn.foodorderbackend.service.UserService;
@@ -16,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,10 +33,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid UserRegisterRequest request) {
         if(request.getEmail() == null || request.getPassword() == null || request.getFullName() == null){
-            return ResponseEntity.status(BAD_REQUEST).body("You must fill all field");
+            return BaseResponse.createError(BAD_REQUEST,"Hãy điền các trường hợp lệ");
         }
         if (userService.checkUserExist(request.getEmail())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("email exist");
+            return BaseResponse.createError(CONFLICT,"Email đã tồn tại");
         }
         return ResponseEntity.ok().body(userService.register(request));
     }
@@ -43,21 +44,21 @@ public class AuthController {
     @PostMapping("/verify_register")
     public ResponseEntity<?> verifyRegister(@RequestBody RegisterVerifyRequest request) {
         if (request.getOtp().isEmpty() || request.getEmail().isEmpty()) {
-            return ResponseEntity.status(BAD_REQUEST).body("All fields must be filled in.");
+            return BaseResponse.createError(BAD_REQUEST,"Hãy điền các trường hợp lệ");
         }
         if (otpService.checkRegisterOTP(request.getEmail(), request.getOtp())) {
             userService.verifiedRegister(request.getEmail());
             otpService.destroyRegisterOTP(request.getEmail(), request.getOtp());
-            return ResponseEntity.ok().build();
+            return BaseResponse.success();
         }
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("OTP was expired or OTP not valid");
+        return BaseResponse.createError(NOT_ACCEPTABLE,"mã OTP này đã hết hạn");
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserLoginRequest request) {
         AuthResponse authResponse = authService.login(request);
         if (authResponse == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return BaseResponse.createError(UNAUTHORIZED,"lỗi đăng nhập");
         }
         return ResponseEntity.ok().body(authResponse);
     }
