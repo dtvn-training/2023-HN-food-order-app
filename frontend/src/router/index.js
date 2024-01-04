@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/admin/Home.vue'
-import Restaurant from '@/views/admin/RestaurantContent.vue'
-import Food from '@/views/admin/FoodContent.vue'
-import Payment from '@/views/admin/PaymentContent.vue'
-import Group from '@/views/admin/GroupContent.vue'
+
+//Admin
+import HomeAdmin from '@/views/admin/Home.vue'
+import RestaurantAdmin from '@/views/admin/RestaurantContent.vue'
+import FoodAdmin from '@/views/admin/FoodContent.vue'
+import PaymentAdmin from '@/views/admin/PaymentContent.vue'
+import GroupAdmin from '@/views/admin/GroupContent.vue'
+//User
+import Home from '@/views/user/Home.vue'
+import RestaurantUser from '@/views/user/Restaurants.vue'
 import CompontTest from '@/components/ComponentTest.vue';
 
 Vue.use(Router)
@@ -17,28 +22,49 @@ export default new Router({
     },
     {
       path: '/admin',
-      component: Home,
+      component: HomeAdmin,
       children: [
         {
           name: 'restautents',
           path: 'restaurants',
-          component: Restaurant,
+          component: RestaurantAdmin,
         },
         {
           name: 'foods',
           path: 'foods',
-          component: Food,
+          component: FoodAdmin,
         },
         {
           name: 'payments',
           path: 'payments',
-          component: Payment,
+          component: PaymentAdmin,
         },
         {
           name: 'groups',
           path: 'groups',
-          component: Group,
+          component: GroupAdmin,
         }
+      ],
+    },
+    {
+      path: '/user',
+      component: Home,
+      children: [
+        {
+          name: 'home',
+          path: '/',
+          component: RestaurantUser,
+        },
+        // {
+        //   name: 'payments',
+        //   path: 'payments',
+        //   component: Payment,
+        // },
+        // {
+        //   name: 'votes',
+        //   path: 'votes',
+        //   component: Vote,
+        // }
       ],
     },
   ]
