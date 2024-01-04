@@ -26,7 +26,14 @@ input:focus{
 <script>
     export default {
         props: {
-            tag: {},  
+            tag: {
+                default() {
+                    return {
+                        name: '',
+                        style: ''
+                    }
+                }
+            },  
             value: {},  
             styleCustomize: {},
             id: {
