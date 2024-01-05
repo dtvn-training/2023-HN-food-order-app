@@ -9,6 +9,7 @@ import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+
 @RequiredArgsConstructor
 public class AdminController {
     final UserService userService;
@@ -38,6 +40,7 @@ public class AdminController {
     static SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(User.Role.ADMIN.name());
 
     @GetMapping("/get_users")
+    @Operation
     public ResponseEntity<?> getUserNotVerify(
             @RequestParam(value = "fullName", required = false) @ValidFullName String fullName,
             @RequestParam(value = "email", required = false) @Email(message = "EMAIL NOT VALID") String email,
@@ -78,7 +81,7 @@ public class AdminController {
     }
 
     @GetMapping("/get_user_not_approved")
-    public ResponseEntity<?> getUserNotApproved() throws Exception{
+    public ResponseEntity<?> getUserNotApproved() throws Exception {
         requireAdminRole();
         return ResponseEntity.ok().body(mapper.mapList(userService.getUserNotApproved(), UserDTO.class));
     }
@@ -89,19 +92,27 @@ public class AdminController {
         return ResponseEntity.ok().body(mapper.mapList(userService.getUserApproved(), UserDTO.class));
     }
 
-    @PostMapping("/pick_restaurant")
-    public ResponseEntity<?> approvedRestaurant() {
+    @PostMapping("/approve_restaurant")
+    public ResponseEntity<?> approvedRestaurant(@RequestParam("id") long deliveryId) throws Exception {
+        requireAdminRole();
+        if (restaurantService.approveRestaurant(deliveryId)) {
+            return BaseResponse.success();
+        }
+        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Không có cửa hàng này");
+    }
+
+    @PostMapping("/reject_restaurant")
+    public ResponseEntity<?> rejectRestaurant(@RequestParam("id") long deliveryId) {
         return null;
+        // TODO:
     }
 
     void requireAdminRole() throws Exception {
         if (userService.loadUserByUsername(String.valueOf(request.getAttribute("email"))).getAuthorities().contains(ADMIN)) {
             return;
         }
-
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.getWriter().write("Bạn không có quyền làm việc này");
         throw new Exception("User not admin");
-
     }
 }

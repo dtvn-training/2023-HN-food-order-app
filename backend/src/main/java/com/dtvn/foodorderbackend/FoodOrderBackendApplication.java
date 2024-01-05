@@ -56,7 +56,7 @@ public class FoodOrderBackendApplication {
         dishTest1.setCategory(dishCategoryTest);
         dishTest2.setId(4L);
         dishTest2.setCategory(dishCategoryTest);
-        dishCategoryTest.setDishList(Arrays.asList(dishTest1));
+        dishCategoryTest.setDishList(Collections.singletonList(dishTest1));
     }
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)

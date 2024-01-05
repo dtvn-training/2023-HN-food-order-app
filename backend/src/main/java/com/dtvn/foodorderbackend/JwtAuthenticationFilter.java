@@ -25,6 +25,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     final UserService userService;
 
     public static final String[] WHITE_LIST = {
+            "/SSV/**",
+            "/SSV/bidv/**",
+            "/SSV/bidv/*",
             "/test",
             "/api/v1/auth/**",
             "/api/v2/auth/**"
@@ -35,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String auth = request.getHeader("Authorization");
             if (auth == null) {
-                reject(response, new Throwable("Authorization must be Bearer Token"));
+                reject(response, new Throwable("This request " + request.hashCode() + " header: Authorization doesn't look like Bearer Token"));
                 return;
             }
             String jwtToken = auth.substring(7);
@@ -56,15 +59,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
-        return Arrays.stream(WHITE_LIST)
+        var accept = Arrays.stream(WHITE_LIST)
                 .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
+        if (accept) {
+            logger.info("request bypass {},{}", request.getServletPath(), request.hashCode());
+        }
+        return !accept;
     }
 
     private void reject(HttpServletResponse response, Throwable t) {
         try {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write(t.getMessage());
-            logger.error("{}", ExceptionUtils.getStackTrace(t));
+            logger.error("{}", t.getMessage());
         } catch (Exception e) {
             logger.error("{}", ExceptionUtils.getStackTrace(e));
         }

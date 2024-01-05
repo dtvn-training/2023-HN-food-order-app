@@ -21,7 +21,8 @@ public class ShopeeFoodService {
     final DishRepository dishRepository;
 
 
-    public Restaurant getRestaurantDishes(int deliveryId) throws Exception {
+
+    public Restaurant getRestaurantDishes(long deliveryId) throws Exception {
         HttpGetWithHeaderFoody httpGetDish = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=" + deliveryId);
         String dataDish = httpGetDish.execute();
 
