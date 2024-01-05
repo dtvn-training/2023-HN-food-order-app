@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import Search from "./actions/Search1.vue"
-import Select from "./actions/Select.vue"
-import Table from "./Table.vue"
-import RestaurantMenu from "../popup/RestaurantMenu.vue"
+import Search from "../actions/Search1.vue"
+import Select from "../actions/Select.vue"
+import Table from "../Table.vue"
+import RestaurantMenu from "../../popup/RestaurantMenu.vue"
 
 export default {
     components: {

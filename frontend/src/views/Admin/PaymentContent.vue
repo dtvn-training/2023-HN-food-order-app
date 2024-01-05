@@ -11,14 +11,23 @@
                     @tabActived="active = $event" />
             </div>
             <div class="data">
-                <h1 style="font-weight: 200;">Data of Payments</h1>
+                <div class="bill">
+                    <div class="header">
+
+                    </div>
+                    
+                </div>
+                <div class="deposit">
+
+                </div>
+
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import Tab from "../../components/Tab.vue"
+    import Tab from "@/components/admin/Tab.vue"
 
     export default {
         components: {

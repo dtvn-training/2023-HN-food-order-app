@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import Tab from "../../components/Tab.vue"
+    import Tab from "@/components/admin/Tab.vue"
 
     export default {
         components: {
