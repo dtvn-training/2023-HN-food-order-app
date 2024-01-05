@@ -46,6 +46,9 @@ public class Restaurant {
     @Column(name = "selected")
     boolean selected = false;
 
+    @Column(name = "deleted")
+    boolean deleted = false;
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<DishCategory> dishCategoryList;
 
