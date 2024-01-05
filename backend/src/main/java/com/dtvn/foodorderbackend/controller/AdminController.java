@@ -9,6 +9,7 @@ import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.Email;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
+
 @RequiredArgsConstructor
 public class AdminController {
     final UserService userService;
@@ -38,6 +40,7 @@ public class AdminController {
     static SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(User.Role.ADMIN.name());
 
     @GetMapping("/get_users")
+    @Operation
     public ResponseEntity<?> getUserNotVerify(
             @RequestParam(value = "fullName", required = false) @ValidFullName String fullName,
             @RequestParam(value = "email", required = false) @Email(message = "EMAIL NOT VALID") String email,
