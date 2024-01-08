@@ -1,6 +1,8 @@
 package com.dtvn.foodorderbackend.controller;
 
+import com.dtvn.foodorderbackend.model.entity.ItemOrder;
 import com.dtvn.foodorderbackend.model.request.CartRequest;
+import com.dtvn.foodorderbackend.model.request.ItemOrderRequest;
 import com.dtvn.foodorderbackend.model.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.CartService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,8 +53,8 @@ public class CartController {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<?> orderCart(@RequestBody List<CartRequest> cartRequestList) {
-        cartService.queueOrder(cartRequestList);
+    public ResponseEntity<?> orderCart(@RequestBody List<ItemOrderRequest> itemOrders) {
+        cartService.queueOrder(itemOrders);
         return BaseResponse.success("ok");
     }
 }

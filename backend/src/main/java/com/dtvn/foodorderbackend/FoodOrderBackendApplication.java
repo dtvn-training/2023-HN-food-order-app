@@ -2,9 +2,12 @@ package com.dtvn.foodorderbackend;
 
 import com.dtvn.foodorderbackend.model.entity.Dish;
 import com.dtvn.foodorderbackend.model.entity.DishCategory;
+import com.dtvn.foodorderbackend.model.entity.ItemOrder;
 import com.dtvn.foodorderbackend.model.entity.Restaurant;
+import com.dtvn.foodorderbackend.model.response.BaseResponse;
 import com.dtvn.foodorderbackend.repository.DishCategoryRepository;
 import com.dtvn.foodorderbackend.repository.DishRepository;
+import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.RestaurantRepository;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.ulti.GsonUtil;
@@ -37,6 +40,7 @@ public class FoodOrderBackendApplication {
     final DishCategoryRepository dishCategoryRepository;
     final DishRepository dishRepository;
     final RestaurantRepository restaurantRepository;
+    final ItemOrderRepository itemOrderRepository;
     Logger logger = LoggerFactory.getLogger(FoodOrderBackendApplication.class);
 
     public static void main(String[] args) {
@@ -61,10 +65,8 @@ public class FoodOrderBackendApplication {
     }
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<?> test(@RequestParam("id") int deliveryId) throws Exception {
-        Restaurant restaurant = shopeeFoodService.getRestaurantDishes(deliveryId);
-        restaurantRepository.save(restaurant);
-        return ResponseEntity.ok().build();
+    public @ResponseBody ResponseEntity<?> test() throws Exception {
+        return BaseResponse.success();
     }
 
 }
