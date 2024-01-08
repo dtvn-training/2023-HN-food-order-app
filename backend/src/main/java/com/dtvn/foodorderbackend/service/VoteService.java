@@ -51,7 +51,6 @@ public class VoteService {
     }
 
     private void acceptVoteAction(long userId, long presentVoteId) {
-        System.out.println("accepted");
         PresentVote presentVote = presentVoteRepository.findById(presentVoteId).orElseThrow();
         presentVote.setTotalVote(presentVote.getTotalVote() + 1);
         presentVoteRepository.save(presentVote);

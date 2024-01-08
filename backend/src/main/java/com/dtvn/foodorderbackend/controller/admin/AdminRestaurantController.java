@@ -7,8 +7,6 @@ import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
 import com.dtvn.foodorderbackend.service.VoteService;
-import com.fasterxml.jackson.databind.ser.Serializers;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
 @RequiredArgsConstructor
+@RequestMapping("/admin/restaurant")
 public class AdminRestaurantController {
     final UserService userService;
     final HttpServletRequest request;
@@ -38,7 +36,7 @@ public class AdminRestaurantController {
     @GetMapping("/get_all_restaurant")
     public ResponseEntity<?> getAllRestaurant() throws Exception {
         adminController.requireAdminRole();
-        List<SimpleRestaurantResponse> restaurants = restaurantService.getAllPresentRestaurant();
+        List<SimpleRestaurantResponse> restaurants = restaurantService.getAllRestaurantInDatabase();
         return ResponseEntity.ok().body(restaurants);
     }
 
@@ -62,20 +60,21 @@ public class AdminRestaurantController {
     }
 
     @DeleteMapping("/remove_restaurant_from_user_list")
-    public ResponseEntity<?> removeRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) throws Exception{
+    public ResponseEntity<?> removeRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) throws Exception {
         adminController.requireAdminRole();
-        if(restaurantService.removeRestaurantFromUserList(deliveryId)){
+        if (restaurantService.removeRestaurantFromUserList(deliveryId)) {
             return BaseResponse.success("Đã xóa xửa hàng khỏi danh sách đặt món của NV");
         }
-        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE,"Lỗi, không thể thêm cửa hàng này");
+        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể thêm cửa hàng này");
     }
+
     @DeleteMapping("/remove_restaurant_from_database")
-    public ResponseEntity<?> setRestaurantDeleted(@RequestParam("delivery_id") long deliveryId) throws Exception{
+    public ResponseEntity<?> setRestaurantDeleted(@RequestParam("delivery_id") long deliveryId) throws Exception {
         adminController.requireAdminRole();
-        if(restaurantService.setRestaurantDeleted(deliveryId)){
+        if (restaurantService.setRestaurantDeleted(deliveryId)) {
             return BaseResponse.success("Đã ẩn cửa hàng này, nếu muốn hiển thị lại, hãy gọi API khác");
         }
-        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE,"Lỗi, không thể ẩn cửa hàng này");
+        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể ẩn cửa hàng này");
     }
 
     @PostMapping("/delete_present_vote")

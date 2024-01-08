@@ -66,8 +66,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (accept) {
             logger.info("request bypass {},{}", request.getServletPath(), request.hashCode());
         }
-//        return accept;
-        return true;
+        return accept;
+//        return true;
     }
 
     private void reject(HttpServletResponse response, Throwable t) {

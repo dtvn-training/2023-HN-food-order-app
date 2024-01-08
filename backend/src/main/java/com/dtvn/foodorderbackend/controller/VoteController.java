@@ -39,7 +39,7 @@ public class VoteController {
     public ResponseEntity<?> voteRestaurant(@RequestParam("present_vote_id") int presentVoteId) {
         long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
         if (voteService.insertVoteAction(userId, presentVoteId)) {
-            return success();
+            return success("Đã vote quán "+ presentVoteId);
         }
         return createError(HttpStatus.NOT_ACCEPTABLE, "Không tìm thấy quán ăn này hoặc bạn đã vote quán này rồi");
     }

@@ -6,9 +6,9 @@ import com.dtvn.foodorderbackend.model.entity.Restaurant;
 import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.repository.PresentVoteRepository;
 import com.dtvn.foodorderbackend.repository.RestaurantRepository;
-import com.zaxxer.hikari.SQLExceptionOverride;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.internal.bytebuddy.build.Plugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class RestaurantService {
     final PresentVoteRepository presentVoteRepository;
     Logger logger = LoggerFactory.getLogger(RestaurantService.class);
 
-    public List<SimpleRestaurantResponse> getAllPresentRestaurant() {
+    public List<SimpleRestaurantResponse> getAllRestaurantInDatabase() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
         return mapper.mapList(restaurants, SimpleRestaurantResponse.class);
     }
@@ -108,4 +108,5 @@ public class RestaurantService {
         restaurantRepository.setRestaurantDeleted(deliveryId,true);
         return true;
     }
+
 }

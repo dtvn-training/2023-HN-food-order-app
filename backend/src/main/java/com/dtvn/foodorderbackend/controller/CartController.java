@@ -52,7 +52,7 @@ public class CartController {
 
     @PostMapping("/order")
     public ResponseEntity<?> orderCart(@RequestBody List<CartRequest> cartRequestList) {
-        return null;
-        // TODO
+        cartService.queueOrder(cartRequestList);
+        return BaseResponse.success("ok");
     }
 }

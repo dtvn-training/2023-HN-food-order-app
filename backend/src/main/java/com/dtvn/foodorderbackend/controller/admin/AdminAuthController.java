@@ -16,11 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/auth")
 @RequiredArgsConstructor
 public class AdminAuthController {
     final UserService userService;
@@ -69,9 +68,5 @@ public class AdminAuthController {
         return ResponseEntity.ok().body(mapper.mapList(userService.getUserNotApproved(), UserDTO.class));
     }
 
-    @GetMapping("/get_user_approved")
-    public ResponseEntity<?> getUserApproved() throws Exception {
-        adminController.requireAdminRole();
-        return ResponseEntity.ok().body(mapper.mapList(userService.getUserApproved(), UserDTO.class));
-    }
+
 }
