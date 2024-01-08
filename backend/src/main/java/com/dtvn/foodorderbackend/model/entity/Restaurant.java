@@ -1,14 +1,12 @@
 package com.dtvn.foodorderbackend.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Vector;
@@ -21,6 +19,7 @@ import java.util.Vector;
   id: delivery id for restaurant
  */
 public class Restaurant {
+    transient Logger logger = LoggerFactory.getLogger(Restaurant.class);
     @Id
     @Column(name = "id")
     long deliveryId;
@@ -38,7 +37,7 @@ public class Restaurant {
     double rating;
 
     @Column(name = "url")
-    String uri;
+    String url;
 
     @Column(name = "image")
     String image;
@@ -53,7 +52,6 @@ public class Restaurant {
     List<DishCategory> dishCategoryList;
 
     public Restaurant(JsonObject data, JsonObject dishDeliveryData) {
-        System.out.println(data);
         if (data.get("result") == null || !data.get("result").getAsString().equals("success")) {
             return;
         }
@@ -63,14 +61,16 @@ public class Restaurant {
         this.description = ""; // Todo: cannot find description in sample data
         this.address = data.get("address").getAsString();
         this.rating = data.get("rating").getAsJsonObject().get("avg").getAsDouble();
-        this.uri = data.get("url").getAsString();
+        this.url = data.get("url").getAsString();
         JsonArray imageArr = data.get("photos").getAsJsonArray();
         this.image = imageArr.get(imageArr.size() - 1).getAsJsonObject().get("value").getAsString();
 
         dishCategoryList = new Vector<>();
         JsonArray dishCategoryArray = dishDeliveryData.get("reply").getAsJsonObject().get("menu_infos").getAsJsonArray();
         for (int i = 0; i < dishCategoryArray.size(); i++) {
-            dishCategoryList.add(new DishCategory(dishCategoryArray.get(i).getAsJsonObject(), this));
+            if (data.get("dish_type_id") != null && data.get("dish_type_id").getAsLong() > 0) {
+                dishCategoryList.add(new DishCategory(dishCategoryArray.get(i).getAsJsonObject(), this));
+            }
         }
     }
 }

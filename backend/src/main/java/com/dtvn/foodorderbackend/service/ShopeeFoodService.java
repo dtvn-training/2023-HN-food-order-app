@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -19,8 +21,7 @@ import java.io.InputStream;
 public class ShopeeFoodService {
     final RestaurantRepository restaurantRepository;
     final DishRepository dishRepository;
-
-
+    final Logger logger = LoggerFactory.getLogger(ShopeeFoodService.class);
 
     public Restaurant getRestaurantDishes(long deliveryId) throws Exception {
         HttpGetWithHeaderFoody httpGetDish = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=" + deliveryId);
@@ -28,23 +29,28 @@ public class ShopeeFoodService {
 
         HttpGetWithHeaderFoody httpGetDetail = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/delivery/get_detail?id_type=2&request_id=" + deliveryId);
         String dataDetail = httpGetDetail.execute();
-
+        logger.debug(dataDetail);
         return new Restaurant(GsonUtil.toJsonObject(dataDetail), GsonUtil.toJsonObject(dataDish));
     }
 
-    public boolean fetchRestaurantData(String url) throws Exception {
+    public Long getDeliveryId(String url) throws Exception {
         String subPath = url.substring("https://shopeefood.vn/".length());
-        HttpGetWithHeaderFoody getRestaurantId = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/delivery/get_from_url?url=" + subPath);
+        HttpGetWithHeaderFoody getRestaurantIdHttp = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/delivery/get_from_url?url=" + subPath);
 
-        JsonObject data = GsonUtil.toJsonObject(getRestaurantId.execute());
-        if (data.get("reply") == null) return false;
-        int deliveryId = data.get("reply").getAsJsonObject().get("delivery_id").getAsInt();
-        if (deliveryId == 0) return false;
+        JsonObject data = GsonUtil.toJsonObject(getRestaurantIdHttp.execute());
+        if (data.get("reply") == null) return null;
+        long deliveryId = data.get("reply").getAsJsonObject().get("delivery_id").getAsLong();
+        if (deliveryId == 0) return null;
+        return deliveryId;
+    }
+
+    public boolean fetchRestaurantData(String url) throws Exception {
+        long deliveryId = getDeliveryId(url);
         fetchRestaurantDataToDatabaseById(deliveryId);
         return true;
     }
 
-    private void fetchRestaurantDataToDatabaseById(int deliveryId) throws Exception {
+    private void fetchRestaurantDataToDatabaseById(long deliveryId) throws Exception {
         // TODO: remove the data exist in database but not present in data fetched by shopee (foody)
         Restaurant restaurant = getRestaurantDishes(deliveryId);
         restaurantRepository.save(restaurant);

@@ -30,7 +30,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/SSV/bidv/*",
             "/test",
             "/api/v1/auth/**",
-            "/api/v2/auth/**"
+            "/api/v2/auth/**",
+            "/api/v1/auth/login",
+            "/swagger-ui/**",
     };
 
     @Override
@@ -53,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         } catch (Exception e) {
             reject(response, e);
-            logger.debug("{}", e.getMessage());
+            logger.error("{}", ExceptionUtils.getStackTrace(e));
         }
     }
 
@@ -64,7 +66,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (accept) {
             logger.info("request bypass {},{}", request.getServletPath(), request.hashCode());
         }
-        return !accept;
+        return accept;
+//        return true;
     }
 
     private void reject(HttpServletResponse response, Throwable t) {

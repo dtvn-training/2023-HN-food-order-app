@@ -70,4 +70,8 @@ public class CartService {
         userCartRepository.deleteByUserIdAndDishId(userId, request.getDishId());
         return true;
     }
+
+    public void queueOrder(List<CartRequest> cartRequestList) {
+
+    }
 }

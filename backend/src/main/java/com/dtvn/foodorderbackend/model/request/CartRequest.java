@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class CartRequest {
-    long dishId;
 
+    long dishId;
     @Size(min = 1, max = 5000000)
     @Nullable
     Integer quantity;

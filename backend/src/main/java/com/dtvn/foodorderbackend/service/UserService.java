@@ -56,6 +56,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByEmail(username).orElseThrow();
     }
 
+    public User loadUserById(long id){
+        return userRepository.findUserById(id).orElseThrow();
+    }
     public String register(UserRegisterRequest request) {
         try {
             logger.info("request is: {}",request);
@@ -79,6 +82,7 @@ public class UserService implements UserDetailsService {
         UserDetails user = loadUserByUsername(request.getEmail());
         String password = user.getPassword();
 //        if(request.getOldPassword().equals())
+        // TODO: change password
     }
 
     public List<UserDTO> getUserByCriteria(String fullName, String email, User.Role role, User.Status status) {
