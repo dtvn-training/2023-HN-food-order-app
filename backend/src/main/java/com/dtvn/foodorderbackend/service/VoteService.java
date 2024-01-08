@@ -39,7 +39,7 @@ public class VoteService {
     public boolean insertVoteAction(long userId, long votePresentId) {
         Timestamp now = TimeUtil.getCurrentTimestamp();
         Timestamp startDay = TimeUtil.getTimestampStartOfDay();
-        PresentVote presentVote = presentVoteRepository.findByActiveTrueAndId(votePresentId).orElse(null);
+        PresentVote presentVote = presentVoteRepository.findByActiveTrueAndId(votePresentId);
         if (presentVote == null) {
             return false;
         }
@@ -70,5 +70,12 @@ public class VoteService {
 
     public List<PresentVote> getPresentVote(long userId){
         return presentVoteRepository.findByUserIdCreated(userId);
+    }
+    public boolean deletePresentVote(long presentVoteId){
+        if(presentVoteRepository.findByActiveTrueAndId(presentVoteId)!=null){
+            return false;
+        }
+        presentVoteRepository.setActiveFalse(presentVoteId);
+        return true;
     }
 }

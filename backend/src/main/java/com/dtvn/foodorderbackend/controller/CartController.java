@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cart")
 @RequiredArgsConstructor
@@ -42,9 +44,15 @@ public class CartController {
 
     @DeleteMapping("/delete_cart")
     public ResponseEntity<?> deleteCart(@RequestBody CartRequest request) {
-        if(cartService.deleteCart(request,Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))){
+        if (cartService.deleteCart(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
         }
-        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE,"Cart doesn't exist");
+        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Cart doesn't exist");
+    }
+
+    @PostMapping("/order")
+    public ResponseEntity<?> orderCart(@RequestBody List<CartRequest> cartRequestList) {
+        return null;
+        // TODO
     }
 }
