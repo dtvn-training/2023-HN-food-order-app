@@ -6,6 +6,7 @@ import Food from '@/views/admin/FoodContent.vue'
 import Payment from '@/views/admin/PaymentContent.vue'
 import Group from '@/views/admin/GroupContent.vue'
 import CompontTest from '@/components/ComponentTest.vue';
+import Login from '@/views/Login.vue'
 
 Vue.use(Router)
 
@@ -14,6 +15,10 @@ export default new Router({
     {
       path: '/test',
       component: CompontTest,
+    },
+    {
+      path: '/login',
+      component: Login
     },
     {
       path: '/admin',
