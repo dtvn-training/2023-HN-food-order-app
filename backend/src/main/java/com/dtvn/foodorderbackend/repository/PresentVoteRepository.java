@@ -6,16 +6,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 
-public interface PresentVoteRepository extends JpaRepository<PresentVote,Long> {
+public interface PresentVoteRepository extends JpaRepository<PresentVote, Long> {
     boolean existsByRestaurantUrl(String restaurantUrl);
 
     List<PresentVote> findAllByActiveTrue();
 
-    List<PresentVote> findByUserIdCreated(long userId);
+    List<PresentVote> findAllByCreatedById(long userId);
 
     @Transactional
     @Modifying

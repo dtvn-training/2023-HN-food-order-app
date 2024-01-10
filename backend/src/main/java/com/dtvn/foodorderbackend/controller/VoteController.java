@@ -25,7 +25,7 @@ public class VoteController {
     public ResponseEntity<?> createVote(@RequestBody VoteCreateRequest voteRequest) {
         long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
         if (!voteService.createVote(voteRequest.getRestaurantUrl(), userId, voteRequest.getRestaurantName(), voteRequest.getDescription())) {
-            return createError(HttpStatus.CONFLICT, "Vote đã có");
+            return createError(HttpStatus.CONFLICT, "Vote đã tồn tại");
         }
         return success();
     }

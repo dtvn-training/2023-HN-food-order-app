@@ -24,7 +24,6 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     Mapper mapper;
     PasswordEncoder encoder;
-
     OtpService otpService;
     Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
@@ -61,13 +60,13 @@ public class UserService implements UserDetailsService {
     }
     public String register(UserRegisterRequest request) {
         try {
-            logger.info("request is: {}",request);
+//            logger.info("request is: {}",request);
             User user = mapper.map(request, User.class);
             user.setRole(User.Role.USER);
             user.setStatus(User.Status.NOT_VERIFY);
             user.setBalance(0);
             user.setPassword(encoder.encode(user.getPassword()));
-            logger.info("user mapped is; {}",user);
+//            logger.info("user mapped is; {}",user);
             userRepository.save(user);
             RegisterOtp otp = otpService.generateAndSaveRegisterOTP(user.getEmail());
             otpService.sendRegisterOTP(otp);

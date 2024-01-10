@@ -1,16 +1,16 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.model.entity.ItemOrder;
 import com.dtvn.foodorderbackend.model.request.CartRequest;
-import com.dtvn.foodorderbackend.model.request.ItemOrderRequest;
 import com.dtvn.foodorderbackend.model.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.CartService;
+import com.dtvn.foodorderbackend.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +21,8 @@ import java.util.List;
 public class CartController {
     final CartService cartService;
     final HttpServletRequest request;
+    final OrderService orderService;
+    @SuppressWarnings("unused")
     Logger logger = LoggerFactory.getLogger(CartController.class);
 
     @PostMapping("/add_to_cart")
@@ -32,7 +34,7 @@ public class CartController {
     }
 
     @PutMapping("/change_quantity")
-    public ResponseEntity<?> changeQuantity(@RequestBody CartRequest request) {
+    public ResponseEntity<?> changeQuantity(@RequestBody @NonNull CartRequest request) {
         if (cartService.changeQuantity(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
         }
@@ -45,16 +47,18 @@ public class CartController {
     }
 
     @DeleteMapping("/delete_cart")
-    public ResponseEntity<?> deleteCart(@RequestBody CartRequest request) {
-        if (cartService.deleteCart(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
+    public ResponseEntity<?> deleteCart(@RequestParam("cart_id") long cartId) {
+        if (cartService.deleteCart(cartId, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
         }
         return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Cart doesn't exist");
     }
 
     @PostMapping("/order")
-    public ResponseEntity<?> orderCart(@RequestBody List<ItemOrderRequest> itemOrders) {
-        cartService.queueOrder(itemOrders);
+    public ResponseEntity<?> orderCart(@RequestBody List<Long> userCartIds) {
+        if(!orderService.queueOrder(userCartIds)){
+            return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE,"Lỗi, không thể đặt món, hãy làm mới trang này");
+        }
         return BaseResponse.success("ok");
     }
 }

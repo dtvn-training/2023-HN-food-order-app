@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface UserCartRepository extends JpaRepository<UserCart, Long> {
-    boolean existsByUserIdAndDishId(long userId, long dishId);
+    boolean existsByUserIdAndId(long userId, long userCartId);
 
     @Transactional
     @Modifying
@@ -16,5 +16,8 @@ public interface UserCartRepository extends JpaRepository<UserCart, Long> {
 
     @Transactional
     @Modifying
-    void deleteByUserIdAndDishId(long userId,long dishId);
+    void deleteByUserIdAndId(long userId,long userCartId);
+
+
+    boolean existsByUserIdAndDishId(long userId, long dishId);
 }

@@ -25,13 +25,13 @@ public class VoteService {
         }
         PresentVote presentVote = PresentVote
                 .builder()
-                .userIdCreated(userId)
                 .restaurantName(restaurantName)
                 .description(description)
                 .restaurantUrl(restaurantUrl)
                 .totalVote(0)
                 .active(true)
                 .build();
+        presentVote.update(userId);
         presentVoteRepository.save(presentVote);
         return insertVoteAction(userId, presentVote.getId());
     }
@@ -43,7 +43,7 @@ public class VoteService {
         if (presentVote == null) {
             return false;
         }
-        if (userVoteRepository.existsByUserIdAndPresentVoteIdAndVoteTimeGreaterThanAndVoteTimeLessThanEqual(userId, votePresentId, startDay, now)) {
+        if (userVoteRepository.existsByCreatedByIdAndPresentVoteIdAndVoteTimeGreaterThanAndVoteTimeLessThanEqual(userId, votePresentId, startDay, now)) {
             return false;
         }
         acceptVoteAction(userId, votePresentId);
@@ -53,13 +53,15 @@ public class VoteService {
     private void acceptVoteAction(long userId, long presentVoteId) {
         PresentVote presentVote = presentVoteRepository.findById(presentVoteId).orElseThrow();
         presentVote.setTotalVote(presentVote.getTotalVote() + 1);
+
+        presentVote.update(userId);
         presentVoteRepository.save(presentVote);
 
         UserVote userVote = new UserVote();
         userVote.setVoteTime(TimeUtil.getCurrentTimestamp());
-        userVote.setUserId(userId);
         userVote.setPresentVoteId(presentVoteId);
 
+        userVote.update(userId);
         userVoteRepository.save(userVote);
     }
 
@@ -67,11 +69,12 @@ public class VoteService {
         return presentVoteRepository.findAllByActiveTrue();
     }
 
-    public List<PresentVote> getPresentVote(long userId){
-        return presentVoteRepository.findByUserIdCreated(userId);
+    public List<PresentVote> getPresentVote(long userId) {
+        return presentVoteRepository.findAllByCreatedById(userId);
     }
-    public boolean deletePresentVote(long presentVoteId){
-        if(presentVoteRepository.findByActiveTrueAndId(presentVoteId)!=null){
+
+    public boolean deletePresentVote(long presentVoteId) {
+        if (presentVoteRepository.findByActiveTrueAndId(presentVoteId) != null) {
             return false;
         }
         presentVoteRepository.setActiveFalse(presentVoteId);

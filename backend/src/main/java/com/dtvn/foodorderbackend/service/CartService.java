@@ -1,10 +1,8 @@
 package com.dtvn.foodorderbackend.service;
 
-import com.dtvn.foodorderbackend.model.entity.ItemOrder;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.entity.UserCart;
 import com.dtvn.foodorderbackend.model.request.CartRequest;
-import com.dtvn.foodorderbackend.model.request.ItemOrderRequest;
 import com.dtvn.foodorderbackend.repository.DishRepository;
 import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.UserCartRepository;
@@ -69,23 +67,12 @@ public class CartService {
         return user.getCarts();
     }
 
-    public boolean deleteCart(CartRequest request, long userId) {
-        if (!userCartRepository.existsByUserIdAndDishId(userId, request.getDishId())) {
+    public boolean deleteCart(long userCartId, long userId) {
+        if (!userCartRepository.existsByUserIdAndId(userId, userCartId)) {
             return false;
         }
-        userCartRepository.deleteByUserIdAndDishId(userId, request.getDishId());
+        userCartRepository.deleteByUserIdAndId(userId, userCartId);
         return true;
     }
 
-    public void queueOrder(List<ItemOrderRequest> itemOrders) {
-        long userId = Integer.parseInt(String.valueOf(httpServletRequest.getAttribute("user_id")));
-        for (ItemOrderRequest item : itemOrders) {
-            ItemOrder order = new ItemOrder();
-            order.setDishId(item.getDishId());
-            order.setQuantity(item.getQuantity());
-            order.setApproved(false);
-            order.update(userId);
-            itemOrderRepository.save(order);
-        }
-    }
 }

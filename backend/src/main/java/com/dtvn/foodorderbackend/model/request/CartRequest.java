@@ -9,6 +9,5 @@ public class CartRequest {
 
     long dishId;
     @Size(min = 1, max = 5000000)
-    @Nullable
-    Integer quantity;
+    int quantity;
 }
