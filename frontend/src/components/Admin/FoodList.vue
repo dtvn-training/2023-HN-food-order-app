@@ -18,7 +18,7 @@
 </style>
 
 <script>
-import Table from "../components/Table.vue"
+import Table from "../Table.vue"
 
 export default {
     data() {

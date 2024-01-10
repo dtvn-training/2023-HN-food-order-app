@@ -167,10 +167,10 @@
 }
 </style>
 <script>
-import Checked from './icons/Checked.vue';
-import Uncheck from './icons/Uncheck.vue';
-import Vector from './icons/Vector.vue';
-import Table from './Table.vue'
+import Checked from '../icons/Checked.vue';
+import Uncheck from '../icons/Uncheck.vue';
+import Vector from '../icons/Vector.vue';
+import Table from '../Table.vue'
 
 export default {
     components: {
