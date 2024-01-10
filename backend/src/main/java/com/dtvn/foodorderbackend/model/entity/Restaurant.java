@@ -68,8 +68,9 @@ public class Restaurant {
         dishCategoryList = new Vector<>();
         JsonArray dishCategoryArray = dishDeliveryData.get("reply").getAsJsonObject().get("menu_infos").getAsJsonArray();
         for (int i = 0; i < dishCategoryArray.size(); i++) {
-            if (data.get("dish_type_id") != null && data.get("dish_type_id").getAsLong() > 0) {
-                dishCategoryList.add(new DishCategory(dishCategoryArray.get(i).getAsJsonObject(), this));
+            JsonObject categoryJsonData = dishCategoryArray.get(i).getAsJsonObject();
+            if (categoryJsonData.get("dish_type_id") != null && categoryJsonData.get("dish_type_id").getAsLong() > 0) {
+                dishCategoryList.add(new DishCategory(categoryJsonData, this));
             }
         }
     }

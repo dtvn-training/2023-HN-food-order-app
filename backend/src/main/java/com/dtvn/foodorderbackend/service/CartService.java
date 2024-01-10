@@ -3,6 +3,7 @@ package com.dtvn.foodorderbackend.service;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.entity.UserCart;
 import com.dtvn.foodorderbackend.model.request.CartRequest;
+import com.dtvn.foodorderbackend.model.response.UserCartDisplayResponse;
 import com.dtvn.foodorderbackend.repository.DishRepository;
 import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.UserCartRepository;
@@ -36,16 +37,18 @@ public class CartService {
         if (!dishRepository.existsById(request.getDishId())) {
             return false;
         }
-        if (userCartRepository.existsByUserIdAndDishId(userId, request.getDishId())) {
+        if (userCartRepository.existsByCreatedByIdAndDishId(userId, request.getDishId())) {
             return false;
         }
         try {
+            UserCart userCart = UserCart.builder()
+                    .dishId(request.getDishId())
+                    .quantity(request.getQuantity())
+                    .build();
+            userCart.update(userId);
+
             userCartRepository.save(
-                    UserCart.builder()
-                            .userId(userId)
-                            .dishId(request.getDishId())
-                            .quantity(request.getQuantity())
-                            .build()
+                    userCart
             );
             return true;
         } catch (Exception e) {
@@ -55,23 +58,24 @@ public class CartService {
     }
 
     public boolean changeQuantity(CartRequest request, long userId) {
-        if (!userCartRepository.existsByUserIdAndDishId(userId, request.getDishId())) {
+        if (!userCartRepository.existsByCreatedByIdAndDishId(userId, request.getDishId())) {
             return false;
         }
+        // TODO: update base entity
         userCartRepository.changeQuantityByUserIdAndDishId(userId, request.getDishId(), request.getQuantity());
         return true;
     }
 
-    public List<UserCart> getAllCart(long userId) {
+    public List<UserCartDisplayResponse> getAllCart(long userId) {
         User user = userRepository.findUserById(userId).orElseThrow();
-        return user.getCarts();
+        return user.getCarts().stream().map(UserCart::toDisplayResponse).toList();
     }
 
     public boolean deleteCart(long userCartId, long userId) {
-        if (!userCartRepository.existsByUserIdAndId(userId, userCartId)) {
+        if (!userCartRepository.existsByCreatedByIdAndId(userId, userCartId)) {
             return false;
         }
-        userCartRepository.deleteByUserIdAndId(userId, userCartId);
+        userCartRepository.deleteByCreatedByIdAndId(userId, userCartId);
         return true;
     }
 

@@ -58,7 +58,7 @@ public class User implements UserDetails {
     @Column(name = "approved")
     boolean approved = false;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.LAZY)
     @JsonIgnore
     List<UserCart> carts;
 

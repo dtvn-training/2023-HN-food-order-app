@@ -23,7 +23,7 @@ public class ItemOrder extends BaseEntity implements RecordEntity {
 
 
     @JoinColumn(name = "dish_id", updatable = false, insertable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     Dish dish;
 
     @Column(name = "dish_id")
@@ -55,11 +55,12 @@ public class ItemOrder extends BaseEntity implements RecordEntity {
 
     public ItemOrderDisplayResponse toDisplayResponse() {
         return ItemOrderDisplayResponse.builder()
+                .id(id)
                 .createdTime(createdTime)
                 .dishName(dish.name)
-                .restaurantName(dish.category.restaurant.name)
-                .restaurantId(dish.category.restaurant.deliveryId)
-                .restaurantAddress(dish.category.restaurant.address)
+                .restaurantName(dish.getCategory().getRestaurant().name)
+                .restaurantId(dish.getCategory().getRestaurant().deliveryId)
+                .restaurantAddress(dish.getCategory().getRestaurant().address)
                 .unitPrice(dish.price)
                 .userFullName(createdBy.getFullName())
                 .quantity(quantity)

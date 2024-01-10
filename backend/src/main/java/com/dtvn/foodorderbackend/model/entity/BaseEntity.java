@@ -1,11 +1,10 @@
 package com.dtvn.foodorderbackend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.apache.poi.ss.formula.functions.T;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 
 import java.sql.Timestamp;
 
@@ -14,6 +13,7 @@ import java.sql.Timestamp;
 public abstract class BaseEntity {
     @JoinColumn(name = "create_by", updatable = false, insertable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     User createdBy;
 
     @Column(name = "create_by")
@@ -25,6 +25,7 @@ public abstract class BaseEntity {
 
     @JoinColumn(name = "update_by", updatable = false, insertable = false)
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     User updatedBy;
 
     @Column(name = "update_by")

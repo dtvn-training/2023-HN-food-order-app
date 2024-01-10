@@ -6,7 +6,6 @@ import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.UserCartRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +20,13 @@ public class OrderService {
     public boolean queueOrder(List<Long> userCartIds) {
         long userId = Integer.parseInt(String.valueOf(httpServletRequest.getAttribute("user_id")));
         List<UserCart> userCarts = userCartRepository.findAllById(userCartIds);
+        // check userCarts contains id
 
+        for (UserCart cart : userCarts) {
+            if (!userCartIds.contains(cart.getId())) {
+                return false;
+            }
+        }
 
         for (UserCart cart : userCarts) {
             ItemOrder order = new ItemOrder();
@@ -34,6 +39,7 @@ public class OrderService {
             order.update(userId);
             itemOrderRepository.save(order);
         }
+        return true;
     }
 
     public List<ItemOrder> getAllItemOrderNotApproved() {

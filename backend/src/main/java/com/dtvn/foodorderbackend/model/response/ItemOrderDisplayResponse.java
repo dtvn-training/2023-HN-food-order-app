@@ -2,10 +2,12 @@ package com.dtvn.foodorderbackend.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
 import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
+@Data
 public class ItemOrderDisplayResponse {
 
     // table item_order

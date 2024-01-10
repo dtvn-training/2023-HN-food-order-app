@@ -1,19 +1,18 @@
 package com.dtvn.foodorderbackend.model.entity;
 
+import com.dtvn.foodorderbackend.model.response.UserCartDisplayResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "user_cart")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCart {
+public class UserCart extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -30,12 +29,13 @@ public class UserCart {
     @Column(name = "quantity")
     int quantity;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @JsonIgnore
-    User user;
-
-    @Column(name = "user_id")
-    @JsonIgnore
-    long userId;
+    public UserCartDisplayResponse toDisplayResponse() {
+        return UserCartDisplayResponse.builder()
+                .id(id)
+                .dishName(getDish().getName())
+                .restaurantName(getDish().getCategory().getRestaurant().getName())
+                .unitPrice(getDish().getPrice())
+                .quantity(getQuantity())
+                .build();
+    }
 }

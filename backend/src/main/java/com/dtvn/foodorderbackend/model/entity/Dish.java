@@ -18,11 +18,11 @@ public class Dish {
     @Column(name = "name")
     String name;
     @Column(name = "price")
-    Integer price;
+    int price;
     @Column(name = "description")
     String description;
     @Column(name = "like_count")
-    Integer like;
+    int like;
     @Column(name = "image")
     String image;
 

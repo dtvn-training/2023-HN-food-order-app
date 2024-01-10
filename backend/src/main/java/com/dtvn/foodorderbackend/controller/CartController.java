@@ -13,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/cart")
 @RequiredArgsConstructor
@@ -51,14 +49,6 @@ public class CartController {
         if (cartService.deleteCart(cartId, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
         }
-        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Cart doesn't exist");
-    }
-
-    @PostMapping("/order")
-    public ResponseEntity<?> orderCart(@RequestBody List<Long> userCartIds) {
-        if(!orderService.queueOrder(userCartIds)){
-            return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE,"Lỗi, không thể đặt món, hãy làm mới trang này");
-        }
-        return BaseResponse.success("ok");
+        return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Không tồn tại trong giỏ hàng");
     }
 }
