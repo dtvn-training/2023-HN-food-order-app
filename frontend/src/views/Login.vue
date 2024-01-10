@@ -5,9 +5,7 @@
                 <form action="#">
                     <h1>Create Account</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social"><Google/></a>
                     </div>
                     <span>or use your email for registration</span>
                     <input type="text" placeholder="Name" />
@@ -20,9 +18,7 @@
                 <form action="#">
                     <h1>Sign in</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social"><Google/></a>
                     </div>
                     <span>or use your account</span>
                     <input type="email" placeholder="Email" />
@@ -50,7 +46,12 @@
 </template>
 
 <script>
+import Google from '../components/icons/Google.vue';
+
 export default {
+    components: {
+        Google
+    },  
     data() {
         return {
             isRightPanelActive: false,
