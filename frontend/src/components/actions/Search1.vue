@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <img src="../../assets/search.png" alt="">
-        <input type="text" name="seach" :style="{'width': width}" :placeholder="placeholder" @v-model="input">
+        <input type="text" name="seach" :style="{'width': width}" :placeholder="placeholder" v-model="input">
     </div>
 </template>
 
@@ -35,16 +35,17 @@
     export default {
         data() {
             return {
-                input: '',
+                input: this.value,
             }
         },
         props: [
             'placeholder',
-            'width'
+            'width',
+            'value'
         ],
         watch: {
             input () {
-                this.$emit('textSearch', input);
+                this.$emit('textSearch', this.input);
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="date-pick">
-        <span class="title">Ngày đến</span>
-        <input type="date" placeholder="1990-07-20" :value="value">
+        <span class="title">{{ title }}</span>
+        <input type="date" placeholder="1990-07-20" v-model="dateValue">
     </div>
 </template>
 <script>
@@ -9,7 +9,17 @@ export default {
     props: [
         'title',
         'value'
-    ]
+    ],
+    data(){
+        return {
+            dateValue: this.value,
+        }
+    },
+    watch: {
+        dateValue(){
+            this.$emit('valueOnChange', this.dateValue);
+        }
+    }
 
 }
 </script>

@@ -3,7 +3,7 @@
         <div class="title">
             <span>{{ title }}</span>
         </div>
-        <select class="form-select">
+        <select class="form-select" v-model="selectValue">
         <option v-for="option in options" :value="option.value">{{ option.label }}</option>
     </select>
     </div>
@@ -42,6 +42,12 @@ export default {
     ],
     data () {
         return {
+            selectValue: this.value,
+        }
+    },
+    watch: {
+        selectValue(){
+            this.$emit('selectOnChange', this.selectValue);
         }
     }
 }

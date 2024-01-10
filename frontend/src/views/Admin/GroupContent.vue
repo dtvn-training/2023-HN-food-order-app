@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="grid-template-rows: 89.5px auto;display: grid;height:100%">
         <div class="tab">
             <Tab 
                 header="NHÓM"
@@ -10,18 +10,26 @@
                 @tabActived="active = $event"
             />
         </div>
-        <div class="data">
-            <h1 style="font-weight: 200;">Data of Group</h1>
+        <div class="data" style="height: 100%;">
+            <GroupInfo v-if="active === 0"/>
+            <Members v-if="active === 1"/>
+            <Approvals v-if="active === 2"/>
         </div>
     </div>
 </template>
 
 <script>
     import Tab from "@/components/admin/Tab.vue"
+    import GroupInfo from "@/components/GroupInfo.vue"
+    import Members from "@/components/Members.vue"
+    import Approvals from "@/components/Approvals.vue"
 
     export default {
         components: {
             Tab,
+            GroupInfo,
+            Members,
+            Approvals,
         },
         data () {
             return {
@@ -40,7 +48,7 @@
         },
         watch: {
             active () {
-                // console.log(this.active);
+                console.log(this.active);
             }
         }
     }
