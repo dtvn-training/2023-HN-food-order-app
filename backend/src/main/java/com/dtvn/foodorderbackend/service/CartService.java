@@ -2,8 +2,8 @@ package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.entity.UserCart;
-import com.dtvn.foodorderbackend.model.request.CartRequest;
-import com.dtvn.foodorderbackend.model.response.UserCartDisplayResponse;
+import com.dtvn.foodorderbackend.model.dto.request.CartRequest;
+import com.dtvn.foodorderbackend.model.dto.response.UserCartDisplayResponse;
 import com.dtvn.foodorderbackend.repository.DishRepository;
 import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.UserCartRepository;

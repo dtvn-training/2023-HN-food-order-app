@@ -1,18 +1,13 @@
 package com.dtvn.foodorderbackend.controller.admin;
 
-import com.dtvn.foodorderbackend.annotation.ValidFullName;
 import com.dtvn.foodorderbackend.mapper.Mapper;
-import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.User;
-import com.dtvn.foodorderbackend.model.response.BaseResponse;
-import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
+import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin")

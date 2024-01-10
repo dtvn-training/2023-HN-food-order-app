@@ -2,10 +2,11 @@ package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.config.ApplicationConfig;
 import com.dtvn.foodorderbackend.mapper.Mapper;
-import com.dtvn.foodorderbackend.model.dto.UserDTO;
+import com.dtvn.foodorderbackend.model.dto.response.UserDTO;
+import com.dtvn.foodorderbackend.model.dto.request.UserChangePasswordRequest;
+import com.dtvn.foodorderbackend.model.dto.request.UserRegisterRequest;
 import com.dtvn.foodorderbackend.model.entity.RegisterOtp;
 import com.dtvn.foodorderbackend.model.entity.User;
-import com.dtvn.foodorderbackend.model.request.*;
 import com.dtvn.foodorderbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;

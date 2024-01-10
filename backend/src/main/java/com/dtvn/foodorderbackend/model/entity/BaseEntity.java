@@ -46,4 +46,14 @@ public abstract class BaseEntity {
         lastUpdateTime = now;
         updatedById = userId;
     }
+
+    @PostPersist
+    @PrePersist
+    void update() {
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        if (createdTime == null) {
+            createdTime = now;
+        }
+        lastUpdateTime = now;
+    }
 }

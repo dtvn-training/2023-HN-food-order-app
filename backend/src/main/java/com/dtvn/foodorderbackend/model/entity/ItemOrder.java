@@ -1,6 +1,6 @@
 package com.dtvn.foodorderbackend.model.entity;
 
-import com.dtvn.foodorderbackend.model.response.ItemOrderDisplayResponse;
+import com.dtvn.foodorderbackend.model.dto.response.ItemOrderDisplayResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,16 +38,26 @@ public class ItemOrder extends BaseEntity implements RecordEntity {
     @Column(name = "deleted")
     boolean deleted = false;
 
+    /**
+     * Initial, approved set to false, when admin order this `ItemOrder` approved set to true
+     */
     @Override
     public void enActive() {
         approved = true;
     }
+
+    /**
+     * Not use this func
+     */
 
     @Override
     public void deActive() {
         approved = false;
     }
 
+    /**
+     * After ordered by admin, or deleted by admin, the delete field set to true;
+     */
     @Override
     public void delete() {
         deleted = true;

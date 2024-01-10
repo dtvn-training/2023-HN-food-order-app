@@ -1,6 +1,6 @@
 package com.dtvn.foodorderbackend.model.entity;
 
-import com.dtvn.foodorderbackend.model.response.UserCartDisplayResponse;
+import com.dtvn.foodorderbackend.model.dto.response.UserCartDisplayResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,6 +32,7 @@ public class UserCart extends BaseEntity {
     public UserCartDisplayResponse toDisplayResponse() {
         return UserCartDisplayResponse.builder()
                 .id(id)
+                .dishId(getDishId())
                 .dishName(getDish().getName())
                 .restaurantName(getDish().getCategory().getRestaurant().getName())
                 .unitPrice(getDish().getPrice())

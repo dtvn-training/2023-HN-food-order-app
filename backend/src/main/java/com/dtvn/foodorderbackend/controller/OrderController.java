@@ -1,6 +1,6 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.model.response.BaseResponse;
+import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.request;
+package com.dtvn.foodorderbackend.model.dto.request;
 
 
 import com.dtvn.foodorderbackend.annotation.ValidFullName;

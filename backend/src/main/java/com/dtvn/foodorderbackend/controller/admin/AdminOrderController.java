@@ -1,9 +1,12 @@
 package com.dtvn.foodorderbackend.controller.admin;
 
 import com.dtvn.foodorderbackend.model.entity.ItemOrder;
-import com.dtvn.foodorderbackend.model.response.ItemOrderDisplayResponse;
+import com.dtvn.foodorderbackend.model.dto.request.AdminOrderRequest;
+import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
+import com.dtvn.foodorderbackend.model.dto.response.ItemOrderDisplayResponse;
 import com.dtvn.foodorderbackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +19,11 @@ public class AdminOrderController {
     final OrderService orderService;
 
     @PostMapping("/order")
-    public ResponseEntity<?> adminOrder(@RequestBody List<Integer> orderIds) {
-        return null;
+    public ResponseEntity<?> adminOrder(@RequestBody AdminOrderRequest adminOrderRequest) {
+        if (null == orderService.adminOrder(adminOrderRequest)) {
+            return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Không thể đặt món, hãy kiểm tra lại hoặc liên hệ bộ phận hỗ trọ");
+        }
+        return BaseResponse.success("Đã đặt món thành công");
     }
 
     @GetMapping("/get_list_order")

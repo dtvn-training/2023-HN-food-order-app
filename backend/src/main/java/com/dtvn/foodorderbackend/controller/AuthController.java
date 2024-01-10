@@ -1,10 +1,10 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.model.request.RegisterVerifyRequest;
-import com.dtvn.foodorderbackend.model.request.UserLoginRequest;
-import com.dtvn.foodorderbackend.model.request.UserRegisterRequest;
-import com.dtvn.foodorderbackend.model.response.AuthResponse;
-import com.dtvn.foodorderbackend.model.response.BaseResponse;
+import com.dtvn.foodorderbackend.model.dto.request.RegisterVerifyRequest;
+import com.dtvn.foodorderbackend.model.dto.request.UserLoginRequest;
+import com.dtvn.foodorderbackend.model.dto.request.UserRegisterRequest;
+import com.dtvn.foodorderbackend.model.dto.response.AuthResponse;
+import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.AuthService;
 import com.dtvn.foodorderbackend.service.OtpService;
 import com.dtvn.foodorderbackend.service.UserService;
@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;

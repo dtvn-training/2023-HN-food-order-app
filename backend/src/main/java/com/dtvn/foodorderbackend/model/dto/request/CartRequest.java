@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.request;
+package com.dtvn.foodorderbackend.model.dto.request;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Size;

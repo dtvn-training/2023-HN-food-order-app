@@ -1,7 +1,7 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.model.request.CartRequest;
-import com.dtvn.foodorderbackend.model.response.BaseResponse;
+import com.dtvn.foodorderbackend.model.dto.request.CartRequest;
+import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.CartService;
 import com.dtvn.foodorderbackend.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;

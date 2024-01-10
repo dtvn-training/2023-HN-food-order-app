@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.request;
+package com.dtvn.foodorderbackend.model.dto.request;
 
 import lombok.Data;
 
