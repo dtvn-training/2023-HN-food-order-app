@@ -10,7 +10,7 @@
                 @tabActived="active = $event"
             />
         </div>
-        <div class="data">
+        <div class="data" style="height: 100%;">
             <GroupInfo v-if="active === 0"/>
             <Members v-if="active === 1"/>
             <Approvals v-if="active === 2"/>
@@ -19,10 +19,10 @@
 </template>
 
 <script>
-    import Tab from "../../components/Tab.vue"
-    import GroupInfo from "../../components/GroupInfo.vue"
-    import Members from "../../components/Members.vue"
-    import Approvals from "../../components/Approvals.vue"
+    import Tab from "@/components/admin/Tab.vue"
+    import GroupInfo from "@/components/GroupInfo.vue"
+    import Members from "@/components/Members.vue"
+    import Approvals from "@/components/Approvals.vue"
 
     export default {
         components: {

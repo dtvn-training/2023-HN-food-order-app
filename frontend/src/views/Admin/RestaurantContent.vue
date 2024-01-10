@@ -18,9 +18,9 @@
 </template>
 
 <script>
-    import Tab from "../../components/Tab.vue"
-    import RestaurantList from "../../components/RestaurantList.vue"
-    import Votes from "../../components/Votes.vue"
+    import Tab from "@/components/admin/Tab.vue"
+    import RestaurantList from "@/components/admin/RestaurantList.vue"
+    import Votes from "@/components/admin/Votes.vue"
 
     export default {
         components: {

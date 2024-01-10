@@ -60,13 +60,13 @@
 </template>
   
 <script>
-import Logo from "./icons/Logo.vue"
-import Restaurant from "./icons/Restaurant.vue"
-import Food from "./icons/Food.vue"
-import Payment from "./icons/Payment.vue"
-import Group from "./icons/Group.vue"
-import ViewHeadline from "./icons/ViewHeadline.vue"
-import Signout from "./icons/Signout.vue"
+import Logo from "../icons/Logo.vue"
+import Restaurant from "../icons/Restaurant.vue"
+import Food from "../icons/Food.vue"
+import Payment from "../icons/Payment.vue"
+import Group from "../icons/Group.vue"
+import ViewHeadline from "../icons/ViewHeadline.vue"
+import Signout from "../icons/Signout.vue"
 
 export default {
     data() {

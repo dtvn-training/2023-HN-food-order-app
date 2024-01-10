@@ -163,7 +163,7 @@ export default {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .action {
