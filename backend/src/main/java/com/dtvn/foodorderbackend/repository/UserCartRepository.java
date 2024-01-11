@@ -6,15 +6,22 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface UserCartRepository extends JpaRepository<UserCart, Long> {
-    boolean existsByUserIdAndDishId(long userId, long dishId);
+    boolean existsByCreatedByIdAndId(long userId, long userCartId);
+
+    UserCart findByCreatedByIdAndId(long userId,long userCartId);
 
     @Transactional
     @Modifying
-    @Query("update UserCart set quantity = :quantity where userId = :userId and dishId = :dishId")
-    void changeQuantityByUserIdAndDishId(long userId, long dishId, int quantity);
+    @Query("update UserCart set quantity = :quantity where id = :cartId")
+    void changeQuantityByCartId(long cartId, int quantity);
 
     @Transactional
     @Modifying
-    void deleteByUserIdAndDishId(long userId,long dishId);
+    void deleteByCreatedByIdAndId(long userId, long userCartId);
+
+
+    boolean existsByCreatedByIdAndDishId(long userId, long dishId);
 }

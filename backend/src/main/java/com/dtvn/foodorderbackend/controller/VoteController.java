@@ -1,6 +1,6 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.model.request.VoteCreateRequest;
+import com.dtvn.foodorderbackend.model.dto.request.VoteCreateRequest;
 import com.dtvn.foodorderbackend.service.VoteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import static com.dtvn.foodorderbackend.model.response.BaseResponse.createError;
-import static com.dtvn.foodorderbackend.model.response.BaseResponse.success;
+import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.createError;
+import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.success;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class VoteController {
     public ResponseEntity<?> createVote(@RequestBody VoteCreateRequest voteRequest) {
         long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
         if (!voteService.createVote(voteRequest.getRestaurantUrl(), userId, voteRequest.getRestaurantName(), voteRequest.getDescription())) {
-            return createError(HttpStatus.CONFLICT, "Vote đã có");
+            return createError(HttpStatus.CONFLICT, "Vote đã tồn tại");
         }
         return success();
     }

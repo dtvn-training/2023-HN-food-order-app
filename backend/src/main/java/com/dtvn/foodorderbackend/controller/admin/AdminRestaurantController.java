@@ -1,8 +1,8 @@
 package com.dtvn.foodorderbackend.controller.admin;
 
 import com.dtvn.foodorderbackend.mapper.Mapper;
-import com.dtvn.foodorderbackend.model.response.BaseResponse;
-import com.dtvn.foodorderbackend.model.response.SimpleRestaurantResponse;
+import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
+import com.dtvn.foodorderbackend.model.dto.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;

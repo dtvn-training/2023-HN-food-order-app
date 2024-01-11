@@ -1,18 +1,16 @@
 package com.dtvn.foodorderbackend.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "present_vote")
-public class PresentVote {
+public class PresentVote extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,9 +21,6 @@ public class PresentVote {
 
     @Column(name = "description")
     String description;
-
-    @Column(name = "user_id_created")
-    long userIdCreated;
 
     @Column(name = "restaurant_name")
     String restaurantName;

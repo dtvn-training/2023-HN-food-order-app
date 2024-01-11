@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.dto;
+package com.dtvn.foodorderbackend.model.dto.response;
 
 import com.dtvn.foodorderbackend.model.entity.User;
 import lombok.AllArgsConstructor;

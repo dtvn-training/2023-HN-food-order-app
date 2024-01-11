@@ -27,9 +27,9 @@ public class ShopeeFoodService {
         HttpGetWithHeaderFoody httpGetDish = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=" + deliveryId);
         String dataDish = httpGetDish.execute();
 
+        logger.info(dataDish);
         HttpGetWithHeaderFoody httpGetDetail = new HttpGetWithHeaderFoody("https://gappapi.deliverynow.vn/api/delivery/get_detail?id_type=2&request_id=" + deliveryId);
         String dataDetail = httpGetDetail.execute();
-        logger.debug(dataDetail);
         return new Restaurant(GsonUtil.toJsonObject(dataDetail), GsonUtil.toJsonObject(dataDish));
     }
 
@@ -53,6 +53,7 @@ public class ShopeeFoodService {
     private void fetchRestaurantDataToDatabaseById(long deliveryId) throws Exception {
         // TODO: remove the data exist in database but not present in data fetched by shopee (foody)
         Restaurant restaurant = getRestaurantDishes(deliveryId);
+        logger.info("number of category in restaurant: {}",restaurant.getDishCategoryList().size());
         restaurantRepository.save(restaurant);
     }
 

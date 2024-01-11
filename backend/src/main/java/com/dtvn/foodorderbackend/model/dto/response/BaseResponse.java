@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.response;
+package com.dtvn.foodorderbackend.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

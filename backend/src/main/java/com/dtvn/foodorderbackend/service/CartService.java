@@ -1,11 +1,15 @@
 package com.dtvn.foodorderbackend.service;
 
+import com.dtvn.foodorderbackend.model.dto.request.cart.CartRequest;
+import com.dtvn.foodorderbackend.model.dto.request.cart.ChangeQuantityCartRequest;
+import com.dtvn.foodorderbackend.model.dto.response.UserCartDisplayResponse;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.entity.UserCart;
-import com.dtvn.foodorderbackend.model.request.CartRequest;
 import com.dtvn.foodorderbackend.repository.DishRepository;
+import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.UserCartRepository;
 import com.dtvn.foodorderbackend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -24,6 +28,8 @@ public class CartService {
     final UserRepository userRepository;
     @SuppressWarnings("unused")
     Logger logger = LoggerFactory.getLogger(CartService.class);
+    final ItemOrderRepository itemOrderRepository;
+    final HttpServletRequest httpServletRequest;
 
     /*
         If exist the dish in user cart, return false
@@ -32,16 +38,18 @@ public class CartService {
         if (!dishRepository.existsById(request.getDishId())) {
             return false;
         }
-        if (userCartRepository.existsByUserIdAndDishId(userId, request.getDishId())) {
+        if (userCartRepository.existsByCreatedByIdAndDishId(userId, request.getDishId())) {
             return false;
         }
         try {
+            UserCart userCart = UserCart.builder()
+                    .dishId(request.getDishId())
+                    .quantity(request.getQuantity())
+                    .build();
+            userCart.update(userId);
+
             userCartRepository.save(
-                    UserCart.builder()
-                            .userId(userId)
-                            .dishId(request.getDishId())
-                            .quantity(request.getQuantity())
-                            .build()
+                    userCart
             );
             return true;
         } catch (Exception e) {
@@ -50,28 +58,27 @@ public class CartService {
         return false;
     }
 
-    public boolean changeQuantity(CartRequest request, long userId) {
-        if (!userCartRepository.existsByUserIdAndDishId(userId, request.getDishId())) {
-            return false;
-        }
-        userCartRepository.changeQuantityByUserIdAndDishId(userId, request.getDishId(), request.getQuantity());
+    public boolean changeQuantity(ChangeQuantityCartRequest request, long userId) {
+        UserCart userCart = userCartRepository.findByCreatedByIdAndId(userId, request.getUserCartId());
+        if (userCart == null) return false;
+        userCart.setQuantity(request.getQuantity());
+        // DONE: update base entity
+        userCart.update(userId);
+        userCartRepository.save(userCart);
         return true;
     }
 
-    public List<UserCart> getAllCart(long userId) {
+    public List<UserCartDisplayResponse> getAllCart(long userId) {
         User user = userRepository.findUserById(userId).orElseThrow();
-        return user.getCarts();
+        return user.getCarts().stream().map(UserCart::toDisplayResponse).toList();
     }
 
-    public boolean deleteCart(CartRequest request, long userId) {
-        if (!userCartRepository.existsByUserIdAndDishId(userId, request.getDishId())) {
+    public boolean deleteCart(long userCartId, long userId) {
+        if (!userCartRepository.existsByCreatedByIdAndId(userId, userCartId)) {
             return false;
         }
-        userCartRepository.deleteByUserIdAndDishId(userId, request.getDishId());
+        userCartRepository.deleteByCreatedByIdAndId(userId, userCartId);
         return true;
     }
 
-    public void queueOrder(List<CartRequest> cartRequestList) {
-
-    }
 }

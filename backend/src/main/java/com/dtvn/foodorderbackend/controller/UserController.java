@@ -1,7 +1,7 @@
 package com.dtvn.foodorderbackend.controller;
 
 import com.dtvn.foodorderbackend.mapper.Mapper;
-import com.dtvn.foodorderbackend.model.dto.UserDTO;
+import com.dtvn.foodorderbackend.model.dto.response.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.UserService;

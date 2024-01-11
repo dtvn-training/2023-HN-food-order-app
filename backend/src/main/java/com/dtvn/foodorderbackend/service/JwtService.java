@@ -1,5 +1,6 @@
 package com.dtvn.foodorderbackend.service;
 
+import com.dtvn.foodorderbackend.config.ApplicationConfig;
 import com.dtvn.foodorderbackend.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -53,7 +54,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + ApplicationConfig.EXPIRED_JWT_TOKEN))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

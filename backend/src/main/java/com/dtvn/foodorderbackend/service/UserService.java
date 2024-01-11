@@ -2,10 +2,11 @@ package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.config.ApplicationConfig;
 import com.dtvn.foodorderbackend.mapper.Mapper;
-import com.dtvn.foodorderbackend.model.dto.UserDTO;
+import com.dtvn.foodorderbackend.model.dto.response.UserDTO;
+import com.dtvn.foodorderbackend.model.dto.request.UserChangePasswordRequest;
+import com.dtvn.foodorderbackend.model.dto.request.UserRegisterRequest;
 import com.dtvn.foodorderbackend.model.entity.RegisterOtp;
 import com.dtvn.foodorderbackend.model.entity.User;
-import com.dtvn.foodorderbackend.model.request.*;
 import com.dtvn.foodorderbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -24,7 +25,6 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     Mapper mapper;
     PasswordEncoder encoder;
-
     OtpService otpService;
     Logger logger = LoggerFactory.getLogger(UserService.class);
     @Autowired
@@ -61,13 +61,13 @@ public class UserService implements UserDetailsService {
     }
     public String register(UserRegisterRequest request) {
         try {
-            logger.info("request is: {}",request);
+//            logger.info("request is: {}",request);
             User user = mapper.map(request, User.class);
             user.setRole(User.Role.USER);
             user.setStatus(User.Status.NOT_VERIFY);
             user.setBalance(0);
             user.setPassword(encoder.encode(user.getPassword()));
-            logger.info("user mapped is; {}",user);
+//            logger.info("user mapped is; {}",user);
             userRepository.save(user);
             RegisterOtp otp = otpService.generateAndSaveRegisterOTP(user.getEmail());
             otpService.sendRegisterOTP(otp);

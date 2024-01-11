@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.request;
+package com.dtvn.foodorderbackend.model.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

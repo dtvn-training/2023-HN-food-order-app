@@ -25,14 +25,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     final UserService userService;
 
     public static final String[] WHITE_LIST = {
-            "/SSV/**",
-            "/SSV/bidv/**",
-            "/SSV/bidv/*",
             "/test",
             "/api/v1/auth/**",
             "/api/v2/auth/**",
             "/api/v1/auth/login",
             "/swagger-ui/**",
+            "/v3/api-docs/**"
     };
 
     @Override
@@ -51,7 +49,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 reject(response, new Throwable("TOKEN NOT VALID"));
                 return;
             }
-            filterChain.doFilter(request, response);
+            try {
+                filterChain.doFilter(request, response);
+            } catch (Exception e) {
+                logger.error("{}", ExceptionUtils.getStackTrace(e));
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.getWriter().write(e.getMessage());
+            }
 
         } catch (Exception e) {
             reject(response, e);
@@ -67,7 +71,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.info("request bypass {},{}", request.getServletPath(), request.hashCode());
         }
         return accept;
-//        return true;
     }
 
     private void reject(HttpServletResponse response, Throwable t) {

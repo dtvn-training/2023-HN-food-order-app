@@ -1,8 +1,8 @@
 package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.model.entity.User;
-import com.dtvn.foodorderbackend.model.request.UserLoginRequest;
-import com.dtvn.foodorderbackend.model.response.AuthResponse;
+import com.dtvn.foodorderbackend.model.dto.request.UserLoginRequest;
+import com.dtvn.foodorderbackend.model.dto.response.AuthResponse;
 import com.dtvn.foodorderbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
