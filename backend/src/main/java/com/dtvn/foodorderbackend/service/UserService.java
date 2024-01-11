@@ -2,18 +2,22 @@ package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.config.ApplicationConfig;
 import com.dtvn.foodorderbackend.mapper.Mapper;
-import com.dtvn.foodorderbackend.model.dto.response.UserDTO;
 import com.dtvn.foodorderbackend.model.dto.request.UserChangePasswordRequest;
 import com.dtvn.foodorderbackend.model.dto.request.UserRegisterRequest;
+import com.dtvn.foodorderbackend.model.dto.request.cart.UserResetPasswordRequest;
+import com.dtvn.foodorderbackend.model.dto.response.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.RegisterOtp;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,14 +26,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
+    HttpServletRequest httpServletRequest;
     UserRepository userRepository;
     Mapper mapper;
     PasswordEncoder encoder;
     OtpService otpService;
     Logger logger = LoggerFactory.getLogger(UserService.class);
+
     @Autowired
     void setOtpService(OtpService otpService) {
         this.otpService = otpService;
+    }
+
+    @Autowired
+    void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+        this.httpServletRequest = httpServletRequest;
     }
 
     @Autowired
@@ -56,9 +67,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByEmail(username).orElseThrow();
     }
 
-    public User loadUserById(long id){
+    public User loadUserById(long id) {
         return userRepository.findUserById(id).orElseThrow();
     }
+
     public String register(UserRegisterRequest request) {
         try {
 //            logger.info("request is: {}",request);
@@ -78,12 +90,41 @@ public class UserService implements UserDetailsService {
         return "Cannot send your OTP, cause by some internal Error";
     }
 
-    public void changePassword(UserChangePasswordRequest request) {
-        UserDetails user = loadUserByUsername(request.getEmail());
+    public boolean changePassword(UserChangePasswordRequest request) {
+        User user = userRepository.findUserByEmail(request.getEmail()).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        if (user.getId() != Long.parseLong(String.valueOf(httpServletRequest.getAttribute("user_id")))) {
+            return false;
+        }
+
         String password = user.getPassword();
-//        if(request.getOldPassword().equals())
-        // TODO: change password
+        if (!encoder.matches(request.getOldPassword(), password)) {
+            return false;
+        }
+        changePassword(user, request.getNewPassword());
+        return true;
     }
+
+    public boolean changePassword(UserResetPasswordRequest userResetPasswordRequest) {
+        User user = userRepository.findUserByEmail(userResetPasswordRequest.getEmail()).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        if (!otpService.checkResetPasswordOtp(userResetPasswordRequest.getEmail(), userResetPasswordRequest.getOtp())) {
+            return false;
+        }
+        otpService.destroyResetPasswordOtp(user.getEmail(), userResetPasswordRequest.getOtp());
+        changePassword(user, userResetPasswordRequest.getNewPassword());
+        return true;
+    }
+
+    public void changePassword(User user, String newPassword) {
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
 
     public List<UserDTO> getUserByCriteria(String fullName, String email, User.Role role, User.Status status) {
         List<User> users = userRepository.getUserByCriteria(fullName, email, role, status);
@@ -95,14 +136,15 @@ public class UserService implements UserDetailsService {
         userRepository.updateStatusByEmail(User.Status.VERIFIED, email);
     }
 
-    public List<User> getUserNotApproved(){
+    public List<User> getUserNotApproved() {
         return userRepository.findUserByApprovedAndStatus(false, User.Status.VERIFIED);
     }
-    public List<User> getUserApproved(){
-        return userRepository.findUserByApprovedAndStatus(true,User.Status.VERIFIED);
+
+    public List<User> getUserApproved() {
+        return userRepository.findUserByApprovedAndStatus(true, User.Status.VERIFIED);
     }
 
     public void changeApprovedByEmail(String email, boolean approved) {
-        userRepository.changeApprovedByEmail(email,approved);
+        userRepository.changeApprovedByEmail(email, approved);
     }
 }
