@@ -1,9 +1,10 @@
 package com.dtvn.foodorderbackend.service;
 
+import com.dtvn.foodorderbackend.model.dto.request.cart.CartRequest;
+import com.dtvn.foodorderbackend.model.dto.request.cart.ChangeQuantityCartRequest;
+import com.dtvn.foodorderbackend.model.dto.response.UserCartDisplayResponse;
 import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.entity.UserCart;
-import com.dtvn.foodorderbackend.model.dto.request.CartRequest;
-import com.dtvn.foodorderbackend.model.dto.response.UserCartDisplayResponse;
 import com.dtvn.foodorderbackend.repository.DishRepository;
 import com.dtvn.foodorderbackend.repository.ItemOrderRepository;
 import com.dtvn.foodorderbackend.repository.UserCartRepository;
@@ -57,12 +58,13 @@ public class CartService {
         return false;
     }
 
-    public boolean changeQuantity(CartRequest request, long userId) {
-        if (!userCartRepository.existsByCreatedByIdAndDishId(userId, request.getDishId())) {
-            return false;
-        }
-        // TODO: update base entity
-        userCartRepository.changeQuantityByUserIdAndDishId(userId, request.getDishId(), request.getQuantity());
+    public boolean changeQuantity(ChangeQuantityCartRequest request, long userId) {
+        UserCart userCart = userCartRepository.findByCreatedByIdAndId(userId, request.getUserCartId());
+        if (userCart == null) return false;
+        userCart.setQuantity(request.getQuantity());
+        // DONE: update base entity
+        userCart.update(userId);
+        userCartRepository.save(userCart);
         return true;
     }
 

@@ -37,7 +37,7 @@ public class AuthController {
         if (userService.checkUserExist(request.getEmail())) {
             return BaseResponse.createError(CONFLICT,"Email đã tồn tại");
         }
-        return ResponseEntity.ok().body(userService.register(request));
+        return BaseResponse.success(userService.register(request));
     }
 
     @PostMapping("/verify_register")

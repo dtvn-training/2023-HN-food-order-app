@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface ItemOrderRepository extends JpaRepository<ItemOrder,Long> {
     List<ItemOrder> findAllByApprovedFalseAndDeletedFalse();
+
+    ItemOrder findByIdAndApprovedFalseAndDeletedFalse(long itemOrderId);
+
 }

@@ -17,10 +17,11 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
     final OrderService orderService;
+
     @PostMapping("/order")
-    public ResponseEntity<?> orderCart(@RequestBody List<Long> userCartIds) {
-        if(!orderService.queueOrder(userCartIds)){
-            return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE,"Lỗi, không thể đặt món, hãy làm mới trang này");
+    public ResponseEntity<?> orderCart(@RequestBody List<Long> userCartIds) throws Exception {
+        if (!orderService.queueOrder(userCartIds)) {
+            return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể đặt món, hãy làm mới trang này");
         }
         return BaseResponse.success("ok");
     }

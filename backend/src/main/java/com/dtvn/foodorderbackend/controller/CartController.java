@@ -1,10 +1,12 @@
 package com.dtvn.foodorderbackend.controller;
 
-import com.dtvn.foodorderbackend.model.dto.request.CartRequest;
+import com.dtvn.foodorderbackend.model.dto.request.cart.CartRequest;
+import com.dtvn.foodorderbackend.model.dto.request.cart.ChangeQuantityCartRequest;
 import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.service.CartService;
 import com.dtvn.foodorderbackend.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ public class CartController {
     Logger logger = LoggerFactory.getLogger(CartController.class);
 
     @PostMapping("/add_to_cart")
-    public ResponseEntity<?> addToCart(@RequestBody CartRequest request) {
+    public ResponseEntity<?> addToCart(@RequestBody @Valid CartRequest request) {
         if (cartService.addToCart(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
         }
@@ -32,7 +34,7 @@ public class CartController {
     }
 
     @PutMapping("/change_quantity")
-    public ResponseEntity<?> changeQuantity(@RequestBody @NonNull CartRequest request) {
+    public ResponseEntity<?> changeQuantity(@RequestBody @NonNull @Valid ChangeQuantityCartRequest request) {
         if (cartService.changeQuantity(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
         }
