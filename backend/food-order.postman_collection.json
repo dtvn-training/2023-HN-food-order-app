@@ -1,0 +1,1000 @@
+{
+	"info": {
+		"_postman_id": "ec25c755-1dac-43aa-b5c7-02ebbe042ee7",
+		"name": "food-order",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26927074"
+	},
+	"item": [
+		{
+			"name": "Food Service",
+			"item": [
+				{
+					"name": "Get Dish By requestId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-foody-api-version",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "x-foody-app-type",
+								"value": "1004",
+								"type": "text"
+							},
+							{
+								"key": "x-foody-client-id",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "x-foody-client-language",
+								"value": "vi",
+								"type": "text"
+							},
+							{
+								"key": "x-foody-client-type",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "x-foody-client-version",
+								"value": "3.0.0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=278577",
+							"protocol": "https",
+							"host": [
+								"gappapi",
+								"deliverynow",
+								"vn"
+							],
+							"path": [
+								"api",
+								"dish",
+								"get_delivery_dishes"
+							],
+							"query": [
+								{
+									"key": "id_type",
+									"value": "2"
+								},
+								{
+									"key": "request_id",
+									"value": "278577"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMzczNDU0MiwiZXhwIjoxNzAzNzM1OTgyfQ.3liJu0cVx0m2zAKIv6pfkipRa5I0PzHh7jF_0vkOutU",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "get user not approved",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMzU3NDYxNSwiZXhwIjoxNzAzNTc2MDU1fQ.a_87aYZfw2QPLDmM-SPMZw-FYHgKZ-KOe9rnALCIwEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get_user_not_approved",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get_user_not_approved"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approved User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMzU3NDYxNSwiZXhwIjoxNzAzNTc2MDU1fQ.a_87aYZfw2QPLDmM-SPMZw-FYHgKZ-KOe9rnALCIwEQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/approved_user?email=cuong2905say2@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"approved_user"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "cuong2905say2@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch restaurant data by link",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/fetch_data?url=https://shopeefood.vn/ha-noi/com-gia-bao-trieu-khuc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"fetch_data"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "https://shopeefood.vn/ha-noi/com-gia-bao-trieu-khuc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all restaurant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMzczMDY2MSwiZXhwIjoxNzAzNzMyMTAxfQ.yR2TuyYtXyFMu9RX5dmQo7oeFqzGwg3pWBgVvQfOYJI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get_all_restaurant",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get_all_restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify User (ADMIN ROLE)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwic3ViIjoiY3VvbmdjdW9uZzMiLCJpYXQiOjE3MDI1Mzg4NjcsImV4cCI6MTcwMjU0MDMwN30.ZTUI9v37Sc4oSkrtsVrk0P4QqgIM5CAKOuQVfda3EiA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/verify_user?username=cuongcuong1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"verify_user"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "cuongcuong1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by criteria (ADMIN ROLE)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwic3ViIjoiY3VvbmdjdW9uZzMiLCJpYXQiOjE3MDI1Mzc4MjksImV4cCI6MTcwMjUzOTI2OX0.-3HtXIS-yEsfsRMdtOUeINp878Ap1GoUM1U37DwXSP0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/get_users?fullName=NGUYEN%20MANH%20CUONG&username=cuongcuong",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"get_users"
+							],
+							"query": [
+								{
+									"key": "fullName",
+									"value": "NGUYEN%20MANH%20CUONG"
+								},
+								{
+									"key": "username",
+									"value": "cuongcuong"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add restaurant from vote to database",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/add_restaurant_from_vote_to_database?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"add_restaurant_from_vote_to_database"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_restaurant_from_database_to_user_list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/add_restaurant_from_database_to_user_list?delivery_id=104796",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"add_restaurant_from_database_to_user_list"
+							],
+							"query": [
+								{
+									"key": "delivery_id",
+									"value": "104796"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove restaurant from user list",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/remove_restaurant_from_user_list?delivery_id=104796",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"remove_restaurant_from_user_list"
+							],
+							"query": [
+								{
+									"key": "delivery_id",
+									"value": "104796"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove (hide) restaurant from database",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/remove_restaurant_from_database?delivery_id=104796",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"remove_restaurant_from_database"
+							],
+							"query": [
+								{
+									"key": "delivery_id",
+									"value": "104796"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin get order not approved",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/order/get_list_order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"order",
+								"get_list_order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADMIN ORDER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderIds\":[7,8,9,10],\r\n    \"restaurantIds\":[109159],\r\n    \"restaurantFees\":[50000]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin/order/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"order",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADMIN DELETE ORDER",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/order/delete_order_item?order_id=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"order",
+								"delete_order_item"
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vote",
+			"item": [
+				{
+					"name": "Vote Restaurant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/vote/vote_restaurant?url=asdas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"vote",
+								"vote_restaurant"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "asdas"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create vote",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"restaurantUrl\":\"https://shopeefood.vn/ha-noi/che-ngon-pho-co-nhue\",\r\n    \"description\":\"ngon vl luon\",\r\n    \"restaurantName\":\"che ngon pho co\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/vote/create_vote",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"vote",
+								"create_vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Own Vote",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/vote/get_my_vote",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"vote",
+								"get_my_vote"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"cuong2905say2@gmail.com\",\r\n    \"password\":\"cuong123\",\r\n    \"fullName\":\"NGUYEN MANH CUONG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"cuong2905say@gmail.com\",\r\n    \"password\": \"cuong123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify_register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"cuong2905say@gmail.com\",\r\n    \"otp\":\"676627\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/verify_register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"verify_register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get Restaurant By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/get_detail_restaurant?id=82774",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"get_detail_restaurant"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "82774"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all restaurant (user)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMzczNDU0MiwiZXhwIjoxNzAzNzM1OTgyfQ.3liJu0cVx0m2zAKIv6pfkipRa5I0PzHh7jF_0vkOutU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/get_restaurant_displayed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"get_restaurant_displayed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Get My Cart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cart/get_cart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"get_cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add To Cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dishId\":160027490,\r\n    \"quantity\":100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cart/add_to_cart",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"add_to_cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Quantity in Cart",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userCartId\":13,\r\n    \"quantity\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cart/change_quantity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"change_quantity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cart/delete_cart?cart_id=14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cart",
+								"delete_cart"
+							],
+							"query": [
+								{
+									"key": "cart_id",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    10,11\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/order/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"order",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-foody-api-version",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-foody-client-id",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "x-foody-app-type",
+						"value": "1004",
+						"type": "text"
+					},
+					{
+						"key": "x-foody-client-type",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "x-foody-client-version",
+						"value": "3.0.0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/test?id=104796",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "104796"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwNDg3MTI5OCwiZXhwIjoxNzM2NDA3Mjk4fQ.y9v89QwfnQBnXRLLnF5TPcqtIlZyUQ8UcIXJKq7UbL4",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
