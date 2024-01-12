@@ -66,7 +66,7 @@ public class AuthController {
 
     @PostMapping("/reset_password")
     public ResponseEntity<?> resetPassword(@RequestParam("email") @Email String email) {
-        // TODO: NOT TEST
+        //
         if (authService.resetPassword(email)) {
             return BaseResponse.success("Mã OTP đã được gửi về email, sẽ hết hạn sau 5 phút");
         }
@@ -75,7 +75,6 @@ public class AuthController {
 
     @PutMapping("/reset_password")
     public ResponseEntity<?> resetPasswordByOtp(@RequestBody @Valid UserResetPasswordRequest request) {
-        // TODO: NOT TEST
         if (userService.changePassword(request)) {
             return BaseResponse.success("BẠN ĐÃ THAY ĐỔI MẬT KHẨU THÀNH CÔNG");
         }
