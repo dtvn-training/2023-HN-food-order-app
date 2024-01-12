@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public interface ResetPasswordOtpRepository extends JpaRepository<ResetPasswordOtp, String> {
-    Optional<ResetPasswordOtp> findByEmailAndOtpAndExpiredLessThanEqual(String email, String otp, long max_expired);
+    Optional<ResetPasswordOtp> findByEmailAndOtpAndExpiredGreaterThanEqual(String email, String otp, long max_expired);
 
     @Transactional
     void deleteByEmailAndOtp(String email, String OTP);

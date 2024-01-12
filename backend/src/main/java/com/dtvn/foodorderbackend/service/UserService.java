@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkUserExist(String username) {
-        return userRepository.existsUserByEmail(username);
+        return userRepository.existsByEmail(username);
     }
 
     @Override

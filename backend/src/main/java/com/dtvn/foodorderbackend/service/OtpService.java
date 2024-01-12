@@ -47,11 +47,11 @@ public class OtpService {
     }
 
     public boolean checkRegisterOTP(String email, String OTP) {
-        return registerOtpRepository.findByEmailAndOTPAndExpiredLessThanEqual(email, OTP, System.currentTimeMillis()).isPresent();
+        return registerOtpRepository.findByEmailAndOTPAndExpiredGreaterThanEqual(email, OTP, System.currentTimeMillis()).isPresent();
     }
 
     public boolean checkResetPasswordOtp(String email, String otp) {
-        return resetPasswordOtpRepository.findByEmailAndOtpAndExpiredLessThanEqual(email, otp, System.currentTimeMillis()).isPresent();
+        return resetPasswordOtpRepository.findByEmailAndOtpAndExpiredGreaterThanEqual(email, otp, System.currentTimeMillis()).isPresent();
     }
 
     public void destroyRegisterOTP(String email, String OTP) {
@@ -61,6 +61,4 @@ public class OtpService {
     public void destroyResetPasswordOtp(String email, String otp) {
         resetPasswordOtpRepository.deleteByEmailAndOtp(email, otp);
     }
-
-
 }
