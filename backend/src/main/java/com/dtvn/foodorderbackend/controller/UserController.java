@@ -47,7 +47,6 @@ public class UserController {
 
     @PutMapping("/change_password")
     public ResponseEntity<?> changePassword(@RequestBody @Valid UserChangePasswordRequest userChangePasswordRequest) {
-        // TODO: NOT TEST
         if (userService.changePassword(userChangePasswordRequest)) {
             return BaseResponse.success("Bạn đã thay đổi mật khẩu thành công");
         }

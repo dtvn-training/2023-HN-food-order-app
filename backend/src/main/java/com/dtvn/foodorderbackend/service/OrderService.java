@@ -42,7 +42,7 @@ public class OrderService {
             if (!cart.getCreatedById().equals(userId)) {
                 return false;
             }
-            // TODO : check exist in database
+            // check exist in database
             if (userCarts.size() != userCartIds.size()) {
                 return false;
             }

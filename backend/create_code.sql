@@ -19,6 +19,29 @@
 CREATE DATABASE IF NOT EXISTS `food_order` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `food_order`;
 
+-- Dumping structure for table food_order.bill
+CREATE TABLE IF NOT EXISTS `bill` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `create_by` bigint DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `update_by` bigint DEFAULT NULL,
+  `discount` int DEFAULT NULL,
+  `final_cost` int DEFAULT NULL,
+  `order_id` bigint DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `ship_fee` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKcbnax01bn4fwxfnbuvhwoey09` (`create_by`),
+  KEY `FKs2gt452btmhn0dwtfmj8mnice` (`update_by`),
+  KEY `FK7tqmnr9oldv45w7svhqcrvuhg` (`order_id`),
+  CONSTRAINT `FK7tqmnr9oldv45w7svhqcrvuhg` FOREIGN KEY (`order_id`) REFERENCES `item_order` (`id`),
+  CONSTRAINT `FKcbnax01bn4fwxfnbuvhwoey09` FOREIGN KEY (`create_by`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKs2gt452btmhn0dwtfmj8mnice` FOREIGN KEY (`update_by`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table food_order.dishes
 CREATE TABLE IF NOT EXISTS `dishes` (
   `id` bigint NOT NULL,
@@ -47,6 +70,28 @@ CREATE TABLE IF NOT EXISTS `dish_category` (
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table food_order.item_order
+CREATE TABLE IF NOT EXISTS `item_order` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `create_by` bigint DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `update_by` bigint DEFAULT NULL,
+  `approved` bit(1) DEFAULT NULL,
+  `deleted` bit(1) DEFAULT NULL,
+  `dish_id` bigint DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKmdjfq0o92dr9tv5pncg8up92l` (`create_by`),
+  KEY `FKg2ildhu611tp9wwh6ylar98ps` (`update_by`),
+  KEY `FK76adxq90g79wy8gpm8f4n7p30` (`dish_id`),
+  CONSTRAINT `FK76adxq90g79wy8gpm8f4n7p30` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`),
+  CONSTRAINT `FKg2ildhu611tp9wwh6ylar98ps` FOREIGN KEY (`update_by`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKmdjfq0o92dr9tv5pncg8up92l` FOREIGN KEY (`create_by`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table food_order.present_vote
 CREATE TABLE IF NOT EXISTS `present_vote` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -55,9 +100,16 @@ CREATE TABLE IF NOT EXISTS `present_vote` (
   `restaurant_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `url` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `total_vote` int DEFAULT NULL,
-  `user_id_created` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `create_by` bigint DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `update_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKnj03wkabpkvdnstyjxcpxyp6r` (`create_by`),
+  KEY `FKix8cnv09ybi5ftx4qsmgp1tf5` (`update_by`),
+  CONSTRAINT `FKix8cnv09ybi5ftx4qsmgp1tf5` FOREIGN KEY (`update_by`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKnj03wkabpkvdnstyjxcpxyp6r` FOREIGN KEY (`create_by`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Data exporting was unselected.
 
@@ -66,6 +118,16 @@ CREATE TABLE IF NOT EXISTS `register_otp` (
   `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `otp` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `expired` bigint DEFAULT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table food_order.reset_password_otp
+CREATE TABLE IF NOT EXISTS `reset_password_otp` (
+  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `expired` bigint DEFAULT NULL,
+  `otp` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,6 +143,7 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
   `rating` double DEFAULT NULL,
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `selected` bit(1) DEFAULT NULL,
+  `deleted` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -101,14 +164,46 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table food_order.user_cart
+CREATE TABLE IF NOT EXISTS `user_cart` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `dish_id` bigint DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `create_by` bigint DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `update_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7jwuk3954rsbw3nbuhvgkeahs` (`dish_id`),
+  KEY `FKbdnfyj7b1yayw16stdxi7x24t` (`create_by`),
+  KEY `FKm4meqq3jg5m7dlljajsbva5vf` (`update_by`),
+  CONSTRAINT `FK7jwuk3954rsbw3nbuhvgkeahs` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`),
+  CONSTRAINT `FKbdnfyj7b1yayw16stdxi7x24t` FOREIGN KEY (`create_by`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKm4meqq3jg5m7dlljajsbva5vf` FOREIGN KEY (`update_by`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table food_order.user_vote
 CREATE TABLE IF NOT EXISTS `user_vote` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `present_vote_id` bigint DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   `vote_time` datetime(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `create_by` bigint DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `update_by` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK2q50phs57njg6g0qvha1r8703` (`user_id`),
+  KEY `FKjn1rvdg2jn95ev23opal5xnsy` (`present_vote_id`),
+  KEY `FKj26apf4ms63o19hnf6its5hiq` (`create_by`),
+  KEY `FK817sccdbhsbji0cd6xlfb0puj` (`update_by`),
+  CONSTRAINT `FK2q50phs57njg6g0qvha1r8703` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK817sccdbhsbji0cd6xlfb0puj` FOREIGN KEY (`update_by`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKj26apf4ms63o19hnf6its5hiq` FOREIGN KEY (`create_by`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKjn1rvdg2jn95ev23opal5xnsy` FOREIGN KEY (`present_vote_id`) REFERENCES `present_vote` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Data exporting was unselected.
 
