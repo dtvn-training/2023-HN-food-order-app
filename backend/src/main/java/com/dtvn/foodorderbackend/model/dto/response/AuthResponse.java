@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.response;
+package com.dtvn.foodorderbackend.model.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AuthResponse {
-    int id;
-    String username;
+    long id;
+    String email;
     String token;
 }

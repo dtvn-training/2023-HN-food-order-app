@@ -1,4 +1,4 @@
-package com.dtvn.foodorderbackend.model.dto;
+package com.dtvn.foodorderbackend.model.dto.response;
 
 import com.dtvn.foodorderbackend.model.entity.User;
 import lombok.AllArgsConstructor;
@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
+    long id;
     String fullName;
-    String username;
+    String email;
     User.Status status;
     User.Role role;
-    Long loan;
+    Long balance;
 }

@@ -1,13 +1,13 @@
-package com.dtvn.foodorderbackend.model.request;
+package com.dtvn.foodorderbackend.model.dto.request;
 
 import com.dtvn.foodorderbackend.annotation.ValidPassword;
-import com.dtvn.foodorderbackend.annotation.ValidUsername;
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 
 @Data
 public class UserLoginRequest {
-    @ValidUsername
-    String username;
+    @Email(message = "EMAIL NOT VALID")
+    String email;
     @ValidPassword
     String password;
 }

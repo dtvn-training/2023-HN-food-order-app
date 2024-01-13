@@ -1,6 +1,5 @@
 package com.dtvn.foodorderbackend.mapper;
 
-import com.dtvn.foodorderbackend.model.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -12,9 +11,10 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class BaseMapper {
+public class Mapper {
     final ModelMapper modelMapper;
-    Logger logger = LoggerFactory.getLogger(BaseMapper.class);
+    Logger logger = LoggerFactory.getLogger(Mapper.class);
+
     public <S, T> T map(S entity, Class<T> outClass) {
         return modelMapper.map(entity, outClass);
     }

@@ -1,4 +1,3 @@
-
 <template>
     <nav :class="sidebarStyle">
         <header>
@@ -14,7 +13,7 @@
         <hr>
         <div class="menu-bar">
             <ul class="menu-links">
-                <li :class="{ active: page === 'restaurants'}" @click="handleActive('restaurants')">
+                <li :class="{ active: page === 'restaurants'}">
                     <router-link to="/admin/restaurants">
                         <span class="icon">
                             <Restaurant />
@@ -22,7 +21,7 @@
                         <span class="text nav-text">Danh sách quán ăn</span>
                     </router-link>
                 </li>
-                <li :class="{ active: page === 'foods'}" @click="handleActive('foods')">
+                <li :class="{ active: page === 'foods'}">
                     <router-link to="/admin/foods">
                         <span class="icon">
                             <Food />
@@ -30,7 +29,7 @@
                         <span class="text nav-text">Món ngon hôm nay</span>
                     </router-link>
                 </li>
-                <li :class="{ active: page === 'payments'}" @click="handleActive('payments')">
+                <li :class="{ active: page === 'payments'}">
                     <router-link to="/admin/payments">
                         <span class=" icon">
                             <Payment />
@@ -38,7 +37,7 @@
                         <span class="text nav-text">Danh sách thanh toán</span>
                     </router-link>
                 </li>
-                <li :class="{ active: page === 'groups'}" @click="handleActive('groups')">
+                <li :class="{ active: page === 'groups'}">
                     <router-link to="/admin/groups">
                         <span class=" icon">
                             <Group />
@@ -50,7 +49,7 @@
             <div class="bottom-content">
                 <li class="signout">
                     <span class="text nav-text">{{ adminName }}</span>
-                    <span class="icon">
+                    <span class="icon" @click="logout">
                         <Signout />
                     </span>
                 </li>
@@ -73,8 +72,6 @@ export default {
         return {
             sidebarStyle: 'sidebar',
             isCollapse: true,
-            adminName: 'Ta Quang Linh',
-            page: '',
         };
     },
     components: {
@@ -86,8 +83,13 @@ export default {
         ViewHeadline,
         Signout
     },
-    beforeMount() {
-        // this.page = this.$route.name;
+    computed: {
+        adminName() {
+            return "Ta Quang Linh"
+        },
+        page() {
+            return this.$route.name;
+        }
     },
     methods: {
         handleCollapse() {
@@ -100,14 +102,13 @@ export default {
                 this.isCollapse = false;
             }
         },
-        handleActive(page) {
-           this.page = page;
+        logout() {
+            console.log("Logout");
+            this.$store.dispatch('auth/logout');
+            this.$router.push('/login');
         }
     },
     watch: {
-        $route(to, from) {
-            this.page = to.name;
-        }
     }
 }
 </script>
