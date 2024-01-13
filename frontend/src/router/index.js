@@ -6,21 +6,26 @@ import Food from '@/views/admin/FoodContent.vue'
 import Payment from '@/views/admin/PaymentContent.vue'
 import Group from '@/views/admin/GroupContent.vue'
 import CompontTest from '@/components/ComponentTest.vue';
+import Login from '@/views/Login.vue'
 
 Vue.use(Router)
 
-export default new Router({
+export const router  = new Router({
   routes: [
     {
       path: '/test',
       component: CompontTest,
     },
     {
+      path: '/login',
+      component: Login
+    },
+    {
       path: '/admin',
       component: Home,
       children: [
         {
-          name: 'restautents',
+          name: 'restaurants',
           path: 'restaurants',
           component: Restaurant,
         },
@@ -42,4 +47,18 @@ export default new Router({
       ],
     },
   ]
+});
+
+
+router.beforeEach((to, from, next) => {
+  // chuyển đến trang login nếu chưa được login
+  const publicPages = ['/login', '/register'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+
+  next();
 })
