@@ -2,29 +2,42 @@
     <div class="login">
         <div :class="{ 'right-panel-active': isRightPanelActive, 'container': true }" id="container">
             <div class="form-container sign-up-container">
-                <form action="#">
+                <form v-if="isVerify === false" :class="{ 'isVerify': true }" v-loading="loading">
                     <h1>Create Account</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><Google/></a>
+                        <a href="#" class="social">
+                            <Google />
+                        </a>
                     </div>
                     <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button @click="signUpToggle">Sign Up</button>
+                    <input type="text" placeholder="Nguyen Van A" v-model="fullname" />
+                    <input type="email" placeholder="nguyenvana@gmail.com" v-model="email" />
+                    <input type="password" placeholder="Mật khẩu" v-model="password" />
+                    <button @click="handleSignUp">Sign Up</button>
+                </form>
+                <form v-if="isVerify === true">
+                    <h1>Verify</h1>
+                    <span style="font-size: 15px; margin-top: 50px;color: rgb(117, 117, 117);">Hệ thống đã gửi mã OTP về
+                        địa chỉ email</span>
+                    <span style="font-size: 14px; margin-bottom: 20px;">{{ email }}</span>
+                    <input type="text" placeholder="OTP" v-model="otp">
+                    <a class="back-register" @click="back">Quay lại trang đăng ký</a>
+                    <button @click="verify">Verify</button>
                 </form>
             </div>
             <div class="form-container sign-in-container">
-                <form action="#">
+                <form>
                     <h1>Sign in</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><Google/></a>
+                        <a href="#" class="social">
+                            <Google />
+                        </a>
                     </div>
                     <span>or use your account</span>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
+                    <input type="email" placeholder="Email" v-model="email" />
+                    <input type="password" placeholder="Password" v-model="password" />
                     <a href="#">Forgot your password?</a>
-                    <button @click="signInToggle">Sign In</button>
+                    <button @click="handleSignIn">Sign In</button>
                 </form>
             </div>
             <div class="overlay-container">
@@ -51,18 +64,114 @@ import Google from '../components/icons/Google.vue';
 export default {
     components: {
         Google
-    },  
+    },
     data() {
         return {
             isRightPanelActive: false,
+            isVerify: false,
+            email: '',
+            password: '',
+            fullname: '',
+            otp: '',
+            loading: false,
+        }
+    },
+    computed: {
+        status() {
+            return this.$store.state.auth.status;
+        },
+    },
+    created() {
+        if (this.status.loggedIn) {
+            switch (this.status.role) {
+                case 'admin':
+                    this.$router.push("/admin");
+                    break;
+                case 'user':
+                    break;
+            }
         }
     },
     methods: {
-        signUpToggle(){
+        signUpToggle() {
             this.isRightPanelActive = true;
         },
-        signInToggle(){
+        signInToggle() {
             this.isRightPanelActive = false;
+        },
+        handleSignIn() {
+            this.loading = true;
+            this.email = this.email.trim();
+            this.password = this.password.trim();
+            if (this.email == "" || this.password == "") {
+                this.$message.warning('Không được bỏ trống!');
+                return false;
+            }
+            const user = {
+                'email': this.email,
+                'password': this.password
+            }
+            this.$store.dispatch('auth/login', user).then(
+                () => {
+                    if (this.$store.state.auth.user.role == "ADMIN") this.$router.push("/admin/restaurants");
+                },
+                (error) => {
+                    this.loading = false;
+                    this.$message.error('Tài khoản hoặc mật khẩu không đúng!');
+                }
+            );
+        },
+        handleSignUp() {
+            this.loading = true;
+            this.email = this.email.trim();
+            this.password = this.password.trim();
+            this.fullname = this.fullname.trim();
+
+            if (this.email == "" || this.password == "" || this.fullname == "") {
+                this.$message.warning('Không được bỏ trống!');
+                this.loading = false;
+                return false;
+            }
+
+            const user = {
+                'email': this.email,
+                'password': this.password,
+                'fullName': this.fullname,
+            }
+            // console.log(user);
+            this.$store.dispatch('auth/register', user).then(
+                () => {
+                    this.loading = false;
+                    this.isVerify = true;
+                },
+                (error) => {
+                    this.loading = false;
+                    this.$message.warning('Email đã tồn tại!');
+                }
+            )
+        },
+        verify() {
+            this.otp = this.otp.trim();
+            if (this.otp == "")this.$message.warning("Không được bỏ trống!");
+
+            const user = {
+                email: this.email,
+                otp: this.otp,
+            }
+
+            this.$store.dispatch("auth/verifyRegister", user).then(
+                () => {
+                    this.$message.success('Đăng ký tài khoản thành công');
+                    this.isVerify = false;
+                    this.signInToggle();
+                },
+                (error) => {
+                    this.$message.error('Sai mã OTP, vui lòng nhập lại!')
+                }
+            )
+        },
+        back() {
+            this.isVerify = false;
         }
     }
 }
@@ -86,7 +195,7 @@ body {
     margin: -20px 0 50px;
 }
 
-.login{
+.login {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,6 +217,16 @@ p {
     line-height: 20px;
     letter-spacing: 0.5px;
     margin: 20px 0 30px;
+}
+
+.back-register {
+    margin: 0;
+    text-decoration: underline;
+    color: rgb(0, 81, 202);
+}
+
+.back-register:hover {
+    cursor: pointer;
 }
 
 span {
@@ -133,6 +252,7 @@ button {
     text-transform: uppercase;
     transition: transform 80ms ease-in;
     margin-top: 30px;
+    cursor: pointer;
 }
 
 button:active {
