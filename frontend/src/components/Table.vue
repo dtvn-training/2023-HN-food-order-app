@@ -44,7 +44,7 @@
         <Pagination 
                 v-if="pagination == 1"
                 :totalPages="datas.length % 10 == 0 ? Math.floor(datas.length / 10) : Math.floor(datas.length / 10) + 1" 
-                :total="datas.length" 
+                :total="+datas.length" 
                 :currentPage="1" 
                 @pagechanged="currentPage = $event"
         />
@@ -79,7 +79,9 @@ export default {
     },
     props: {
         columns:{},
-        datas:{},
+        datas:{
+            type: Array
+        },
         actions:{},
         pagination: {
             type: Number,

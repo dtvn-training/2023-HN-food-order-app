@@ -44,7 +44,7 @@
             },
             changeTab (e) {
                 this.tab = e;
-                console.log(this.tab);
+                // console.log(this.tab);
             }
         },
     }
