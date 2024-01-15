@@ -19,7 +19,7 @@ public class OrderController {
     final OrderService orderService;
 
     @PostMapping("/order")
-    public ResponseEntity<?> orderCart(@RequestBody List<Long> userCartIds) throws Exception {
+    public ResponseEntity<?> orderCart(@RequestBody List<Long> userCartIds) {
         if (!orderService.queueOrder(userCartIds)) {
             return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể đặt món, hãy làm mới trang này");
         }

@@ -27,7 +27,7 @@ public class CartService {
     final DishRepository dishRepository;
     final UserRepository userRepository;
     @SuppressWarnings("unused")
-    Logger logger = LoggerFactory.getLogger(CartService.class);
+    final Logger logger = LoggerFactory.getLogger(CartService.class);
     final ItemOrderRepository itemOrderRepository;
     final HttpServletRequest httpServletRequest;
 

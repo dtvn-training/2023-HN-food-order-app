@@ -24,22 +24,22 @@ public class RestaurantService {
     final HttpServletResponse response;
     final ShopeeFoodService shopeeFoodService;
     final PresentVoteRepository presentVoteRepository;
-    Logger logger = LoggerFactory.getLogger(RestaurantService.class);
+    final Logger logger = LoggerFactory.getLogger(RestaurantService.class);
 
     public List<SimpleRestaurantResponse> getAllRestaurantInDatabase() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
         return mapper.mapList(restaurants, SimpleRestaurantResponse.class);
     }
 
-    public void fetchData(String url) {
+    public void fetchData(String url) throws Exception {
+        fetchData(restaurantRepository.findByUrlAndDeletedTrue(url));
+
     }
 
-    public void fetchData(long deliveryId) {
-    }
-
-    public void fetchData(Restaurant oldRestaurant) {
-        restaurant = mergeRestaurant()
-        restaurantRepository.save(restaurant);
+    public void fetchData(Restaurant oldRestaurant) throws Exception {
+        Restaurant newRestaurant = shopeeFoodService.getRestaurantDishes(oldRestaurant.getDeliveryId());
+        oldRestaurant = mergeRestaurant(oldRestaurant, newRestaurant);
+        restaurantRepository.save(oldRestaurant);
     }
 
     public List<SimpleRestaurantResponse> getRestaurantSelected() {
@@ -77,18 +77,17 @@ public class RestaurantService {
             fetchData(restaurant);
             restaurantRepository.save(restaurant);
             restaurant.setSelected(false);
-        }else{
+        } else {
             // this restaurant do not exist in database, fetching is redundant
             restaurant = shopeeFoodService.getRestaurantDishes(shopeeFoodService.getDeliveryId(url));
             restaurantRepository.save(restaurant);
             presentVoteRepository.setActiveFalse(presentVoteId);
         }
         // fetch data
-        // TODO: some case for fetching data
         return true;
     }
 
-    public boolean addRestaurantFromDatabaseToUserList(long deliveryId) throws Exception {
+    public boolean addRestaurantFromDatabaseToUserList(long deliveryId) {
         Restaurant restaurant = restaurantRepository.findByDeliveryIdAndSelected(deliveryId, false);
         if (restaurant == null) {
             return false;
@@ -156,28 +155,4 @@ public class RestaurantService {
         existedDishCategory.setDishList(newDishCategory.getDishList());
         return existedDishCategory;
     }
-
-    public static void main(String[] args) {
-        List<A> aList = new java.util.ArrayList<>(List.of(new A(1, 2), new A(3, 4), new A(5, 6)));
-        aList.set(1, new A(10, 20));
-        System.out.println(aList.get(1));
-        System.out.println(aList.get(2));
-        System.out.println(aList.size());
-    }
-
-    private static class A {
-        int b;
-        int c;
-
-        A(int b, int c) {
-            this.b = b;
-            this.c = c;
-        }
-
-        @Override
-        public String toString() {
-            return b + " " + c;
-        }
-    }
-
 }
