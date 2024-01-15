@@ -1,9 +1,11 @@
 package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.mapper.Mapper;
+import com.dtvn.foodorderbackend.model.dto.response.SimpleRestaurantResponse;
+import com.dtvn.foodorderbackend.model.entity.Dish;
+import com.dtvn.foodorderbackend.model.entity.DishCategory;
 import com.dtvn.foodorderbackend.model.entity.PresentVote;
 import com.dtvn.foodorderbackend.model.entity.Restaurant;
-import com.dtvn.foodorderbackend.model.dto.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.repository.PresentVoteRepository;
 import com.dtvn.foodorderbackend.repository.RestaurantRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,7 +37,9 @@ public class RestaurantService {
     public void fetchData(long deliveryId) {
     }
 
-    public void fetchData(Restaurant restaurant) {
+    public void fetchData(Restaurant oldRestaurant) {
+        restaurant = mergeRestaurant()
+        restaurantRepository.save(restaurant);
     }
 
     public List<SimpleRestaurantResponse> getRestaurantSelected() {
@@ -65,21 +69,26 @@ public class RestaurantService {
         logger.debug("not exist restaurant in database: ok");
 
         // check if restaurant was deleted, this case, the return will true, change deleted false and fetch data again
+        // if not exist -> crawl data
+        // if deleted-> fetch data
         Restaurant restaurant = restaurantRepository.findByUrlAndDeletedTrue(url);
         if (restaurant != null) {
             restaurant.setDeleted(false);
             fetchData(restaurant);
+            restaurantRepository.save(restaurant);
+            restaurant.setSelected(false);
+        }else{
+            // this restaurant do not exist in database, fetching is redundant
+            restaurant = shopeeFoodService.getRestaurantDishes(shopeeFoodService.getDeliveryId(url));
+            restaurantRepository.save(restaurant);
+            presentVoteRepository.setActiveFalse(presentVoteId);
         }
         // fetch data
-        restaurant = shopeeFoodService.getRestaurantDishes(shopeeFoodService.getDeliveryId(url));
-        restaurantRepository.save(restaurant);
-        presentVoteRepository.setActiveFalse(presentVoteId);
         // TODO: some case for fetching data
         return true;
     }
 
     public boolean addRestaurantFromDatabaseToUserList(long deliveryId) throws Exception {
-        // check exist from database
         Restaurant restaurant = restaurantRepository.findByDeliveryIdAndSelected(deliveryId, false);
         if (restaurant == null) {
             return false;
@@ -100,12 +109,75 @@ public class RestaurantService {
     }
 
     public boolean setRestaurantDeleted(long deliveryId) {
-        Restaurant restaurant = restaurantRepository.findByDeliveryIdAndDeleted(deliveryId,false);
-        if(restaurant==null){
+        Restaurant restaurant = restaurantRepository.findByDeliveryIdAndDeleted(deliveryId, false);
+        if (restaurant == null) {
             return false;
         }
-        restaurantRepository.setRestaurantDeleted(deliveryId,true);
+        restaurantRepository.setRestaurantDeleted(deliveryId, true);
         return true;
+    }
+
+    public Restaurant mergeRestaurant(Restaurant existedRestaurant, Restaurant newRestaurant) {
+        for (DishCategory oldCategory : existedRestaurant.getDishCategoryList()) {
+            List<DishCategory> newCategories = newRestaurant.getDishCategoryList();
+            boolean present = false;
+            for (int i = 0; i < newCategories.size(); i++) {
+                if (newCategories.get(i).getId() == oldCategory.getId()) {
+                    present = true;
+                    newCategories.set(i, mergeDishCategory(oldCategory, newCategories.get(i)));
+                    break;
+                }
+            }
+            if (!present) {
+                oldCategory.deActive();
+                newCategories.add(oldCategory);
+            }
+        }
+        existedRestaurant.setDishCategoryList(newRestaurant.getDishCategoryList());
+        return existedRestaurant;
+    }
+
+    private DishCategory mergeDishCategory(DishCategory existedDishCategory, DishCategory newDishCategory) {
+        for (Dish dish : existedDishCategory.getDishList()) {
+            List<Dish> newDishes = newDishCategory.getDishList();
+            boolean present = false;
+            for (Dish newDish : newDishes) {
+                if (newDish.getId().equals(dish.getId())) {
+                    present = true;
+                    break;
+                }
+            }
+
+            if (!present) {
+                dish.deActive();
+                newDishes.add(dish);
+            }
+        }
+        existedDishCategory.setDishList(newDishCategory.getDishList());
+        return existedDishCategory;
+    }
+
+    public static void main(String[] args) {
+        List<A> aList = new java.util.ArrayList<>(List.of(new A(1, 2), new A(3, 4), new A(5, 6)));
+        aList.set(1, new A(10, 20));
+        System.out.println(aList.get(1));
+        System.out.println(aList.get(2));
+        System.out.println(aList.size());
+    }
+
+    private static class A {
+        int b;
+        int c;
+
+        A(int b, int c) {
+            this.b = b;
+            this.c = c;
+        }
+
+        @Override
+        public String toString() {
+            return b + " " + c;
+        }
     }
 
 }
