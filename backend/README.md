@@ -63,7 +63,7 @@ Example
     spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 ## 5. Image Store (Optional)
-- You shouldn't store user image in local, use [Cloudinary](..%2F..%2F..%2F..%2F..%2FAppData%2FLocal%2FTemp%2FImage%20and%20Video%20Upload%2C%20Storage%2C%20Optimization%20and%20CDN.url) for free
+- You shouldn't store user image in local, use [Cloudinary](https://cloudinary.com) for free
 - After registration, You have _Cloud Name, API Key, API Secret_
 - Easy push to application.properties:
 ```

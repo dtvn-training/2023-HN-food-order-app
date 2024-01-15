@@ -1,8 +1,6 @@
 package com.dtvn.foodorderbackend.model.dto.request;
 
-import jakarta.persistence.Tuple;
 import lombok.Data;
-import org.springframework.data.util.Pair;
 
 import java.util.List;
 
