@@ -16,7 +16,7 @@ import java.util.Vector;
 @Data
 @Table(name = "dish_category")
 @NoArgsConstructor
-public class DishCategory {
+public class DishCategory implements RecordEntity {
     transient Logger logger = LoggerFactory.getLogger(DishCategory.class);
     @Id
     @Column(name = "id")
@@ -29,6 +29,9 @@ public class DishCategory {
     @JoinColumn(name = "restaurant_id")
     @JsonIgnore
     Restaurant restaurant;
+
+    @Column(name = "active")
+    boolean active = true;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Dish> dishList;
@@ -46,5 +49,26 @@ public class DishCategory {
             Dish dish = new Dish(dishArray.get(i).getAsJsonObject(), this);
             dishList.add(dish);
         }
+    }
+
+    @Override
+    public void enActive() {
+        active = true;
+    }
+
+    @Override
+    public void deActive() {
+        active = false;
+        for (Dish dish : dishList) {
+            dish.deActive();
+        }
+    }
+
+    /**
+     * not use
+     */
+    @Override
+    public void delete() {
+
     }
 }

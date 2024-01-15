@@ -43,21 +43,6 @@ public class ShopeeFoodService {
         if (deliveryId == 0) return null;
         return deliveryId;
     }
-
-    public boolean fetchRestaurantData(String url) throws Exception {
-        long deliveryId = getDeliveryId(url);
-        fetchRestaurantDataToDatabaseById(deliveryId);
-        return true;
-    }
-
-    private void fetchRestaurantDataToDatabaseById(long deliveryId) throws Exception {
-        // TODO: remove the data exist in database but not present in data fetched by shopee (foody)
-        Restaurant restaurant = getRestaurantDishes(deliveryId);
-        logger.info("number of category in restaurant: {}",restaurant.getDishCategoryList().size());
-        restaurantRepository.save(restaurant);
-    }
-
-
     public static class HttpGetWithHeaderFoody extends HttpGet {
         public HttpGetWithHeaderFoody(String uri) {
             super(uri);
