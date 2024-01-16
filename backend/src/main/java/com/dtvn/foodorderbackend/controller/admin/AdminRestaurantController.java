@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,57 +34,63 @@ public class AdminRestaurantController {
     @SuppressWarnings("unused")
     final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    @GetMapping("/get_all_restaurant")
+    @GetMapping("/get-all-restaurant")
     public ResponseEntity<?> getAllRestaurant() throws Exception {
-        adminController.requireAdminRole();
         List<SimpleRestaurantResponse> restaurants = restaurantService.getAllRestaurantInDatabase();
         return ResponseEntity.ok().body(restaurants);
     }
 
-    @PostMapping("/add_restaurant_from_vote_to_database")
-//    @Operation(description = "id: vote present id")
+    @GetMapping("/get-by-criteria")
+    public ResponseEntity<?> getRestaurantByCriteria(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "selected", required = false) Boolean selected,
+            @RequestParam(value = "deleted", required = false) Boolean deleted) throws Exception {
+        return ResponseEntity.ok().body(restaurantService.getByCategory(name, selected, deleted));
+    }
+
+    @PostMapping("/add-restaurant-from-vote-to-database")
     public ResponseEntity<?> addRestaurantFromVotePresentToDatabase(@RequestParam("id") long presentVoteId) throws Exception {
-        adminController.requireAdminRole();
         if (restaurantService.addRestaurantFromVotePresentToDatabase(presentVoteId)) {
             return BaseResponse.success("Đã thêm cửa hàng này");
         }
         return BaseResponse.createError(HttpStatus.NOT_FOUND, "Không thể thêm cửa hàng, hãy kiểm tra lại");
     }
 
-    @PostMapping("/add_restaurant_from_database_to_user_list")
+    @PostMapping("/add-restaurant-from-database-to-user-list")
     public ResponseEntity<?> addRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) throws Exception {
-        adminController.requireAdminRole();
         if (restaurantService.addRestaurantFromDatabaseToUserList(deliveryId)) {
             return BaseResponse.success("Đã thêm cửa hàng này vào danh sách đặt món của NV");
         }
         return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể thêm cửa hàng này");
     }
 
-    @DeleteMapping("/remove_restaurant_from_user_list")
+    @DeleteMapping("/remove-restaurant-from-user-list")
     public ResponseEntity<?> removeRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) throws Exception {
-        adminController.requireAdminRole();
         if (restaurantService.removeRestaurantFromUserList(deliveryId)) {
             return BaseResponse.success("Đã xóa xửa hàng khỏi danh sách đặt món của NV");
         }
         return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể thêm cửa hàng này");
     }
 
-    @DeleteMapping("/remove_restaurant_from_database")
+    @DeleteMapping("/remove-restaurant-from-database")
     public ResponseEntity<?> setRestaurantDeleted(@RequestParam("delivery_id") long deliveryId) throws Exception {
-        adminController.requireAdminRole();
         if (restaurantService.setRestaurantDeleted(deliveryId)) {
             return BaseResponse.success("Đã ẩn cửa hàng này, nếu muốn hiển thị lại, hãy gọi API khác");
         }
         return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Lỗi, không thể ẩn cửa hàng này");
     }
 
-    @PostMapping("/delete_present_vote")
+    @PostMapping("/delete-present-vote")
 //    @Operation(description = "id: vote present id")
     public ResponseEntity<?> deletePresentVote(@RequestParam("id") long presentVoteId) throws Exception {
-        adminController.requireAdminRole();
         if (voteService.deletePresentVote(presentVoteId)) {
             return BaseResponse.success("Đã xóa cửa hàng này");
         }
         return BaseResponse.createError(HttpStatus.NOT_FOUND, "Không tồn tại cửa hàng, hãy làm mới trang");
+    }
+    @PostMapping("/fetch-data")
+    public ResponseEntity<?> fetchDataByAdmin(@RequestParam("url") @NonNull String url) throws Exception {
+        restaurantService.fetchData(url);
+        return BaseResponse.createError(HttpStatus.BAD_REQUEST, "Không thể cập nhật món ăn, hãy thử lại");
     }
 }

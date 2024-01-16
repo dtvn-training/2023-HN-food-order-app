@@ -6,8 +6,6 @@ import com.google.gson.JsonObject;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Vector;
@@ -17,7 +15,6 @@ import java.util.Vector;
 @Table(name = "dish_category")
 @NoArgsConstructor
 public class DishCategory implements RecordEntity {
-    transient Logger logger = LoggerFactory.getLogger(DishCategory.class);
     @Id
     @Column(name = "id")
     long id;

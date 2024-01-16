@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
-    List<Restaurant> findAllBySelectedTrue();
+    List<Restaurant> findAllByDeletedFalse();
+    List<Restaurant> findAllBySelectedTrueAndDeletedFalse();
 
     boolean existsByUrlAndDeletedFalse(String url);
 
@@ -28,4 +29,14 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     @Transactional
     @Query("update Restaurant  r set r.deleted = :deleted where r.deliveryId = :deliveryId")
     void setRestaurantDeleted(long deliveryId, boolean deleted);
+
+    @Query("""
+           SELECT r
+           FROM Restaurant r
+           where
+           (:name is null or r.name like %:name%) and
+           (:selected is null or r.selected = :selected) and
+           (:deleted is null or r.deleted = :deleted)
+           """)
+    List<Restaurant> getByCategory(String name, Boolean selected, Boolean deleted);
 }

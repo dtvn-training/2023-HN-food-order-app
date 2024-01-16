@@ -27,8 +27,12 @@ public class RestaurantService {
     final Logger logger = LoggerFactory.getLogger(RestaurantService.class);
 
     public List<SimpleRestaurantResponse> getAllRestaurantInDatabase() {
-        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<Restaurant> restaurants = restaurantRepository.findAllByDeletedFalse();
         return mapper.mapList(restaurants, SimpleRestaurantResponse.class);
+    }
+
+    public List<Restaurant> getByCategory(String name,Boolean selected,Boolean deleted){
+        return restaurantRepository.getByCategory(name,selected,deleted);
     }
 
     public void fetchData(String url) throws Exception {
@@ -43,7 +47,7 @@ public class RestaurantService {
     }
 
     public List<SimpleRestaurantResponse> getRestaurantSelected() {
-        List<Restaurant> restaurantsSelected = restaurantRepository.findAllBySelectedTrue();
+        List<Restaurant> restaurantsSelected = restaurantRepository.findAllBySelectedTrueAndDeletedFalse();
         return mapper.mapList(restaurantsSelected, SimpleRestaurantResponse.class);
     }
 

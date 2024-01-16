@@ -32,7 +32,7 @@ public class AdminAuthController {
     @SuppressWarnings("unused")
     final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-    @GetMapping("/get_users")
+    @GetMapping("/get-users")
     @Operation
     public ResponseEntity<?> getUserNotVerify(
             @RequestParam(value = "fullName", required = false) @ValidFullName String fullName,
@@ -40,31 +40,27 @@ public class AdminAuthController {
             @RequestParam(value = "role", required = false) User.Role role,
             @RequestParam(value = "status", required = false) User.Status status
     ) throws Exception {
-        adminController.requireAdminRole();
         return ResponseEntity.ok().body(userService.getUserByCriteria(fullName, email, role, status));
     }
 
-    @PostMapping("/approve_user")
+    @PostMapping("/approve-user")
     public ResponseEntity<?> approveUserByEmail(
             @RequestParam(value = "email") @Email(message = "EMAIL NOT VALID") String email
     ) throws Exception {
-        adminController.requireAdminRole();
         userService.changeApprovedByEmail(email, true);
         return BaseResponse.success();
     }
 
-    @PostMapping("/disapprove_user")
+    @PostMapping("/disapprove-user")
     public ResponseEntity<?> disapproveUserByEmail(
             @RequestParam(value = "email") @Email(message = "EMAIL NOT VALID") String email
     ) throws Exception {
-        adminController.requireAdminRole();
         userService.changeApprovedByEmail(email, false);
         return BaseResponse.success();
     }
 
-    @GetMapping("/get_user_not_approved")
+    @GetMapping("/get-user-not-approved")
     public ResponseEntity<?> getUserNotApproved() throws Exception {
-        adminController.requireAdminRole();
         return ResponseEntity.ok().body(mapper.mapList(userService.getUserNotApproved(), UserDTO.class));
     }
 
