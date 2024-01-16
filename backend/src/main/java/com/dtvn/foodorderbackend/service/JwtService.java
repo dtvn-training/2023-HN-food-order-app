@@ -64,15 +64,10 @@ public class JwtService {
      * @return null if token not valid
      * username if token is valid
      */
-    public String checkValidAndReturnEmail(@NonNull String token) {
-        try {
-            String username = extractEmail(token);
-            if ((username.equals(userService.loadUserByUsername(username).getUsername())) && !isTokenExpired(token)) {
-                return username;
-            }
-        } catch (Throwable ignore) {
-        }
-        return null;
+    public User checkValid(@NonNull String token) {
+        String username = extractEmail(token);
+        User user = userService.findUserByUsername(username);
+        return !isTokenExpired(token) ? user : null;
     }
 
     private boolean isTokenExpired(String token) {

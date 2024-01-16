@@ -19,7 +19,6 @@ import java.util.Vector;
   id: delivery id for restaurant
  */
 public class Restaurant {
-    transient Logger logger = LoggerFactory.getLogger(Restaurant.class);
     @Id
     @Column(name = "id")
     long deliveryId;

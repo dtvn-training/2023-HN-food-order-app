@@ -20,7 +20,6 @@ public class AdminTransactionController {
 
     @PostMapping("/approve")
     public ResponseEntity<?> approveTransaction(@RequestParam("id") long transactionId) throws Exception {
-        adminController.requireAdminRole();
         if (transactionService.approveTransaction(transactionId)) {
             return success("Thành công");
         }
@@ -29,19 +28,16 @@ public class AdminTransactionController {
 
     @GetMapping("/get-not-approved-transaction")
     public ResponseEntity<?> getNotApprovedTransaction() throws Exception {
-        adminController.requireAdminRole();
         return ResponseEntity.ok().body(transactionService.getTransactionNotApproved());
     }
 
     @GetMapping("/get-all")
     public ResponseEntity<?> getAllTransaction() throws Exception {
-        adminController.requireAdminRole();
         return ResponseEntity.ok().body(transactionService.getAllTransaction());
     }
 
     @GetMapping("/get-transaction-approved-by-me")
     public ResponseEntity<?> getTransactionApprovedByMe() throws Exception {
-        adminController.requireAdminRole();
         long adminId = Integer.parseInt(String.valueOf(httpServletRequest.getAttribute("user_id")));
 
         return ResponseEntity.ok().body(transactionService.getTransactionApprovedBy(adminId));

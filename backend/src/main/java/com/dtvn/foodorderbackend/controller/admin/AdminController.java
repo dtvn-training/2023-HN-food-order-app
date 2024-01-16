@@ -2,7 +2,6 @@ package com.dtvn.foodorderbackend.controller.admin;
 
 import com.dtvn.foodorderbackend.mapper.Mapper;
 import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
-import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,23 +31,9 @@ public class AdminController {
     final RestaurantService restaurantService;
     @SuppressWarnings("unused")
     final Logger logger = LoggerFactory.getLogger(AdminController.class);
-    final static SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(User.Role.ADMIN.name());
 
 
-    @PostMapping("/fetch_data")
-    public ResponseEntity<?> fetchDataByAdmin(@RequestParam("url") @NonNull String url) throws Exception {
-        requireAdminRole();
-        restaurantService.fetchData(url);
-        return BaseResponse.createError(HttpStatus.BAD_REQUEST, "Không thể cập nhật món ăn, hãy thử lại");
-    }
 
-    void requireAdminRole() throws Exception {
-        if (userService.loadUserByUsername(String.valueOf(request.getAttribute("email"))).getAuthorities().contains(ADMIN)) {
-            return;
-        }
-        response.setStatus(HttpStatus.FORBIDDEN.value());
-        response.getWriter().write("Bạn không có quyền làm việc này");
-        throw new Exception("User not admin");
-    }
+
 
 }

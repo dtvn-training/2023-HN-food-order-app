@@ -23,6 +23,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin(value = "http://localhost:8000")
 public class AuthController {
     final UserService userService;
     final AuthenticationManager authenticationManager;
@@ -42,7 +43,7 @@ public class AuthController {
         return BaseResponse.success(userService.register(request));
     }
 
-    @PostMapping("/verify_register")
+    @PostMapping("/verify-register")
     public ResponseEntity<?> verifyRegister(@RequestBody RegisterVerifyRequest request) {
         if (request.getOtp().isEmpty() || request.getEmail().isEmpty()) {
             return BaseResponse.createError(BAD_REQUEST, "Hãy điền các trường hợp lệ");
@@ -64,7 +65,7 @@ public class AuthController {
         return ResponseEntity.ok().body(authResponse);
     }
 
-    @PostMapping("/reset_password")
+    @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam("email") @Email String email) {
         //
         if (authService.resetPassword(email)) {
@@ -73,7 +74,7 @@ public class AuthController {
         return BaseResponse.createError(NOT_ACCEPTABLE, "Không thể khôi phục được password,hãy kiểm tra lại");
     }
 
-    @PutMapping("/reset_password")
+    @PutMapping("/reset-password")
     public ResponseEntity<?> resetPasswordByOtp(@RequestBody @Valid UserResetPasswordRequest request) {
         if (userService.changePassword(request)) {
             return BaseResponse.success("BẠN ĐÃ THAY ĐỔI MẬT KHẨU THÀNH CÔNG");
