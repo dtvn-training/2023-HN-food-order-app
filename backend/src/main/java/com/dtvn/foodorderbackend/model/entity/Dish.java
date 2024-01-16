@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "dishes")
 @NoArgsConstructor
-public class Dish {
+public class Dish implements RecordEntity {
     @Id
     Long id;
     @Column(name = "name")
@@ -30,6 +30,9 @@ public class Dish {
     @JoinColumn(name = "category_id")
     @JsonIgnore
     DishCategory category;
+
+    @Column(name = "active")
+    boolean active = true;
 
     public Dish(JsonObject data, DishCategory dishCategory) {
         this.category = dishCategory;
@@ -53,5 +56,20 @@ public class Dish {
     @Override
     public String toString() {
         return "id: " + id + ", name: " + name;
+    }
+
+    @Override
+    public void enActive() {
+        active = true;
+    }
+
+    @Override
+    public void deActive() {
+        active = false;
+    }
+
+    @Override
+    public void delete() {
+
     }
 }

@@ -20,6 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
+    public final static SimpleGrantedAuthority ADMIN = new SimpleGrantedAuthority(Role.ADMIN.name());
+
     public enum Role {
         USER,
         ADMIN

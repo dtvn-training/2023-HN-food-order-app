@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
     Mapper mapper;
     PasswordEncoder encoder;
     OtpService otpService;
-    Logger logger = LoggerFactory.getLogger(UserService.class);
+    final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     void setOtpService(OtpService otpService) {
@@ -65,6 +65,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByEmail(username).orElseThrow();
+    }
+    public User findUserByUsername(String username){
+        return userRepository.findUserByEmail(username).orElse(null);
     }
 
     public User loadUserById(long id) {
@@ -147,4 +150,5 @@ public class UserService implements UserDetailsService {
     public void changeApprovedByEmail(String email, boolean approved) {
         userRepository.changeApprovedByEmail(email, approved);
     }
+
 }

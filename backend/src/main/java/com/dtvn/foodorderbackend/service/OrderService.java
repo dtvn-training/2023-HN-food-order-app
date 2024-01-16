@@ -31,9 +31,9 @@ public class OrderService {
     final ItemOrderRepository itemOrderRepository;
     final UserRepository userRepository;
     final BillRepository billRepository;
-    Logger logger = LoggerFactory.getLogger(OrderService.class);
+    final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
-    public boolean queueOrder(List<Long> userCartIds) throws Exception {
+    public boolean queueOrder(List<Long> userCartIds) {
         long userId = Integer.parseInt(String.valueOf(httpServletRequest.getAttribute("user_id")));
         List<UserCart> userCarts = userCartRepository.findAllById(userCartIds);
         // check all user carts contains user id

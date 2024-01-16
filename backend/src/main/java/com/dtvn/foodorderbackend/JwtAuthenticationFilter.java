@@ -1,5 +1,6 @@
 package com.dtvn.foodorderbackend;
 
+import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.service.JwtService;
 import com.dtvn.foodorderbackend.service.UserService;
 import jakarta.servlet.FilterChain;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.Arrays;
@@ -19,7 +21,7 @@ import java.util.Arrays;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     final PathMatcher pathMatcher;
     final JwtService jwtService;
     final UserService userService;
@@ -42,19 +44,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
             String jwtToken = auth.substring(7);
-            String email = jwtService.checkValidAndReturnEmail(jwtToken);
-            request.setAttribute("email", email);
-            request.setAttribute("user_id", jwtService.extractUserId(jwtToken));
-            if (email == null) {
+            User user = jwtService.checkValid(jwtToken);
+            if (user == null) {
                 reject(response, new Throwable("TOKEN NOT VALID"));
                 return;
             }
+
+            if (request.getRequestURI().startsWith("/admin") && !user.getAuthorities().contains(User.ADMIN)) {
+                reject(response, new Throwable("Bạn không phải admin"));
+                return;
+            }
+
+
+            request.setAttribute("email", user.getEmail());
+            request.setAttribute("user_id", jwtService.extractUserId(jwtToken));
+
+
             try {
                 filterChain.doFilter(request, response);
             } catch (Exception e) {
                 logger.error("{}", ExceptionUtils.getStackTrace(e));
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                response.getWriter().write(e.getMessage());
             }
 
         } catch (Exception e) {
@@ -65,6 +75,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
+
         var accept = Arrays.stream(WHITE_LIST)
                 .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
         if (accept) {

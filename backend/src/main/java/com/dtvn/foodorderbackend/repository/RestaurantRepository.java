@@ -7,26 +7,36 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
-    List<Restaurant> findAllBySelectedTrue();
-
-    boolean existsByDeliveryIdAndDeletedFalse(long deliveryId);
+    List<Restaurant> findAllByDeletedFalse();
+    List<Restaurant> findAllBySelectedTrueAndDeletedFalse();
 
     boolean existsByUrlAndDeletedFalse(String url);
 
-    Restaurant findByDeliveryIdAndDeleted(long deliveryId,boolean deleted);
+    Restaurant findByDeliveryIdAndDeleted(long deliveryId, boolean deleted);
+
     Restaurant findByUrlAndDeletedTrue(String url);
+
     @Modifying
     @Transactional
     @Query("update Restaurant  r set r.selected = :selected where r.deleted = false and r.deliveryId = :deliveryId")
-    void setRestaurantSelected(long deliveryId,boolean selected);
+    void setRestaurantSelected(long deliveryId, boolean selected);
 
-    Restaurant findByDeliveryIdAndSelected(long deliveryId,boolean selected);
+    Restaurant findByDeliveryIdAndSelected(long deliveryId, boolean selected);
 
     @Modifying
     @Transactional
     @Query("update Restaurant  r set r.deleted = :deleted where r.deliveryId = :deliveryId")
     void setRestaurantDeleted(long deliveryId, boolean deleted);
+
+    @Query("""
+           SELECT r
+           FROM Restaurant r
+           where
+           (:name is null or r.name like %:name%) and
+           (:selected is null or r.selected = :selected) and
+           (:deleted is null or r.deleted = :deleted)
+           """)
+    List<Restaurant> getByCategory(String name, Boolean selected, Boolean deleted);
 }

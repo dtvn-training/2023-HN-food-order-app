@@ -25,7 +25,7 @@ public class CartController {
     @SuppressWarnings("unused")
     Logger logger = LoggerFactory.getLogger(CartController.class);
 
-    @PostMapping("/add_to_cart")
+    @PostMapping("/add-to-cart")
     public ResponseEntity<?> addToCart(@RequestBody @Valid CartRequest request) {
         if (cartService.addToCart(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
@@ -33,7 +33,7 @@ public class CartController {
         return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Cart exist or not valid dish id");
     }
 
-    @PutMapping("/change_quantity")
+    @PutMapping("/change-quantity")
     public ResponseEntity<?> changeQuantity(@RequestBody @NonNull @Valid ChangeQuantityCartRequest request) {
         if (cartService.changeQuantity(request, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
@@ -41,12 +41,12 @@ public class CartController {
         return BaseResponse.createError(HttpStatus.NOT_ACCEPTABLE, "Cart doesn't exist");
     }
 
-    @GetMapping("/get_cart")
+    @GetMapping("/get-cart")
     public ResponseEntity<?> getMyCart() {
         return ResponseEntity.ok().body(cartService.getAllCart(Integer.parseInt(String.valueOf(request.getAttribute("user_id")))));
     }
 
-    @DeleteMapping("/delete_cart")
+    @DeleteMapping("/delete-cart")
     public ResponseEntity<?> deleteCart(@RequestParam("cart_id") long cartId) {
         if (cartService.deleteCart(cartId, Integer.parseInt(String.valueOf(this.request.getAttribute("user_id"))))) {
             return BaseResponse.success();
