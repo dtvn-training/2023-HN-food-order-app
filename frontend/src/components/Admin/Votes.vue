@@ -32,7 +32,7 @@
                     }
                 },
                 {
-                    key: 'restaurant',
+                    key: 'restaurantName',
                     header: 'Tên quán',
                     style: {
                         width: '25%',
@@ -54,7 +54,7 @@
                     }
                 },
                 {
-                    key: 'vote',
+                    key: 'totalVote',
                     header: 'Bình chọn',
                     style: {
                         'text-align': 'center',
@@ -177,6 +177,9 @@
                 votes: [],
             }
         },
+        beforeMount(){
+            this.getVotes();
+        },
         methods: {
             async getVotes(){
                 const votes = await Vote.getAll()
@@ -187,6 +190,10 @@
                     console.log(error);
                     return [];
                 })
+                console.log(votes);
+                votes.forEach(element => {
+                    element.restaurantName = '<a href="'+ element.restaurantUrl+'" target="_blank">'+element.restaurantName+'</a>';
+                });
                 this.votes = votes;
             },
             handleAction(e){
