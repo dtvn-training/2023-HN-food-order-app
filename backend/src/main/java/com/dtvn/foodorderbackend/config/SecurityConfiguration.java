@@ -25,14 +25,5 @@ public class SecurityConfiguration {
 //                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll())
-//                .csrf(AbstractHttpConfigurer::disable)
-////                .authenticationProvider(authenticationProvider)
-////                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//                ;
-//        return http.build();
-//    }
 
 }

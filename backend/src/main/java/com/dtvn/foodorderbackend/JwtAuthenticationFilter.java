@@ -19,7 +19,7 @@ import java.util.Arrays;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     final PathMatcher pathMatcher;
     final JwtService jwtService;
     final UserService userService;

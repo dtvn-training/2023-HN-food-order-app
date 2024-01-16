@@ -40,7 +40,7 @@ public class AuthService {
             return null;
         }
         String token = jwtService.generateToken(user);
-        return new AuthResponse(user.getId(), user.getUsername(), token, user.getRole().toString());
+        return new AuthResponse(user.getId(), user.getUsername(), user.getRole(), token);
     }
 
     public boolean resetPassword(String email) {
