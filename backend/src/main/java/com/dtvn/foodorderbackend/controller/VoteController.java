@@ -16,6 +16,7 @@ import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.success;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("vote")
+@CrossOrigin
 public class VoteController {
     final VoteService voteService;
     final HttpServletResponse response;

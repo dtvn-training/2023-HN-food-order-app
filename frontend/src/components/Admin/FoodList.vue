@@ -2,7 +2,7 @@
     <div class="food-list">
         <Table 
             :columns="columns"
-            :datas="datas"
+            :datas="foods"
             :actions="actions"
             @onClickAction="handleAction"
         />
