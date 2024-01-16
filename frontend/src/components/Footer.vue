@@ -60,6 +60,7 @@
 
 .footer .logo {
     margin-top: 30px;
+    width: 120px;
 }
 
 .footer .desc {

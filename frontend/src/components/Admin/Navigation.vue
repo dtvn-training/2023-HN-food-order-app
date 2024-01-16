@@ -122,6 +122,7 @@ nav {
     align-items: center;
     margin-left: 30px;
     transition: all 0.2s ease;
+    max-width: 100px;
 }
 
 .close .image-text .image {
