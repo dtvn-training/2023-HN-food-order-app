@@ -16,6 +16,11 @@
 </template>
 
 <style scoped>
+.container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 50px 1px auto;
+}
 .header {
     height: 50px;
     display: flex;

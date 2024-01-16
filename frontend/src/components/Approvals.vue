@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <Table 
+    <Table 
             :columns="columns"
             :datas="approvals"
             :actions="actions"
             @onClickAction="handleAction"
         />
-    </div>
 </template>
 
 <script>

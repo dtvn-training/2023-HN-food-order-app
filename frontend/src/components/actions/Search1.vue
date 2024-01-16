@@ -35,12 +35,13 @@
     export default {
         data() {
             return {
-                input: '',
+                input: this.value,
             }
         },
         props: [
             'placeholder',
-            'width'
+            'width',
+            'value'
         ],
         watch: {
             input () {

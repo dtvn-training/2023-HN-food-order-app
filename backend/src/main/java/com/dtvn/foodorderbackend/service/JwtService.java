@@ -1,5 +1,6 @@
 package com.dtvn.foodorderbackend.service;
 
+import com.dtvn.foodorderbackend.config.ApplicationConfig;
 import com.dtvn.foodorderbackend.model.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -25,7 +26,7 @@ public class JwtService {
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970AAAAAAAAAAAAAAAAAAAAAA";
 
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -53,7 +54,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + ApplicationConfig.EXPIRED_JWT_TOKEN))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -63,9 +64,9 @@ public class JwtService {
      * @return null if token not valid
      * username if token is valid
      */
-    public String checkValidAndReturnUsername(@NonNull String token) {
+    public String checkValidAndReturnEmail(@NonNull String token) {
         try {
-            String username = extractUsername(token);
+            String username = extractEmail(token);
             if ((username.equals(userService.loadUserByUsername(username).getUsername())) && !isTokenExpired(token)) {
                 return username;
             }
