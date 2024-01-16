@@ -263,7 +263,7 @@ export default {
         }
     },
     beforeMount(){
-        this.getRestaurantList;
+        this.getRestaurantList();
     },
     methods: {
         async getRestaurantList(){
@@ -275,6 +275,12 @@ export default {
             .catch(error => {
                 console.log(error);
                 return [];
+            })
+            datas.forEach(item => {
+                if (item.selected == false)item.selected = 0;
+                else item.selected = 1;
+                item.id = item.deliveryId;
+                delete item.deliveryId;
             })
             this.restaurantList = datas;
         },
@@ -288,12 +294,22 @@ export default {
         handleAction(e) {
             switch (e.name) {
                 case 'delete':
-                    this.datas = this.datas.filter(item => item.id != e.id)
+                    const params = new Map();
+                    params.set('delivery_id', e.id);
+                    Restaurant.removeFoodUserList(params);
+                    this.restaurantList = this.restaurantList.filter(item => item.id != e.id)
                     break;
                 case 'check':
-                    this.datas = this.datas.map(item => {
+                    this.restaurantList = this.restaurantList.map(item => {
                         if (item.id === e.id) {
                             // Nếu là đối tượng cần cập nhật, thì cập nhật thông tin name
+                            const params = new Map();
+                            params.set('delivery_id', item.id);
+                            if (item.selected == 1){
+                                Restaurant.unCheckFoodUserList(params);
+                            }else{
+                                Restaurant.addFoodUserList(params);
+                            }
                             return { ...item, selected: !item.selected };
                         } else {
                             // Nếu không phải, giữ nguyên đối tượng

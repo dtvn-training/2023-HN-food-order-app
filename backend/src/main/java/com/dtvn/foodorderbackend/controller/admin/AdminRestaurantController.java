@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/restaurant")
+@CrossOrigin
 public class AdminRestaurantController {
     final UserService userService;
     final HttpServletRequest request;

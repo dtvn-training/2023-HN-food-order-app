@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
     Mapper mapper;
     PasswordEncoder encoder;
     OtpService otpService;
-    Logger logger = LoggerFactory.getLogger(UserService.class);
+    final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     void setOtpService(OtpService otpService) {
@@ -147,4 +147,5 @@ public class UserService implements UserDetailsService {
     public void changeApprovedByEmail(String email, boolean approved) {
         userRepository.changeApprovedByEmail(email, approved);
     }
+
 }

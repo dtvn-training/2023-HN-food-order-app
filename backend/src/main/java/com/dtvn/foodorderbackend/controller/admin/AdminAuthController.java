@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin/auth")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AdminAuthController {
     final UserService userService;
     final HttpServletRequest request;

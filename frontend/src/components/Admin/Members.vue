@@ -33,6 +33,7 @@
 <script>
 import Search from "@/components/actions/Search1.vue"
 import Table from "@/components/Table.vue";
+import Group from "@/services/group"
 
 export default {
     components: {
@@ -66,7 +67,7 @@ export default {
                     }
                 },
             ],
-            members: [
+            amembers: [
                 {
                     id: 1,
                     member: "Tran Quang Duc",
@@ -104,10 +105,25 @@ export default {
                     phone: "0923123456",
                 },
             ],
-            actions: ['delete']
+            actions: ['delete'],
+            members: []
         }
     },
+    beforeMount(){
+        this.getMember();
+    },
     methods: {
+        async getMember(){
+            const members = Group.getMember()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.members = members;
+        },
         textSearchOnChange(e) {
             this.inputTextSeach = e;
             // Loc nhan vien

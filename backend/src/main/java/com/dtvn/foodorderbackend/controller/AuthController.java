@@ -23,6 +23,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
+@CrossOrigin
 public class AuthController {
     final UserService userService;
     final AuthenticationManager authenticationManager;
