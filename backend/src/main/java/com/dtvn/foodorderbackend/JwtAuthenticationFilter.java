@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.Arrays;
@@ -59,7 +58,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             request.setAttribute("email", user.getEmail());
             request.setAttribute("user_id", jwtService.extractUserId(jwtToken));
 
-
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization");
             try {
                 filterChain.doFilter(request, response);
             } catch (Exception e) {
@@ -75,7 +78,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
-
         var accept = Arrays.stream(WHITE_LIST)
                 .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
         if (accept) {

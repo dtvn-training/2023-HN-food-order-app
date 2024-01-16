@@ -33,9 +33,9 @@ public class FoodOrderBackendApplication {
         SpringApplication.run(FoodOrderBackendApplication.class, args);
     }
 
-    @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<?> test() {
-        return BaseResponse.success();
+    @GetMapping(value = "/error", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<?> error() {
+        return BaseResponse.success("ERROR");
     }
 
 }
