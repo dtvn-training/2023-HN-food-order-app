@@ -1,34 +1,54 @@
 <template>
-    <div class="container">
-        <div class="logo"><span>
-                <Logo />
-            </span></div>
-        <div class="wrapper">
-            <div class="left">
-                <ul>
-                    <li :class="{ 'active': isActive == 0 }" @click="isActive = 0">Đồ ăn</li>
-                    <li :class="{ 'active': isActive == 1 }" @click="isActive = 1">Bình chọn</li>
-                    <li :class="{ 'active': isActive == 2 }" @click="isActive = 2">Thanh toán</li>
-                </ul>
-            </div>
-            <div class="right">
-                <div class="balance">
-                    <Token />
-                    <span>{{ balance }}</span>
+    <div class="header">
+        <div class="container">
+            <div class="logo"><span>
+                    <Logo />
+                </span></div>
+            <div class="wrapper">
+                <div class="left">
+                    <ul>
+
+                        <router-link to="/restaurants" class="router-link">
+                            <li :class="{ 'active': isActive == 'restaurants' }">
+                                <span>Đồ ăn</span>
+                            </li>
+                        </router-link>
+
+
+                        <router-link to="/votes" class="router-link">
+                            <li :class="{ 'active': isActive == 'votes' }">
+                                <span>Bình chọn</span>
+                            </li>
+                        </router-link>
+
+
+                        <router-link to="/payments" class="router-link">
+                            <li :class="{ 'active': isActive == 'payments' }">
+                                <span>Thanh toán</span>
+                            </li>
+                        </router-link>
+
+                    </ul>
                 </div>
-                <div class="cart">
-                    <Cart />
-                </div>
-                <div class="account" >
-                    <Account />
-                    <div class="menu" v-if="menuDisplay == 1">
-                        <ul>
-                            <li>Thông tin</li>
-                            <li>Nạp tiền</li>
-                            <li>Lịch sử nạp tiền</li>
-                            <li>Nhóm</li>
-                            <li>Đăng xuất</li>
-                        </ul>
+                <div class="right">
+                    <div class="balance">
+                        <Token />
+                        <span>{{ balance }}</span>
+                    </div>
+                    <div class="cart">
+                        <Cart />
+                    </div>
+                    <div class="account" @click="menuDisplay = !menuDisplay">
+                        <Account />
+                        <div class="menu" v-if="menuDisplay == 1">
+                            <ul>
+                                <li>Thông tin</li>
+                                <li>Nạp tiền</li>
+                                <li>Lịch sử nạp tiền</li>
+                                <li>Nhóm</li>
+                                <li>Đăng xuất</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,15 +57,22 @@
 </template>
 
 <style scoped>
-.container {
+.header {
     height: 80px;
-    background: #F6F6F6;
-    display: grid;
-    grid-template-columns: 10% 80% 10%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
 }
 
+.container{
+    display: flex;
+    justify-content: center;
+    width: 1170px;
+    padding: 0 12px 0 12px;
+}   
 .wrapper {
     display: grid;
+    width: 1170px;
     grid-template-columns: 60% 40%;
 }
 
@@ -54,6 +81,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    margin-right: 30px;
 }
 
 .logo span {
@@ -109,21 +137,25 @@
     cursor: pointer;
     position: relative;
 }
+
 .menu {
     position: absolute;
     right: 0px;
     top: 45px;
 }
+
 .right ul {
     padding: 0;
     list-style: none;
     min-width: 170px;
     background: #ffffff;
 }
+
 .right li {
     font-size: 15px;
     padding: 7px 10px 7px 15px;
 }
+
 .right li:hover {
     font-size: 16px;
     background-color: #CF2127;
@@ -146,13 +178,21 @@ export default {
     },
     data() {
         return {
-            isActive: 1,
             balance: '400,000 đ',
-            menuDisplay: 1
+            menuDisplay: 0
         }
     },
     methods: {
-
+        active(param) {
+            this.isActive = param;
+            this.$emit('menuActive', param);
+        }
+    },
+    computed: {
+        isActive() {
+            console.log(this.$route.name);
+            return this.$route.name;
+        }
     }
 }
 </script>

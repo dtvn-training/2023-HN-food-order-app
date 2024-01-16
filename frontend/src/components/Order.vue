@@ -18,7 +18,7 @@
         </div>
         <hr>
         <div class="data">
-            <Table 
+            <Table
                 v-if="isPayment === 0"
                 :datas="datas"
                 :columns="columns"
@@ -427,7 +427,7 @@ export default {
             ],
             actions: ['check', 'remove'],
             isSelectAll: 0,
-            isPayment: 0,   
+            isPayment: 0,
             discount: '',
         }
     },

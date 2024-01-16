@@ -11,6 +11,8 @@ import GroupAdmin from '@/views/admin/GroupContent.vue'
 import Home from '@/views/user/Home.vue'
 import RestaurantUser from '@/views/user/Restaurants.vue'
 import CompontTest from '@/components/ComponentTest.vue';
+import Payment from '@/views/user/Payment.vue'
+import Vote from '@/views/user/Vote.vue'
 
 Vue.use(Router)
 
@@ -47,24 +49,24 @@ export default new Router({
       ],
     },
     {
-      path: '/user',
+      path: '/',
       component: Home,
       children: [
         {
-          name: 'home',
-          path: '/',
+          name: 'restaurants',
+          path: 'restaurants',
           component: RestaurantUser,
         },
-        // {
-        //   name: 'payments',
-        //   path: 'payments',
-        //   component: Payment,
-        // },
-        // {
-        //   name: 'votes',
-        //   path: 'votes',
-        //   component: Vote,
-        // }
+        {
+          name: 'payments',
+          path: 'payments',
+          component: Payment,
+        },
+        {
+          name: 'votes',
+          path: 'votes',
+          component: Vote,
+        }
       ],
     },
   ]

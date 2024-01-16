@@ -18,12 +18,9 @@
 }
 .main {
     height: auto;
-    background-color: aquamarine;
-}
-.wrapper {
-    margin: 0 auto;
-    width: 80%;
-    height: auto;
+    background-color: rgb(247, 247, 247);
+    display: flex;
+    justify-content: center;
 }
 
 </style>
