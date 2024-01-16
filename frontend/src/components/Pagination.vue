@@ -3,14 +3,14 @@
         <ul>
         <li>
             <button class="directional" type="button" @click="onClickFirstPage"
-                :style="{ 'visibility': isInFirstPage ? 'hidden' : '' }">
+                :style="{ 'visibility': isInFirstPage || total == 0 ? 'hidden' : '' }">
                 <DoubleArrow style="transform: rotate(180deg);"/>
             </button>
         </li>
 
         <li>
             <button class="directional" type="button" @click="onClickPreviousPage"
-                :style="{ 'visibility': current === 1 ? 'hidden' : '' }">
+                :style="{ 'visibility': current === 1 || total == 0 ? 'hidden' : '' }">
                 <Arrow style="transform: rotate(180deg);"/>
             </button>
         </li>
@@ -33,7 +33,7 @@
 
         <li>
             <button class="directional" type="button" @click="onClickLastPage"
-                :style="{ 'visibility': isInLastPage ? 'hidden' : '' }">
+                :style="{ 'visibility': isInLastPage || total == 0 ? 'hidden' : '' }">
                 <DoubleArrow/>
             </button>
         </li>

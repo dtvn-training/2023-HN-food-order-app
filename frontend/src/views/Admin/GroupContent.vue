@@ -20,9 +20,9 @@
 
 <script>
     import Tab from "@/components/admin/Tab.vue"
-    import GroupInfo from "@/components/GroupInfo.vue"
-    import Members from "@/components/Members.vue"
-    import Approvals from "@/components/Approvals.vue"
+    import GroupInfo from "@/components/admin/GroupInfo.vue"
+    import Members from "@/components/admin/Members.vue"
+    import Approvals from "@/components/admin/Approvals.vue"
 
     export default {
         components: {

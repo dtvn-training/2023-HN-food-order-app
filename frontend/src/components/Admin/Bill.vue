@@ -46,6 +46,7 @@ import Select from "@/components/actions/Select.vue"
 import DatePick from "@/components/actions/DatePick.vue"
 import Refresh from "@/components/icons/Refresh.vue"
 import Table from "../Table.vue";
+import Payment from "@/services/payment"
 
 export default {
     components: {
@@ -190,9 +191,24 @@ export default {
                 },
             ],
             actions: ['view'],
+            bills: [],
         }
     },
+    beforeMount(){
+        this.getBill();
+    },
     methods: {
+        async getBill(){
+            const bills = await Payment.getBills()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.bills = bills;
+        },
         handleReset(){
             location.reload();
             // this.textSearch = '';

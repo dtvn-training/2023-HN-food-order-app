@@ -31,8 +31,8 @@
 </style>
 
 <script>
-import Search from "../components/actions/Search1.vue"
-import Table from "./Table.vue";
+import Search from "@/components/actions/Search1.vue"
+import Table from "@/components/Table.vue";
 
 export default {
     components: {

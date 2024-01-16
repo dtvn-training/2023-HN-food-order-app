@@ -10,18 +10,9 @@
             </div>
         </div>
         <hr>
-        <Table 
-            :columns="columns" 
-            :datas="datas" 
-            :actions="actions" 
-            @onClickAction="handleAction" 
-        />
-        <RestaurantMenu 
-            v-if="restaurantMenu === 1" 
-            :categories="categories" 
-            @onClickCancel="cancelRestaurantMenu" 
-            @onClickSave="saveRestaurantMenu" 
-        />
+        <Table :columns="columns" :datas="restaurantList" :actions="actions" @onClickAction="handleAction" />
+        <RestaurantMenu v-if="restaurantMenu === 1" :categories="categories" @onClickCancel="cancelRestaurantMenu"
+            @onClickSave="saveRestaurantMenu" />
     </div>
 </template>
 
@@ -30,6 +21,7 @@ import Search from "../actions/Search1.vue"
 import Select from "../actions/Select.vue"
 import Table from "../Table.vue"
 import RestaurantMenu from "../../popup/RestaurantMenu.vue"
+import Restaurant from "@/services/restaurant"
 
 export default {
     components: {
@@ -64,7 +56,7 @@ export default {
                     }
                 },
             ],
-            datas: [
+            datass: [
                 {
                     id: 1,
                     name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA" target="_blank">Bún chả mẹ Nga</a>',
@@ -267,9 +259,25 @@ export default {
                     ]
                 }
             ],
+            restaurantList: [],
         }
     },
+    beforeMount(){
+        this.getRestaurantList;
+    },
     methods: {
+        async getRestaurantList(){
+            const datas = await Restaurant.getAll()
+            .then(response => {
+                    return response;
+                }
+            )
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.restaurantList = datas;
+        },
         cancelRestaurantMenu(e) {
             this.restaurantMenu = 0;
         },
