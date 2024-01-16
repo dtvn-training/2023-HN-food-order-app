@@ -10,6 +10,7 @@
 <script>
 import Search from "@/components/actions/Search1.vue"
 import Table from "@/components/Table.vue";
+import Group from "@/services/group"
 
 export default {
     components: {
@@ -35,7 +36,7 @@ export default {
                     },
                 },
             ],
-            approvals: [
+            approvalss: [
                 {
                     id: 1,
                     member: "Tran Quang Duc",
@@ -67,10 +68,25 @@ export default {
                     mail: "tranquangduc@gmail.com",
                 },
             ],
-            actions: ['accept', 'delete']
+            actions: ['accept', 'delete'],
+            approvals: [],
         }
     },
+    beforeMount(){
+        this.getApprovals();
+    },
     methods: {
+        getApprovals(){
+            const approvals = Group.getApprovals()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.approvals = approvals;
+        },
         handleAction(e){
             // call api
         }

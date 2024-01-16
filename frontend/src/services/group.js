@@ -11,6 +11,14 @@ class Group {
             return response.data;
         })
     }
+
+    getApprovals(){
+        return axios
+        .get(API_URL + 'getApprovals', config)
+        .then(response => {
+            return response.data;
+        })
+    }
 }
 
 export default new Group();
