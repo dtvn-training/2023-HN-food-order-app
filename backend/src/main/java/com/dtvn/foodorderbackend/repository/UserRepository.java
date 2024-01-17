@@ -38,6 +38,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
             User.Role role,
             User.Status status
     );
+
+    List<User> findAllByStatus(User.Status status);
     @Modifying
     @Transactional
     @Query(value = "update User u set u.status = :status where u.email = :email")

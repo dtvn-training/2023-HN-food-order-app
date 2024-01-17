@@ -134,6 +134,9 @@ public class UserService implements UserDetailsService {
         return mapper.mapList(users, UserDTO.class);
     }
 
+    public List<User> getUserVerified(){
+        return userRepository.findAllByStatus(User.Status.VERIFIED);
+    }
 
     public void verifiedRegister(String email) {
         userRepository.updateStatusByEmail(User.Status.VERIFIED, email);
