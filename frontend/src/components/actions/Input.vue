@@ -9,10 +9,13 @@
         props: [
             'title',
             'value',
-            'disable'
+            'disable',
+            'style',
         ]
     }
 </script>
 <style scoped>
-
+    input{
+        widht: 100px
+    }
 </style>

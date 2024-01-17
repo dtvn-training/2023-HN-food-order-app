@@ -7,23 +7,20 @@
             <div class="wrapper">
                 <div class="left">
                     <ul>
-
                         <router-link to="/restaurants" class="router-link">
-                            <li :class="{ 'active': isActive == 'restaurants' }">
+                            <li :class="{ 'active': isActive == 'userRestaurants' }">
                                 <span>Đồ ăn</span>
                             </li>
                         </router-link>
 
-
                         <router-link to="/votes" class="router-link">
-                            <li :class="{ 'active': isActive == 'votes' }">
+                            <li :class="{ 'active': isActive == 'userVotes' }">
                                 <span>Bình chọn</span>
                             </li>
                         </router-link>
 
-
                         <router-link to="/payments" class="router-link">
-                            <li :class="{ 'active': isActive == 'payments' }">
+                            <li :class="{ 'active': isActive == 'userPayments' }">
                                 <span>Thanh toán</span>
                             </li>
                         </router-link>
@@ -36,7 +33,7 @@
                         <span>{{ balance }}</span>
                     </div>
                     <div class="cart">
-                        <Cart />
+                        <router-link to="/cart"><Cart /></router-link>
                     </div>
                     <div class="account" @click="menuDisplay = !menuDisplay">
                         <Account />
@@ -59,7 +56,7 @@
 <style scoped>
 .header {
     height: 80px;
-    background: #ffffff;
+    background: rgb(247, 247, 247);
     display: flex;
     justify-content: center;
 }

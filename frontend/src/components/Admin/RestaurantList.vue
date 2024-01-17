@@ -292,6 +292,7 @@ export default {
         saveRestaurantMenu(e) {
             this.categories = e;
             this.restaurantMenu = 0;
+            
         },
         async handleAction(e) {
             switch (e.name) {

@@ -75,7 +75,13 @@
 
 .rating {
     font-size: 12px;
-    margin: 2px 0 2px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+}
+.rating span{
+    margin-left: 3px;
+    margin-top: 5px;
 }
 </style>
 

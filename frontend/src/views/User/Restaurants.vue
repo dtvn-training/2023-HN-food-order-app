@@ -1,5 +1,18 @@
 <template>
-    <div class="wrapper">
+    <div class="restaurant">
+        <div class="title">
+            <span>Danh sách cửa hàng hôm nay</span>
+        </div>
+        <div class="searchBar">
+            <Search
+                placeholder="Tên cửa hàng"
+                value=""
+                width="100%"
+                borderRadius="20px"
+                height="40px"
+            />
+        </div>
+        <div class="wrapper">
         <div v-for="restaurant in restaurants">
             <Card 
                 :img="restaurant.img"
@@ -9,6 +22,7 @@
             />
         </div>
     </div>
+    </div>
 </template>
 <style scoped>
 .wrapper {
@@ -16,16 +30,30 @@
     width: 100%;
     /* background-color: rgb(162, 149, 196); */
     display: grid;
-      grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: 20px;
+}
+.title {
+    font-size: 45px;
+    padding-left: 10px;
+    font-weight: 500;
+    color: rgb(56, 56, 56);
+    margin-top: 20px;
+}
+.searchBar{
+    margin: 10px 0 10px;
+    padding: 0 10px 0 10px;
 }
 </style>
 
 <script>
 import Card from "@/components/user/Card.vue"
+import Search from "@/components/actions/Search1"
 
 export default {
     components: {
         Card,
+        Search
     },
     data() {
         return {

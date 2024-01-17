@@ -16,9 +16,12 @@
     display: grid;
     grid-template-rows: 80px auto auto;
 }
+.wrapper {
+    width: 1170px;
+}
 .main {
     height: auto;
-    background-color: rgb(247, 247, 247);
+    background-color: white;
     display: flex;
     justify-content: center;
 }
