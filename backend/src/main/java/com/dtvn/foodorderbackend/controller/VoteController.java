@@ -1,6 +1,8 @@
 package com.dtvn.foodorderbackend.controller;
 
 import com.dtvn.foodorderbackend.model.dto.request.VoteCreateRequest;
+import com.dtvn.foodorderbackend.model.dto.response.PresentVoteResponse;
+import com.dtvn.foodorderbackend.model.entity.PresentVote;
 import com.dtvn.foodorderbackend.service.VoteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.function.Function;
 
 import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.createError;
 import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.success;
@@ -33,7 +37,7 @@ public class VoteController {
 
     @GetMapping("/get-vote-present")
     public ResponseEntity<?> getVotingRestaurant() {
-        return ResponseEntity.ok().body(voteService.getVotePresent());
+        return ResponseEntity.ok().body(voteService.getVotePresent().stream().map(PresentVoteResponse::new));
     }
 
     @PostMapping("/vote-restaurant")
