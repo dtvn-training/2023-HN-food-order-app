@@ -2,19 +2,19 @@
     <div class="restaurantInfo">
         <div class="info">
             <div class="banner">
-                <img src="https://images.foody.vn/res/g2/13831/prof/s640x400/foody-upload-api-foody-mobile-bmi-huynh-hoa-190924151516.jpg"
+                <img :src="restaurant.image"
                     alt="">
             </div>
             <div class="detail">
                 <span class="shop">SHOP/CỬA HÀNG</span>
-                <div class="restaurant-name">Bia hơi Hà Nội</div>
+                <div class="restaurant-name">{{ restaurant.name }}</div>
                 <div class="address">
                     <Location />
-                    <span>142 Ba Đình, Quận Ba Đình, Hà Nội</span>
+                    <span>{{ restaurant.address }}</span>
                 </div>
                 <div class="rating">
                     <Star />
-                    <span>4.5</span>
+                    <span>{{ restaurant.rating }}</span>
                 </div>
                 <div class="open-time">
                     <Online />
@@ -28,10 +28,7 @@
                 </div>
                 <hr>
                 <div class="description">
-                    <span>Quán bia này là điểm hẹn lý tưởng cho những người yêu thưởng thức hương vị bia độc đáo. Với không
-                        gian ấm cúng và trang trí độc đáo, quán mang lại không khí thoải mái và thân thiện. Thực đơn đa dạng
-                        với nhiều loại bia nội địa và quốc tế, từ lagers nhẹ nhàng đến stouts đậm đà. Nhóm phục vụ tận tâm
-                        và kiến thức vững về bia, sẵn sàng tư vấn cho khách hàng chọn lựa phù hợp. </span>
+                    <span>{{ restaurant.description }}</span>
                 </div>
             </div>
         </div>
@@ -41,16 +38,16 @@
                 <span>THỰC ĐƠN</span>
                 <div class="wrapper">
                     <ul>
-                        <li v-for="category in categories">{{ category.name }}</li>
+                        <li v-for="category in restaurant.dishCategoryList">{{ category.name }}</li>
                     </ul>
                 </div>
             </div>
             <div class="foods">
                 <Search placeholder="Tên món ăn" width="100%" value="" />
                 <div class="food-category">
-                    <div v-for="category in categories">
+                    <div v-for="category in restaurant.dishCategoryList">
                         <div class="category-name">{{ category.name }}</div>
-                        <div class="food" v-for="food in category.foods">
+                        <div class="food" v-for="food in category.dishList">
                             <div class="image-name">
                                 <img :src="food.image" alt="">
                                 <div class="food-name">{{ food.name }}</div>
@@ -92,12 +89,11 @@
 }
 
 .restaurant-name {
-    font-size: 48px;
-    font-weight: 500;
-    padding-top: -10px;
-    height: 50px;
-    display: flex;
-    align-items: center;
+    font-size: 24px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: rgb(53, 53, 53);
 }
 
@@ -106,6 +102,7 @@
 .open-time span,
 .price span {
     margin-left: 4px;
+    font-size: 14px;
 }
 
 .open-time {
@@ -209,6 +206,7 @@
 .food-price {
     color: #066ECD;
     font-weight: 500;
+    text-align: center;
 }
 .category-name{
     font-size: 14px;
@@ -225,6 +223,7 @@ import Clock from "@/components/icons/Clock"
 import Online from "@/components/icons/Online"
 import Search from "@/components/actions/Search1"
 import Add from "@/components/icons/Add"
+import Restaurant from '@/services/restaurant.js'
 
 export default {
     components: {
@@ -308,10 +307,21 @@ export default {
                     ]
                 },
             ],
+            restaurant: [],
         }
     },
-    mounted() {
-        console.log(this.categories);
+    beforeMount(){
+        this.getRestaurant();
+    },
+    methods:{
+        async getRestaurant(){
+            const id = this.$route.params.id;
+            const restaurant = await Restaurant.getRestaurant(id)
+            .then(response => {
+                return response;
+            })
+            this.restaurant = restaurant;
+        }
     }
 }
 </script>

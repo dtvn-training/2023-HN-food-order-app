@@ -77,7 +77,7 @@ export const router  = new Router({
         },
         {
           name: 'restaurantInfo',
-          path: 'restaurants/1',
+          path: 'restaurants/:id',
           component: RestaurantInfo,
         },
         {

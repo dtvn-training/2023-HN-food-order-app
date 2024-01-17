@@ -43,7 +43,7 @@
                                 <li>Nạp tiền</li>
                                 <li>Lịch sử nạp tiền</li>
                                 <li>Nhóm</li>
-                                <li>Đăng xuất</li>
+                                <li @click="logout">Đăng xuất</li>
                             </ul>
                         </div>
                     </div>
@@ -183,6 +183,10 @@ export default {
         active(param) {
             this.isActive = param;
             this.$emit('menuActive', param);
+        },
+        logout(){
+            this.$store.dispatch('auth/logout');
+            this.$router.push('/login');
         }
     },
     computed: {

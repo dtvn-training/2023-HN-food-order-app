@@ -1,8 +1,7 @@
 <template>
     <div class="container">
         <div class="img">
-            <img :src="img"
-                alt="">
+            <img :src="img" alt="">
         </div>
         <div class="wrapper">
             <div class="restaurant-name">
@@ -55,11 +54,14 @@
     color: rgb(48, 48, 48);
     overflow: hidden;
 }
-.restaurant-name span{
+
+.restaurant-name span {
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.address{
+.address {
     font-size: 11px;
     margin-bottom: 5px;
     display: flex;
@@ -68,9 +70,11 @@
     overflow: hidden;
 }
 
-.address span{
+.address span {
     margin-left: 5px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .rating {
@@ -79,7 +83,8 @@
     display: flex;
     align-items: center;
 }
-.rating span{
+
+.rating span {
     margin-left: 3px;
     margin-top: 5px;
 }

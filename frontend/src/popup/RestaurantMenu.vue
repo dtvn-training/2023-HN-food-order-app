@@ -3,7 +3,7 @@
         <div class="restaurant-menu" @click.stop="">
             <div class="container">
                 <div class="header">
-                    <span>{{ header }}</span>
+                    <span>{{ restaurantName }}</span>
                 </div>
                 <hr>
                 <div class="menu">
@@ -46,6 +46,7 @@ export default {
     },
     props: [
         'categories',
+        'restaurantName'
     ],
     data() {
         return {

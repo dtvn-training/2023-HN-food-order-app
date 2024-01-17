@@ -18,6 +18,13 @@
 </template>
 
 <style scoped>
+    .votes, .vote-data {
+        height: 100%;
+    }
+    .votes {
+        display: grid;
+        grid-template-rows: 52px auto;
+    }
     .added { 
         display: flex;
         justify-content: end;

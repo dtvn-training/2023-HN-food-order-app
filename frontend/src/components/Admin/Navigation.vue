@@ -103,7 +103,6 @@ export default {
             }
         },
         logout() {
-            console.log("Logout");
             this.$store.dispatch('auth/logout');
             this.$router.push('/login');
         }

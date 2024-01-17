@@ -10,21 +10,27 @@
                 width="100%"
                 borderRadius="20px"
                 height="40px"
+                @textSearch="handleSearch"
             />
         </div>
         <div class="wrapper">
         <div v-for="restaurant in restaurants">
-            <Card 
+            <div class="cart" @click="handleOnClickCard(restaurant)">
+                <Card
                 :img="restaurant.img"
                 :restaurantName="restaurant.name"
                 :address="restaurant.address"
-                :star="restaurant.star"
+                :star="restaurant.rating"
             />
+            </div>
         </div>
     </div>
     </div>
 </template>
 <style scoped>
+.cart {
+    cursor: pointer;
+}
 .wrapper {
     height: auto;
     width: 100%;
@@ -49,6 +55,7 @@
 <script>
 import Card from "@/components/user/Card.vue"
 import Search from "@/components/actions/Search1"
+import Restaurant from '@/services/restaurant.js'
 
 export default {
     components: {
@@ -58,113 +65,42 @@ export default {
     data() {
         return {
             restaurants: [
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-                {
-                    id: 1,
-                    name: "Com chay HOang Ha",
-                    address: "123 truong chinh, dong da, ha noi, viet nam",
-                    star: 4.3,
-                    img: "https://images.foody.vn/res/g111/1103512/prof/s280x175/file_restaurant_photo_tztn_16321-c131f83c-210920135931.jpg",
-                },
-            ]
+            ],
+            textSearch:'',
+        }
+    },
+    beforeMount(){
+        this.getRestaurant();
+    },
+    methods:{
+        async getRestaurant(){
+            const restaurants = await Restaurant.getRestaurantToday([])
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.restaurants = restaurants;
+        },
+        handleOnClickCard(restaurant){
+            console.log(restaurant);
+            const id = restaurant.id;
+            this.$router.push({ name: 'restaurantInfo', params: { id } });
+        },
+        async handleSearch(e){
+            let params = new Map();
+            params.set('restaurantName', e);
+            const restaurants = await Restaurant.getRestaurantToday(params)
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.restaurants = restaurants;
         }
     }
 }

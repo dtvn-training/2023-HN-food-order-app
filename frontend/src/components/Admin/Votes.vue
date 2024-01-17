@@ -213,7 +213,7 @@
                         })
                         break;
                 }
-                this.datas = this.datas.filter(item => item.id != e.id);
+                this.votes = this.votes.filter(item => item.id != e.id);
             }
         }
     }

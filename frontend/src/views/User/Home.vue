@@ -18,6 +18,7 @@
 }
 .wrapper {
     width: 1170px;
+    min-height: 875px;
 }
 .main {
     height: auto;

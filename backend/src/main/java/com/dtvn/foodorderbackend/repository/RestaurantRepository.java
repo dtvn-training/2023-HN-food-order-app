@@ -36,7 +36,15 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
            where
            (:name is null or r.name like %:name%) and
            (:selected is null or r.selected = :selected) and
-           (:deleted is null or r.deleted = :deleted)
+           (r.deleted = false)
            """)
-    List<Restaurant> getByCategory(String name, Boolean selected, Boolean deleted);
+    List<Restaurant> getByCategory(String name, Boolean selected);
+
+    @Query(value = """
+            select * from restaurant where
+            (:name is null or name like %:name%) and
+            (selected = true) and
+            (deleted = false)
+            """, nativeQuery = true)
+    List<Restaurant> findRestaurantByName(String name);
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 100%;">
         <div class="payment-data">
             <Table
                 :columns="columns"
@@ -18,6 +18,8 @@
 <style>
 .payment-data{
     margin-top: 20px;
+    height: 100%;
+    padding-bottom: 25px;
 }
 </style>
  

@@ -3,6 +3,7 @@ package com.dtvn.foodorderbackend.controller.admin;
 import com.dtvn.foodorderbackend.mapper.Mapper;
 import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.model.dto.response.SimpleRestaurantResponse;
+import com.dtvn.foodorderbackend.model.entity.Restaurant;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
@@ -36,17 +37,18 @@ public class AdminRestaurantController {
     final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @GetMapping("/get-all-restaurant")
-    public ResponseEntity<?> getAllRestaurant() throws Exception {
-        List<SimpleRestaurantResponse> restaurants = restaurantService.getAllRestaurantInDatabase();
+    public ResponseEntity<?> getAllRestaurant(
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "selected", required = false) Boolean selected) throws Exception {
+        List<SimpleRestaurantResponse> restaurants = restaurantService.getAllRestaurantInDatabase(name, selected);
         return ResponseEntity.ok().body(restaurants);
     }
 
     @GetMapping("/get-by-criteria")
     public ResponseEntity<?> getRestaurantByCriteria(
             @RequestParam(name = "name", required = false) String name,
-            @RequestParam(name = "selected", required = false) Boolean selected,
-            @RequestParam(name = "deleted", required = false) Boolean deleted) throws Exception {
-        return ResponseEntity.ok().body(restaurantService.getByCategory(name, selected, deleted));
+            @RequestParam(name = "selected", required = false) Boolean selected) throws Exception {
+        return ResponseEntity.ok().body(restaurantService.getByCategory(name, selected));
     }
 
     @PostMapping("/add-restaurant-from-vote-to-database")
