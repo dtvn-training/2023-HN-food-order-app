@@ -31,9 +31,4 @@ public class AdminController {
     final RestaurantService restaurantService;
     @SuppressWarnings("unused")
     final Logger logger = LoggerFactory.getLogger(AdminController.class);
-
-
-
-
-
 }

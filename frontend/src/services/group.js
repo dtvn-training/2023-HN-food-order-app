@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/admin/auth/';
 class Group {
     getMembers(){
         return axios
-        .get(API_URL + 'get-users', config)
+        .get('http://localhost:8080/user/get-user-approved', config)
         .then(response => {
             return response.data;
         })

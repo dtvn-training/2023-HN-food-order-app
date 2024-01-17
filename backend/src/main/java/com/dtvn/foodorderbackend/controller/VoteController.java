@@ -3,7 +3,6 @@ package com.dtvn.foodorderbackend.controller;
 import com.dtvn.foodorderbackend.model.dto.request.VoteCreateRequest;
 import com.dtvn.foodorderbackend.service.VoteService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.success;
 @CrossOrigin
 public class VoteController {
     final VoteService voteService;
-    final HttpServletResponse response;
     final HttpServletRequest request;
 
     @PostMapping("/create-vote")
@@ -45,7 +43,7 @@ public class VoteController {
         return createError(HttpStatus.NOT_ACCEPTABLE, "Không tìm thấy quán ăn này hoặc bạn đã vote quán này rồi");
     }
 
-    @GetMapping("/get-my-vote")
+    @GetMapping("")
     public ResponseEntity<?> getMyVote() {
         long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
         return ResponseEntity.ok().body(voteService.getPresentVote(userId));

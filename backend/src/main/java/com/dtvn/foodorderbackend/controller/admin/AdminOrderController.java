@@ -5,6 +5,8 @@ import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.model.dto.response.ItemOrderDisplayResponse;
 import com.dtvn.foodorderbackend.model.entity.ItemOrder;
 import com.dtvn.foodorderbackend.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/order")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AdminOrderController {
     final OrderService orderService;
     final AdminController adminController;

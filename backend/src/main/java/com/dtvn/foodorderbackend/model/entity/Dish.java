@@ -32,7 +32,10 @@ public class Dish implements RecordEntity {
     DishCategory category;
 
     @Column(name = "active")
-    boolean active = true;
+    Boolean active;
+
+    @Column(name = "approved")
+    Boolean approved;
 
     public Dish(JsonObject data, DishCategory dishCategory) {
         this.category = dishCategory;

@@ -36,6 +36,8 @@
                             <Eye v-if="action == 'view'" />
                             <RadioChecked v-if="action == 'radio' && row.selected == 1" />
                             <RadioUncheck v-if="action == 'radio' && row.selected == 0" />
+                            <HeartCheck v-if="action == 'heart' && row.selected == 1" />
+                            <HeartUncheck v-if="action == 'heart' && row.selected == 0" />
                         </div>
                     </div>
                 </div>
@@ -52,7 +54,8 @@
 </template>
 
 <script>
-
+import HeartCheck from "./icons/HeartCheck.vue"
+import HeartUncheck from "./icons/HeartUncheck.vue"
 import Accept from "./icons/Accept.vue"
 import Checked from "./icons/Checked.vue"
 import Uncheck from "./icons/Uncheck.vue"
@@ -76,6 +79,8 @@ export default {
         Pagination,
         Remove,
         Tag,
+        HeartCheck,
+        HeartUncheck,
     },
     props: {
         columns:{},
@@ -111,7 +116,7 @@ export default {
                 name,
                 id
             }
-            console.log(action);
+            // console.log(action);
             this.$emit('onClickAction', action)
         },
         handleValueInput(e){

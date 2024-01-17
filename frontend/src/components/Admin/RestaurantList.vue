@@ -11,8 +11,13 @@
         </div>
         <hr>
         <Table :columns="columns" :datas="restaurantList" :actions="actions" @onClickAction="handleAction" />
-        <RestaurantMenu v-if="restaurantMenu === 1" :categories="restaurant.dishCategoryList" @onClickCancel="cancelRestaurantMenu"
-            @onClickSave="saveRestaurantMenu" />
+        <RestaurantMenu 
+        v-if="restaurantMenu === 1" 
+            :categories="restaurant.dishCategoryList" 
+            :restaurantName="restaurant.name" 
+            @onClickCancel="cancelRestaurantMenu"
+            @onClickSave="saveRestaurantMenu" 
+        />
     </div>
 </template>
 
@@ -268,7 +273,7 @@ export default {
     },
     methods: {
         async getRestaurantList(){
-            const datas = await Restaurant.getAll()
+            const datas = await Restaurant.getAll([])
             .then(response => {
                     return response;
                 }
@@ -276,8 +281,8 @@ export default {
             .catch(error => {
                 console.log(error);
                 return [];
-            })
-            console.log(datas);
+            });
+
             datas.forEach(item => {
                 if (item.selected == false)item.selected = 0;
                 else item.selected = 1;
@@ -292,6 +297,7 @@ export default {
         saveRestaurantMenu(e) {
             this.categories = e;
             this.restaurantMenu = 0;
+            
         },
         async handleAction(e) {
             switch (e.name) {
@@ -320,7 +326,6 @@ export default {
                     });
                     break;
                 case 'view':
-                    this.restaurantMenu = 1;
                     let restaurant = await Restaurant.getRestaurant(e.id)
                     .then(response => {
                         return response;
@@ -330,6 +335,7 @@ export default {
                         return [];
                     })
                     this.restaurant = restaurant;
+                    this.restaurantMenu = 1;
                     console.log(restaurant);
                     break;
             }

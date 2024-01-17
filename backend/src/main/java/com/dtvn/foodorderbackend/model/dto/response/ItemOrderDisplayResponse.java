@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @Builder
 @Data
@@ -12,7 +14,7 @@ public class ItemOrderDisplayResponse {
 
     // table item_order
     long id;
-    Timestamp createdTime;
+    String createdTime;
     int quantity;
     // --> map = userId
 

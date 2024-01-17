@@ -20,7 +20,7 @@
         <div class="data">
             <Table
                 v-if="isPayment === 0"
-                :datas="datas"
+                :datas="orders"
                 :columns="columns"
                 :actions="actions"
                 :pagination=1
@@ -29,7 +29,7 @@
             <div class="payment" v-if="isPayment === 1">
                 <Table
                     style="margin-bottom: 20px;"
-                    :datas="fee"
+                    :datas="fees"
                     :columns="columnsPayment"
                     :actions="[]"
                     :pagination=0
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 <hr>
-                <button class="save">Save</button>
+                <button class="save" @click="save">Save</button>
             </div>
         </div>
     </div>
@@ -171,6 +171,7 @@ import Checked from '../icons/Checked.vue';
 import Uncheck from '../icons/Uncheck.vue';
 import Vector from '../icons/Vector.vue';
 import Table from '../Table.vue'
+import Order from '@/services/order.js'
 
 export default {
     components: {
@@ -194,7 +195,7 @@ export default {
                     }
                 },
                 {
-                    key: 'address',
+                    key: 'restaurantAddress',
                     header: 'Địa chỉ',
                     style: {
                         width: '40%',
@@ -222,32 +223,9 @@ export default {
                     }
                 },
             ],
-            fee: [
-                {
-                    id: 1,
-                    restaurantName: 'Bún chả phố cổ',
-                    address: 'Pho Co, Hà noi',
-                    price: 33000,
-                    fee: ''
-                },
-                {
-                    id: 2,
-                    restaurantName: 'Bún chả phố cổ',
-                    address: 'Pho Co, Hà noi',
-                    price: 33000,
-                    fee: ''
-                },
-                {
-                    id: 3,
-                    restaurantName: 'Bún chả phố cổ',
-                    address: 'Pho Co, Hà noi',
-                    price: 33000,
-                    fee: ''
-                },
-            ],
             columns: [
                 {
-                    key: 'orderAt',
+                    key: 'createdTime',
                     header: 'Thời gian',
                     style: {
                         width: '150px',
@@ -259,7 +237,7 @@ export default {
                     }
                 },
                 {
-                    key: 'employee',
+                    key: 'userFullName',
                     header: 'Nhân viên',
                     style: {
                         width: '20%',
@@ -270,7 +248,7 @@ export default {
                     }
                 },
                 {
-                    key: 'dish',
+                    key: 'dishName',
                     header: 'Tên món ăn',
                     style: {
                         width: '25%',
@@ -293,7 +271,7 @@ export default {
                     }
                 },
                 {
-                    key: 'price',
+                    key: 'unitPrice',
                     header: 'Giá',
                     style: {
                         width: '120px',
@@ -306,154 +284,63 @@ export default {
                 },
 
             ],
-            datas: [
-                {
-                    id: 1,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 2,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 3,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 4,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 5,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 6,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 7,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 8,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 9,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 10,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 11,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 12,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-                {
-                    id: 13,
-                    orderAt: '10:43 20/12/2023',
-                    employee: 'Nguyen Van A',
-                    dish: 'Bún chả',
-                    quantity: 1,
-                    selected: 0,
-                    price: 33000
-                },
-            ],
+            fees: [],
             actions: ['check', 'remove'],
             isSelectAll: 0,
             isPayment: 0,
             discount: '',
+            orders: [],
         }
     },
+    beforeMount(){
+        this.getOrders();
+    },
     methods: {
+        async getOrders(){
+            const orders = await Order.getOrders()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            orders.forEach(item => {
+                item.selected = 0;
+            });
+            this.orders = orders;
+        },
         selectAll() {
             this.isSelectAll = +!this.isSelectAll;
             if (this.isSelectAll == 1){
-                this.datas.forEach(item => {
+                this.orders.forEach(item => {
                     item.selected = 1;
                 })
             }else {
-                this.datas.forEach(item =>{
+                this.orders.forEach(item =>{
                     item.selected = 0;
                 })
             }
         },
         handleOrder(){
             this.isPayment = 1;
+            let restaurantIdMap = {};
+            this.orders.forEach(item => {
+                if (item.selected == 1)
+                if (!restaurantIdMap[item.restaurantId]){
+                    this.fees.push(item);
+                    restaurantIdMap[item.restaurantId] = true;
+                }
+            })
         },
         handleBack(){
             this.isPayment = 0;
+            this.fees = [];
         },
         handleAction(e){
             switch(e.name){
                 case 'check':
-                    this.datas.forEach(item => {
+                    this.orders.forEach(item => {
                         if (item.id === e.id){
                             item.selected = +!item.selected;
                             return;
@@ -461,17 +348,38 @@ export default {
                     })
                     break;
                 case 'remove':
-                    this.datas = this.datas.filter(item => e.id !== item.id);
+                    Order.delete(e.id);
+                    this.orders = this.orders.filter(item => e.id !== item.id);
                     break;
             }
         },
         handleValueInput(e){
-            this.fee.forEach(item => {
+            this.fees.forEach(item => {
                 if (item.id == e.id){
                     item.fee = e.value;
                     return;
                 }
             })
+        },
+        save(){
+            let orderIds = [];
+            this.orders.forEach(item => {
+                if (item.selected == 1)orderIds.push(item.id);
+            });
+            let restaurantIds = [];
+            let restaurantFees = [];
+            this.fees.forEach(item => {
+                restaurantIds.push(item.restaurantId);
+                restaurantFees.push(item.fee);
+            })
+            const body = {
+                orderIds, 
+                restaurantIds,
+                restaurantFees,
+                discount: this.discount,
+            }
+            Order.order(body);
+            
         }
     }
 }

@@ -28,7 +28,7 @@ public class DishCategory implements RecordEntity {
     Restaurant restaurant;
 
     @Column(name = "active")
-    boolean active = true;
+    Boolean active;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Dish> dishList;

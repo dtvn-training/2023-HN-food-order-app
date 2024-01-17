@@ -34,6 +34,14 @@ class Vote {
             return error;
         })
     }
+    userGetVote(){
+        const url = 'http://localhost:8080/vote/get-vote-present';
+        return axios
+        .get(url, config)
+        .then(response => {
+            return response.data;
+        })
+    }
 }
 
 export default new Vote();
