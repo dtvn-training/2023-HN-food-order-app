@@ -113,7 +113,9 @@ export default {
             }
             this.$store.dispatch('auth/login', user).then(
                 () => {
-                    if (this.$store.state.auth.user.role == "ADMIN") this.$router.push("/admin/restaurants");
+                    if (this.$store.state.auth.user.role == "ADMIN") {
+                        this.$router.push("/admin/restaurants");
+                    }
                 },
                 (error) => {
                     this.loading = false;
@@ -152,7 +154,7 @@ export default {
         },
         verify() {
             this.otp = this.otp.trim();
-            if (this.otp == "")this.$message.warning("Không được bỏ trống!");
+            if (this.otp == "") this.$message.warning("Không được bỏ trống!");
 
             const user = {
                 email: this.email,

@@ -29,7 +29,7 @@ public class AdminOrderController {
 
     @GetMapping("/get-list-order")
     public ResponseEntity<?> getAllActiveItemOrder() throws Exception {
-        List<ItemOrderDisplayResponse> responses = orderService.getAllItemOrderNotApproved().stream().map(ItemOrder::toDisplayResponse).toList();
+        List<ItemOrderDisplayResponse> responses = orderService.getAll().stream().map(ItemOrder::toDisplayResponse).toList();
         return ResponseEntity.ok().body(responses);
     }
 

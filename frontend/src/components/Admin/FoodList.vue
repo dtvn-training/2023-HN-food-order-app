@@ -2,7 +2,7 @@
     <div class="food-list">
         <Table 
             :columns="columns"
-            :datas="datas"
+            :datas="foods"
             :actions="actions"
             @onClickAction="handleAction"
         />
@@ -19,6 +19,7 @@
 
 <script>
 import Table from "../Table.vue"
+import Food from "@/services/food"
 
 export default {
     data() {
@@ -183,14 +184,28 @@ export default {
                     price: 33000
                 },
             ],
-            actions: ['remove']
-
+            actions: ['remove'],
+            foods: []
         }
     },
     components: {
         Table,
     },
+    beforeMount(){
+        this.getFoods();
+    },
     methods: {
+        async getFoods(){
+            const foods = await Food.getAll()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.foods = foods;
+        },
         handleAction(e) {
             // call api remove food from food-group
             this.datas = this.datas.filter(item => item.id != e.id)

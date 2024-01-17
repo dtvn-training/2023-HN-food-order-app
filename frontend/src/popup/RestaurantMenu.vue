@@ -9,7 +9,7 @@
                 <div class="menu">
                     <div class="category" v-for="category in categoriesResult">
                         <div class="category-name">{{ category.name }}</div>
-                        <div class="food" v-for="food in category.foods">
+                        <div class="food" v-for="food in category.dishList">
                             <div style="display: flex; align-item:center">
                                 <img class="food-img" :src="food.image" alt="">
                                 <span class="name">{{ food.name }}</span>
@@ -17,8 +17,8 @@
                             <div style="display: flex;align-item:center">
                                 <span class="price">{{ food.price + 'đ' }}</span>
                                 <div class="radio-btn" @click="selectedFood(food.id)">
-                                    <RadioChecked v-if="food.selected === 1" />
-                                    <RadioUncheck v-if="food.selected === 0" />
+                                    <RadioChecked v-if="food.active == true" />
+                                    <RadioUncheck v-if="food.active === false" />
                                 </div>
                             </div>
                         </div>
@@ -56,9 +56,9 @@ export default {
     methods: {
         selectedFood(id) {
             this.categoriesResult.forEach(item => {
-                item.foods.forEach(food => {
+                item.dishList.forEach(food => {
                     if (food.id == id){
-                        food.selected = +!food.selected;
+                        food.active = !food.active;
                         return;
                     }
                 })

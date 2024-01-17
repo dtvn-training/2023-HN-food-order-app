@@ -11,7 +11,7 @@ class AuthService {
       })
       .then(response => {
         if (response.data.token) {
-          localStorage.setItem('user', JSON.stringify(response.data.token));
+          localStorage.setItem('user', JSON.stringify(response.data.token).replace(/\"/g, ""));
         }
         return response.data;
       });
@@ -29,7 +29,7 @@ class AuthService {
   }
 
   verifyRegister(user) {
-    return axios.post(API_URL + 'verify_register', {
+    return axios.post(API_URL + 'verify-register', {
       email: user.email,
       otp: user.otp,
     })

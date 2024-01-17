@@ -1,7 +1,7 @@
 import AuthService from '../../services/authen.js';
-import { jwtDecode } from "jwt-decode";
 
-const user = JSON.parse(localStorage.getItem('user'));
+const user = localStorage.getItem('user');
+// console.log(user);
 const initialState = user
     ? { status: { loggedIn: true }, user }
     : { status: { loggedIn: false }, user: null };
@@ -20,8 +20,6 @@ export const auth = {
         login({ commit }, user) {
             return AuthService.login(user).then(
                 user => {
-                    const token = localStorage.getItem('user');
-                    const decode = jwtDecode(token);
                     commit('loginSuccess', user);
                     return Promise.resolve(user);
                 },
@@ -51,12 +49,10 @@ export const auth = {
             return AuthService.verifyRegister(user).then(
                 response => {
                     commit('registerSuccess');
-                    console.log(response.data);
                     return Promise.resolve(response.data);
                 },
                 error => {
                     commit('registerFailure');
-                    console.log(response.data);
                     return Promise.reject(error);
                 }
             )

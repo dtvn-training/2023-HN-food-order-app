@@ -142,7 +142,13 @@ public class OrderService {
 
 
     public List<ItemOrder> getAllItemOrderNotApproved() {
-        return itemOrderRepository.findAllByApprovedFalseAndDeletedFalse();
+        List<ItemOrder> itemOrderList = itemOrderRepository.findByApprovedAndDeleted(false, false);
+        return itemOrderList;
+    }
+
+    public List<ItemOrder> getAll() {
+        List<ItemOrder> itemOrderList = itemOrderRepository.findAll();
+        return itemOrderList;
     }
 
     public boolean deleteOrderItem(long orderId) {

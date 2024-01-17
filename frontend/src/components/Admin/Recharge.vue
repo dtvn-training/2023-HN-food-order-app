@@ -33,7 +33,7 @@
         <div class="main">
             <Table
                 :columns="columns"
-                :datas="bills"
+                :datas="recharges"
                 :actions="actions"
                 @onClickAction="handleAction"
             />
@@ -46,6 +46,7 @@ import Select from "@/components/actions/Select.vue"
 import DatePick from "@/components/actions/DatePick.vue"
 import Refresh from "@/components/icons/Refresh.vue"
 import Table from "../Table.vue";
+import Payment from "@/services/payment"
 
 export default {
     components: {
@@ -190,9 +191,24 @@ export default {
                 },
             ],
             actions: ['view'],
+            recharges: [],
         }
     },
+    beforeMount(){
+        this.getRecharge();
+    },
     methods: {
+        async getRecharge(){
+            const recharges = await Payment.getRecharge()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.recharges = recharges;
+        },
         handleReset(){
             location.reload();
             // this.textSearch = '';

@@ -8,8 +8,9 @@
 </template>
 
 <script>
-import Search from "../components/actions/Search1.vue"
-import Table from "./Table.vue";
+import Search from "@/components/actions/Search1.vue"
+import Table from "@/components/Table.vue";
+import Group from "@/services/group"
 
 export default {
     components: {
@@ -21,21 +22,21 @@ export default {
             inputTextSeach: '',
             columns: [
                 {
-                    key: 'member',
+                    key: 'fullName',
                     header: 'Tên thành viên',
                     style: {
                         width: '30%',
                     },
                 },
                 {
-                    key: 'mail',
+                    key: 'email',
                     header: 'Email',
                     style: {
                         width: '40%',
                     },
                 },
             ],
-            approvals: [
+            approvalss: [
                 {
                     id: 1,
                     member: "Tran Quang Duc",
@@ -67,12 +68,48 @@ export default {
                     mail: "tranquangduc@gmail.com",
                 },
             ],
-            actions: ['accept', 'delete']
+            actions: ['accept', 'delete'],
+            approvals: [],
         }
     },
+    beforeMount(){
+        this.getApprovals();
+    },
     methods: {
-        handleAction(e){
+        async getApprovals(){
+            const approvals = await Group.getApprovals()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+            this.approvals = approvals;
+        },
+        async handleAction(e){
+            const email = this.approvals.filter(item => item.id == e.id)[0].email;
             // call api
+            switch(e.name){
+                case 'accept':
+                    await Group.accept(email)
+                    .then(response => {
+                        this.approvals = this.approvals.filter(item => item.id != e.id)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    break;
+                case 'delete':
+                    await Group.delete(email)
+                    .then(response => {
+                        this.approvals = this.approvals.filter(item => item.id != e.id)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    break;
+            }
         }
     }
 }

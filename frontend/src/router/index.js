@@ -1,11 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/admin/Home.vue'
-import Restaurant from '@/views/admin/RestaurantContent.vue'
-import Food from '@/views/admin/FoodContent.vue'
-import Payment from '@/views/admin/PaymentContent.vue'
-import Group from '@/views/admin/GroupContent.vue'
+
+//Admin
+import HomeAdmin from '@/views/admin/Home.vue'
+import RestaurantAdmin from '@/views/admin/RestaurantContent.vue'
+import FoodAdmin from '@/views/admin/FoodContent.vue'
+import PaymentAdmin from '@/views/admin/PaymentContent.vue'
+import GroupAdmin from '@/views/admin/GroupContent.vue'
+//User
+import Home from '@/views/user/Home.vue'
+import RestaurantUser from '@/views/user/Restaurants.vue'
 import CompontTest from '@/components/ComponentTest.vue';
+import Payment from '@/views/user/Payment.vue'
+import Vote from '@/views/user/Vote.vue'
+
 import Login from '@/views/Login.vue'
 
 Vue.use(Router)
@@ -22,17 +30,38 @@ export const router  = new Router({
     },
     {
       path: '/admin',
+      component: HomeAdmin,
+      children: [
+        {
+          name: 'restaurants',
+          path: 'restaurants',
+          component: RestaurantAdmin,
+        },
+        {
+          name: 'foods',
+          path: 'foods',
+          component: FoodAdmin,
+        },
+        {
+          name: 'payments',
+          path: 'payments',
+          component: PaymentAdmin,
+        },
+        {
+          name: 'groups',
+          path: 'groups',
+          component: GroupAdmin,
+        }
+      ],
+    },
+    {
+      path: '/',
       component: Home,
       children: [
         {
           name: 'restaurants',
           path: 'restaurants',
-          component: Restaurant,
-        },
-        {
-          name: 'foods',
-          path: 'foods',
-          component: Food,
+          component: RestaurantUser,
         },
         {
           name: 'payments',
@@ -40,9 +69,9 @@ export const router  = new Router({
           component: Payment,
         },
         {
-          name: 'groups',
-          path: 'groups',
-          component: Group,
+          name: 'votes',
+          path: 'votes',
+          component: Vote,
         }
       ],
     },
