@@ -21,7 +21,7 @@
             return {
                 columns: [
                 {
-                    key: 'employee',
+                    key: 'createdName',
                     header: 'Nhân viên',
                     style: {
                         width: '20%',

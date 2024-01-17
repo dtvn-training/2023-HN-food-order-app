@@ -17,8 +17,8 @@
                             <div style="display: flex;align-item:center">
                                 <span class="price">{{ food.price + 'đ' }}</span>
                                 <div class="radio-btn" @click="selectedFood(food.id)">
-                                    <RadioChecked v-if="food.active == true" />
-                                    <RadioUncheck v-if="food.active === false" />
+                                    <RadioChecked v-if="food.approved == true" />
+                                    <RadioUncheck v-if="food.approved === false" />
                                 </div>
                             </div>
                         </div>
@@ -61,12 +61,12 @@ export default {
                 item.dishList.forEach(food => {
                     if (food.id == id) {
                         console.log(food);
-                        food.active = !food.active;
+                        food.approved = !food.approved;
                         // call api
                         const body = {
-                            active: food.active,
+                            approved: food.approved,
                         }
-                        Food.updatedActive(food.id, body)
+                        Food.update(food.id, body)
                             .then(response => {
                                 this.$message({
                                     message: 'Cập nhật thành công',

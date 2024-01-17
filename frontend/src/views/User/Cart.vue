@@ -16,15 +16,20 @@
                         <Checked v-if="order.selected == 1"/>
                         <Uncheck v-if="order.selected == 0"/>
                     </div>
-                    <div class="food">{{ order.foodName }}</div>
+                    <div class="food">{{ order.dishName }}</div>
                     <div class="restaurant">{{ order.restaurantName }}</div>
-                    <div class="price">{{ order.price }}</div>
+                    <div class="price">{{ order.unitPrice }}</div>
                     <div class="quantity">
-                        <div class="sub" @click="order.quantity > 1 ? order.quantity-- : handleDecrement(order)"><Sub/></div>
+                        <div class="sub" @click="handleDecrement(order)"><Sub/></div>
                         <input type="text" :value="order.quantity">
-                        <div class="plus" @click="order.quantity++"><Plus/></div>
+                        <div class="plus" @click="handleIncrement(order)"><Plus/></div>
                     </div>
                 </div>
+            </div>
+            <div class="order">
+                <button @click="order">
+                    Order
+                </button>
             </div>
         </div>
     </div>
@@ -82,6 +87,24 @@
         background: rgb(228, 228, 228);
         cursor: pointer;
     }
+    .order{
+        width: 100%;
+        margin-top: 80px;
+        display: flex;
+        justify-content: center;
+    }
+    .order button {
+        color: white;
+        background: #00bd78;
+        width: 110px;
+        height: 30px;
+        border-radius: 5px;
+        border: none;
+    }
+    .order button:hover{
+        cursor: pointer;
+        background: #01d889;
+    }
 </style>
 
 <script>
@@ -89,6 +112,8 @@ import Checked from "@/components/icons/Checked"
 import Uncheck from "@/components/icons/Uncheck"
 import Plus from '@/components/icons/Plus'
 import Sub from '@/components/icons/Sub'
+import Cart from '@/services/cart'
+import Order from '@/services/order'
 
 export default {
     components: {
@@ -99,45 +124,55 @@ export default {
     },
     data(){
         return {
-            orders: [
-                {
-                    id: 2,
-                    foodName:'Cơm rang dưa bò',
-                    restaurantName:'Cơm Rang Hà Nội',
-                    price: 34000,
-                    quantity: 1,
-                    selected: 1,
-                },
-                {
-                    id: 3,
-                    foodName:'Cơm rang dưa bò',
-                    restaurantName:'Cơm Rang Hà Nội',
-                    price: 34000,
-                    quantity: 1,
-                    selected: 0,
-                },
-                {
-                    id: 4,
-                    foodName:'Cơm rang dưa bò',
-                    restaurantName:'Cơm Rang Hà Nội',
-                    price: 34000,
-                    quantity: 1,
-                    selected: 0,
-                },
-                {
-                    id: 5,
-                    foodName:'Cơm rang dưa bò',
-                    restaurantName:'Cơm Rang Hà Nội',
-                    price: 34000,
-                    quantity: 1,
-                    selected: 0,
-                },
-            ]
+            orders: []
         }
     },
+    beforeMount(){
+        this.getOrders();
+    },
     methods: {
+        async getOrders(){
+            const orders = await Cart.list()
+            .then(response => {
+                return response;
+            }) 
+            orders.forEach(item => {
+                item.selected = 0;
+            })
+            this.orders = orders;
+        },
         handleDecrement(order){
-            this.orders = this.orders.filter(item => item.id != order.id);
+            if (order.quantity == 1){
+                Cart.delete(order.id);
+                this.orders = this.orders.filter(item => item.id != order.id);
+                return;
+            }
+            order.quantity--;
+            const body = {
+                userCartId: order.id,
+                quantity: order.quantity
+            }
+            Cart.updateQuantity(body);
+        },
+        handleIncrement(order){
+            order.quantity++;
+            const body = {
+                userCartId: order.id,
+                quantity: order.quantity
+            }
+            Cart.updateQuantity(body);
+        },
+        order(){
+            const body = [];
+            this.orders.forEach(item => {
+                if (item.selected == 1){
+                    body.push(item.id);
+                    Cart.delete(item.id);
+                    this.orders = this.orders.filter(item => item.id != item.id);
+                } 
+            })
+            Order.userOrder(body);
+
         }
     }
 }

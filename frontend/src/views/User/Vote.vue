@@ -48,6 +48,7 @@
 <script>
     import Table from "@/components/Table"
     import VoteCreate from "@/popup/VoteCreate.vue"
+    import Vote from '@/services/vote'
 
     export default {
         components: {
@@ -58,7 +59,7 @@
             return {
                 columns:[
                     {
-                        key: 'employee',
+                        key: 'createdName',
                         header: 'Nhân viên',
                         style: {
                             width: '20%',
@@ -69,7 +70,7 @@
                         },
                     },
                     {
-                        key: 'restaurant',
+                        key: 'restaurantName',
                         header: 'Quán ăn',
                         style: {
                             width: '25%',
@@ -102,20 +103,8 @@
                             style: ''
                         },
                     },
-                    {
-                        key: 'status',
-                        header: 'Trạng thái',
-                        style: {
-                            width: '15%',
-                            'text-align': 'center',
-                        },
-                        tag: {
-                            name: '',
-                            style: ''
-                        },
-                    },
                 ],
-                votes: [
+                votess: [
                     {
                         id: 1,
                         employee: "nguyen van an",
@@ -254,9 +243,21 @@
                 ],
                 actions:['heart'],
                 voteCreate: 0,
+                votes: []
             }
         },
+        beforeMount(){
+            this.getVotes();
+        },
         methods: {
+            async getVotes(){
+                const votes = await Vote.userGetVote()
+                .then(response => {
+                    return response;
+                })
+                this.votes = votes;
+                console.log(this.votes);
+            },
             handleAction(){
 
             },

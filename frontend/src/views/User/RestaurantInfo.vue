@@ -2,8 +2,7 @@
     <div class="restaurantInfo">
         <div class="info">
             <div class="banner">
-                <img :src="restaurant.image"
-                    alt="">
+                <img :src="restaurant.image" alt="">
             </div>
             <div class="detail">
                 <span class="shop">SHOP/CỬA HÀNG</span>
@@ -53,10 +52,12 @@
                                 <div class="food-name">{{ food.name }}</div>
                             </div>
                             <div class="food-price">{{ food.price }}</div>
-                            <Add/>
+                            <div @click="handleAdd(food.id)">
+                                <Add />
+                            </div>
                         </div>
                     </div>
-                          
+
                 </div>
             </div>
         </div>
@@ -184,21 +185,23 @@
     cursor: pointer;
 }
 
-.food{
+.food {
     display: grid;
     grid-template-columns: 75% 20% 5%;
     align-items: center;
     margin: 5px 0 5px;
 }
-.image-name{
+
+.image-name {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.food-name{
+.food-name {
     padding: 0 10px 0 10px;
 }
+
 .food img {
     width: 60px;
 }
@@ -208,7 +211,8 @@
     font-weight: 500;
     text-align: center;
 }
-.category-name{
+
+.category-name {
     font-size: 14px;
     margin-top: 25px;
     margin-bottom: 8px;
@@ -224,6 +228,7 @@ import Online from "@/components/icons/Online"
 import Search from "@/components/actions/Search1"
 import Add from "@/components/icons/Add"
 import Restaurant from '@/services/restaurant.js'
+import Cart from '@/services/cart'
 
 export default {
     components: {
@@ -237,90 +242,37 @@ export default {
     },
     data() {
         return {
-            categories: [
-                {
-                    name: 'GÀ MẸT',
-                    foods: [
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                    ]
-                },
-                {
-                    name: 'GÀ NGON',
-                    foods: [
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                    ]
-                },
-                {
-                    name: 'GÀ NGON NGUYÊN CON',
-                    foods: [
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                    ]
-                },
-                {
-                    name: 'LẨU THIÊN ÂN',
-                    foods: [
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                        {
-                            id: 1,
-                            image: 'https://images.foody.vn/res/g2/13831/s120x120/f30ffa0f-0cf6-40ff-811d-3eb98064-ae0c4fd0-221126094752.jpeg',
-                            name: 'Gà quay móc mật 1/2 con',
-                            price: '133000đ',
-                        },
-                    ]
-                },
-            ],
             restaurant: [],
         }
     },
-    beforeMount(){
+    beforeMount() {
         this.getRestaurant();
     },
-    methods:{
-        async getRestaurant(){
+    methods: {
+        async getRestaurant() {
             const id = this.$route.params.id;
             const restaurant = await Restaurant.getRestaurant(id)
-            .then(response => {
-                return response;
-            })
+                .then(response => {
+                    return response;
+                })
             this.restaurant = restaurant;
+        },
+        handleAdd(id) {
+            console.log(id);
+            const body = {
+                dishId: id,
+                quantity: 1,
+            }
+
+            Cart.addFood(body)
+            .then(response => {
+                console.log(response);
+                this.$message({
+                    message: response.message,
+                    type: 'success'
+                });
+            })
+
         }
     }
 }

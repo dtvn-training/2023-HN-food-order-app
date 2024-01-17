@@ -4,28 +4,51 @@ import com.dtvn.foodorderbackend.model.dto.request.DishUpdateActive;
 import com.dtvn.foodorderbackend.model.dto.response.DishRes;
 import com.dtvn.foodorderbackend.model.entity.Dish;
 import com.dtvn.foodorderbackend.repository.DishRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DishService {
-    @Autowired
-    private DishRepository dishRepository;
+    final DishRepository dishRepository;
 
+    public boolean approveDish(long dishId) {
+        Dish dish = dishRepository.findByActiveTrueAndApprovedFalseAndId(dishId);
+        if (dish == null) {
+            return false;
+        }
+        dish.setApproved(true);
+        dishRepository.save(dish);
+        return true;
+    }
+
+    public List<Dish> getDishApproved() {
+        return dishRepository.findAllByActiveTrueAndApprovedTrue();
+    }
+
+    public boolean disApproveDish(long dishId) {
+        Dish dish = dishRepository.findByActiveTrueAndApprovedTrueAndId(dishId);
+        if (dish == null) {
+            return false;
+        }
+        dish.setApproved(false);
+        dishRepository.save(dish);
+        return true;
+    }
 
     public List<DishRes> getDishes() {
         List<Dish> dishes = dishRepository.findAll();
         List<DishRes> response = new ArrayList<>();
         for(Dish item : dishes){
             response.add(DishRes.builder()
-                            .id(item.getId())
-                            .price(item.getPrice())
-                            .image(item.getImage())
-                            .name(item.getName())
-                            .restaurantName(item.getCategory().getRestaurant().getName())
+                    .id(item.getId())
+                    .price(item.getPrice())
+                    .image(item.getImage())
+                    .name(item.getName())
+                    .restaurantName(item.getCategory().getRestaurant().getName())
                     .build());
         }
         return response;

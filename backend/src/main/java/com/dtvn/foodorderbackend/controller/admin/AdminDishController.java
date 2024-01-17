@@ -16,12 +16,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/dishes")
 @CrossOrigin("*")
-@RequiredArgsConstructor
 public class AdminDishController {
     @Autowired
     private DishService dishService;
-    final HttpServletRequest request;
-    final HttpServletResponse response;
     @GetMapping
     public ResponseEntity<?> getDishSelected(){
         List<DishRes> response = dishService.getDishes();
@@ -31,12 +28,29 @@ public class AdminDishController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateActive(
             @PathVariable Long id,
-            @RequestBody DishUpdateActive request){
+            @RequestBody DishUpdateActive request) {
 
         request.setId(id);
-        if (dishService.updateActive(request)){
+        if (dishService.updateActive(request)) {
             return ResponseEntity.ok("Success");
         }
         return ResponseEntity.ok("Fail");
+    }
+
+    @PostMapping("/approve")
+    public ResponseEntity<?> approveDish(@RequestParam("id") long dishId) {
+        if (dishService.approveDish(dishId)) {
+            return success();
+        }
+        return createError(HttpStatus.NOT_ACCEPTABLE, "Không tồn tại mon ăn hoặc đã được thêm rồi");
+    }
+
+    @PostMapping("disapprove")
+    public ResponseEntity<?> disApproveDish(@RequestParam("id") long dishId){
+        if(dishService.disApproveDish(dishId)){
+            return success();
+        }
+        return createError(HttpStatus.NOT_ACCEPTABLE, "Không tồn tại mon ăn hoặc đã được xóa rồi");
+
     }
 }
