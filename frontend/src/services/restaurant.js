@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/admin/restaurant/';
 class Restaurant {
     getAll(){
         return axios
-        .get(API_URL + 'get-by-criteria', config)
+        .get(API_URL + 'get-all-restaurant', config)
         .then(response => {
             // console.log(response);
             return response.data;
@@ -51,6 +51,15 @@ class Restaurant {
         paramsResult = paramsResult.slice(0, -1);
         return await axios
         .delete(API_URL + 'remove-restaurant-from-database'+ paramsResult, config)
+        .then(response => {
+            return response.data;
+        })
+    }
+
+    getRestaurant(param){
+        const url = 'http://localhost:8080/user/get-detail-restaurant?id='+param
+        return axios
+        .get(url, config)
         .then(response => {
             return response.data;
         })

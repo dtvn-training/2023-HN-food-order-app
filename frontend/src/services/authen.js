@@ -29,7 +29,7 @@ class AuthService {
   }
 
   verifyRegister(user) {
-    return axios.post(API_URL + 'verify_register', {
+    return axios.post(API_URL + 'verify-register', {
       email: user.email,
       otp: user.otp,
     })

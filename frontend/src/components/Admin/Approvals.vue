@@ -22,14 +22,14 @@ export default {
             inputTextSeach: '',
             columns: [
                 {
-                    key: 'member',
+                    key: 'fullName',
                     header: 'Tên thành viên',
                     style: {
                         width: '30%',
                     },
                 },
                 {
-                    key: 'mail',
+                    key: 'email',
                     header: 'Email',
                     style: {
                         width: '40%',
@@ -76,8 +76,8 @@ export default {
         this.getApprovals();
     },
     methods: {
-        getApprovals(){
-            const approvals = Group.getApprovals()
+        async getApprovals(){
+            const approvals = await Group.getApprovals()
             .then(response => {
                 return response;
             })
@@ -87,8 +87,29 @@ export default {
             })
             this.approvals = approvals;
         },
-        handleAction(e){
+        async handleAction(e){
+            const email = this.approvals.filter(item => item.id == e.id)[0].email;
             // call api
+            switch(e.name){
+                case 'accept':
+                    await Group.accept(email)
+                    .then(response => {
+                        this.approvals = this.approvals.filter(item => item.id != e.id)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    break;
+                case 'delete':
+                    await Group.delete(email)
+                    .then(response => {
+                        this.approvals = this.approvals.filter(item => item.id != e.id)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    break;
+            }
         }
     }
 }

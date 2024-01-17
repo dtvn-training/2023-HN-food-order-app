@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin(value = "http://localhost:8000")
+@CrossOrigin()
 public class AuthController {
     final UserService userService;
     final AuthenticationManager authenticationManager;

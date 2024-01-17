@@ -45,7 +45,7 @@ export default {
             inputTextSeach: '',
             columns: [
                 {
-                    key: 'member',
+                    key: 'fullName',
                     header: 'Tên thành viên',
                     style: {
                         width: '30%',
@@ -56,7 +56,7 @@ export default {
                     }
                 },
                 {
-                    key: 'mail',
+                    key: 'email',
                     header: 'Email',
                     style: {
                         width: '40%',
@@ -114,7 +114,7 @@ export default {
     },
     methods: {
         async getMember(){
-            const members = Group.getMember()
+            const members = await Group.getMembers()
             .then(response => {
                 return response;
             })
@@ -128,13 +128,18 @@ export default {
             this.inputTextSeach = e;
             // Loc nhan vien
         },
-        handleAction(e){
-            switch(e.action) {
-                case 'accept':
-                    // call api accept
-                    break;
+        async handleAction(e){
+            const email = this.members.filter(item => item.id == e.id)[0].email;
+            switch(e.name) {
                 case 'delete':
                     // call api delete
+                    await Group.delete(email)
+                    .then(response => {
+                        this.members = this.members.filter(item => item.id != e.id)
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
                     break;
             }
         }

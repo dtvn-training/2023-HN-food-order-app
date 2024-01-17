@@ -21,6 +21,7 @@ import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.createEr
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
     final RestaurantService restaurantService;
     final UserService userService;

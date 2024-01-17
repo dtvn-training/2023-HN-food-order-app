@@ -196,13 +196,21 @@
                 });
                 this.votes = votes;
             },
-            handleAction(e){
-                switch(e.action){
+            async handleAction(e){
+                switch(e.name){
                     case 'accept':
                         // api accept vote
+                        await Vote.accept(e.id)
+                        .catch(error => {
+                            console.log(error);
+                        });
                         break;
                     case 'delete':
                         // api delete vote
+                        await Vote.reject(e.id)
+                        .catch(error => {
+                            console.log(error);
+                        })
                         break;
                 }
                 this.datas = this.datas.filter(item => item.id != e.id);

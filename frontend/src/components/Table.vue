@@ -111,7 +111,7 @@ export default {
                 name,
                 id
             }
-            // console.log(action);
+            console.log(action);
             this.$emit('onClickAction', action)
         },
         handleValueInput(e){

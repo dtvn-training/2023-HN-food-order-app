@@ -36,7 +36,7 @@ public class AdminAuthController {
     @GetMapping("/get-users")
     @Operation
     public ResponseEntity<?> getUserNotVerify(
-            @RequestParam(value = "fullName", required = false) @ValidFullName String fullName,
+            @RequestParam(value = "fullName", required = false) String fullName,
             @RequestParam(value = "email", required = false) @Email(message = "EMAIL NOT VALID") String email,
             @RequestParam(value = "role", required = false) User.Role role,
             @RequestParam(value = "status", required = false) User.Status status

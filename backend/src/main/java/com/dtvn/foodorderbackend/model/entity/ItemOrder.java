@@ -27,16 +27,16 @@ public class ItemOrder extends BaseEntity implements RecordEntity {
     Dish dish;
 
     @Column(name = "dish_id")
-    long dishId;
+    Long dishId;
 
     @Column(name = "quantity")
-    int quantity;
+    Integer quantity;
 
     @Column(name = "approved")
-    boolean approved = false;
+    Boolean approved;
 
     @Column(name = "deleted")
-    boolean deleted = false;
+    Boolean deleted;
 
     /**
      * Initial, approved set to false, when admin order this `ItemOrder` approved set to true

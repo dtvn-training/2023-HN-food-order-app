@@ -43,9 +43,9 @@ public class AdminRestaurantController {
 
     @GetMapping("/get-by-criteria")
     public ResponseEntity<?> getRestaurantByCriteria(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "selected", required = false) Boolean selected,
-            @RequestParam(value = "deleted", required = false) Boolean deleted) throws Exception {
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "selected", required = false) Boolean selected,
+            @RequestParam(name = "deleted", required = false) Boolean deleted) throws Exception {
         return ResponseEntity.ok().body(restaurantService.getByCategory(name, selected, deleted));
     }
 

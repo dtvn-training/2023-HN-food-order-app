@@ -11,7 +11,7 @@
         </div>
         <hr>
         <Table :columns="columns" :datas="restaurantList" :actions="actions" @onClickAction="handleAction" />
-        <RestaurantMenu v-if="restaurantMenu === 1" :categories="categories" @onClickCancel="cancelRestaurantMenu"
+        <RestaurantMenu v-if="restaurantMenu === 1" :categories="restaurant.dishCategoryList" @onClickCancel="cancelRestaurantMenu"
             @onClickSave="saveRestaurantMenu" />
     </div>
 </template>
@@ -56,98 +56,98 @@ export default {
                     }
                 },
             ],
-            datass: [
-                {
-                    id: 1,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA" target="_blank">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 2,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 1,
-                },
-                {
-                    id: 3,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 4,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 5,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 1,
-                },
-                {
-                    id: 6,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 7,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 8,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 1,
-                },
-                {
-                    id: 9,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 10,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 11,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 12,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 13,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 14,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-                {
-                    id: 15,
-                    name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
-                    description: 'Quán bún chả ngon nhất',
-                    selected: 0,
-                },
-            ],
+            // datass: [
+            //     {
+            //         id: 1,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA" target="_blank">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 2,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 1,
+            //     },
+            //     {
+            //         id: 3,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 4,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 5,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 1,
+            //     },
+            //     {
+            //         id: 6,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 7,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 8,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 1,
+            //     },
+            //     {
+            //         id: 9,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 10,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 11,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 12,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 13,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 14,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            //     {
+            //         id: 15,
+            //         name: '<a href="https://www.google.com/search?q=excel&sca_esv=592395163&tbm=isch&sxsrf=AM9HkKnyvP3uL3R-94r2eAwI5-eXy58epA">Bún chả mẹ Nga</a>',
+            //         description: 'Quán bún chả ngon nhất',
+            //         selected: 0,
+            //     },
+            // ],
             actions: ['check', 'view', 'delete'],
             statusOptions: [{
                 value: 'none',
@@ -172,94 +172,95 @@ export default {
             }],
             sortValue: 'none',
             restaurantMenu: 0,
-            categories: [
-                {
-                    name: "GA NGON",
-                    foods: [
-                        {
-                            id: 1,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc MaGa oc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa MMoc MaGa Moc MaGa Moc Mat",
-                            price: "133,000",
-                            selected: 0,
-                        },
-                        {
-                            id: 2,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 1,
-                        }
-                    ]
-                },
-                {
-                    name: "GA NGON",
-                    foods: [
-                        {
-                            id: 3,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 0,
-                        },
-                        {
-                            id: 4,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 1,
-                        }
-                    ]
-                },
-                {
-                    name: "GA NGON",
-                    foods: [
-                        {
-                            id: 5,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 0,
-                        },
-                        {
-                            id: 6,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 1,
-                        },
-                        {
-                            id: 7,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 0,
-                        },
-                        {
-                            id: 8,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 1,
-                        },
-                        {
-                            id: 9,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 0,
-                        },
-                        {
-                            id: 10,
-                            image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
-                            name: "Ga Moc Mat",
-                            price: "133,000",
-                            selected: 1,
-                        }
-                    ]
-                }
-            ],
+            // categories: [
+            //     {
+            //         name: "GA NGON",
+            //         foods: [
+            //             {
+            //                 id: 1,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc MaGa oc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa Moc MaGa MMoc MaGa Moc MaGa Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 0,
+            //             },
+            //             {
+            //                 id: 2,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 1,
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         name: "GA NGON",
+            //         foods: [
+            //             {
+            //                 id: 3,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 0,
+            //             },
+            //             {
+            //                 id: 4,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 1,
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         name: "GA NGON",
+            //         foods: [
+            //             {
+            //                 id: 5,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 0,
+            //             },
+            //             {
+            //                 id: 6,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 1,
+            //             },
+            //             {
+            //                 id: 7,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 0,
+            //             },
+            //             {
+            //                 id: 8,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 1,
+            //             },
+            //             {
+            //                 id: 9,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 0,
+            //             },
+            //             {
+            //                 id: 10,
+            //                 image: "https://cdn.tgdd.vn/2021/03/content/1-800x500-9.jpg",
+            //                 name: "Ga Moc Mat",
+            //                 price: "133,000",
+            //                 selected: 1,
+            //             }
+            //         ]
+            //     }
+            // ],
             restaurantList: [],
+            restaurant: {},
         }
     },
     beforeMount(){
@@ -276,6 +277,7 @@ export default {
                 console.log(error);
                 return [];
             })
+            console.log(datas);
             datas.forEach(item => {
                 if (item.selected == false)item.selected = 0;
                 else item.selected = 1;
@@ -291,12 +293,12 @@ export default {
             this.categories = e;
             this.restaurantMenu = 0;
         },
-        handleAction(e) {
+        async handleAction(e) {
             switch (e.name) {
                 case 'delete':
                     const params = new Map();
                     params.set('delivery_id', e.id);
-                    Restaurant.removeFoodUserList(params);
+                    await Restaurant.removeFoodUserList(params);
                     this.restaurantList = this.restaurantList.filter(item => item.id != e.id)
                     break;
                 case 'check':
@@ -319,6 +321,16 @@ export default {
                     break;
                 case 'view':
                     this.restaurantMenu = 1;
+                    let restaurant = await Restaurant.getRestaurant(e.id)
+                    .then(response => {
+                        return response;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        return [];
+                    })
+                    this.restaurant = restaurant;
+                    console.log(restaurant);
                     break;
             }
         }
