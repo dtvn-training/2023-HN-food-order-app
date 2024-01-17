@@ -1,6 +1,6 @@
 package com.dtvn.foodorderbackend.service;
 
-import com.dtvn.foodorderbackend.model.dto.request.DishUpdateActive;
+import com.dtvn.foodorderbackend.model.dto.request.DishUpdate;
 import com.dtvn.foodorderbackend.model.dto.response.DishRes;
 import com.dtvn.foodorderbackend.model.entity.Dish;
 import com.dtvn.foodorderbackend.repository.DishRepository;
@@ -40,7 +40,7 @@ public class DishService {
     }
 
     public List<DishRes> getDishes() {
-        List<Dish> dishes = dishRepository.findAll();
+        List<Dish> dishes = dishRepository.findAllByActiveTrueAndApprovedTrue();
         List<DishRes> response = new ArrayList<>();
         for(Dish item : dishes){
             response.add(DishRes.builder()
@@ -54,10 +54,11 @@ public class DishService {
         return response;
     }
 
-    public boolean updateActive(DishUpdateActive request) {
+    public boolean update(DishUpdate request) {
         Dish dish = dishRepository.findById(request.getId()).orElse(null);
         if (dish == null)return false;
-        dish.setActive(request.getActive());
+        if(request.getActive() != null)dish.setActive(request.getActive());
+        if(request.getApproved() != null)dish.setApproved(request.getApproved());
         dishRepository.save(dish);
         return true;
     }

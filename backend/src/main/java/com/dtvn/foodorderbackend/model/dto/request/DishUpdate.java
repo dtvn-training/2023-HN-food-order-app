@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DishUpdateActive {
+public class DishUpdate {
     private Long id;
     private Boolean active;
-    private String info;
+    private Boolean approved;
 }

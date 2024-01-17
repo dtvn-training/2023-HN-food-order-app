@@ -12,4 +12,6 @@ public interface DishRepository extends JpaRepository<Dish, Long> {
     Dish findByActiveTrueAndApprovedFalseAndId(long id);
     Dish findByActiveTrueAndApprovedTrueAndId(long id);
     List<Dish> findAllByActiveTrueAndApprovedTrue();
+
+    List<Dish> findByActiveTrue();
 }
