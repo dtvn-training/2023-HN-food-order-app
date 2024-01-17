@@ -25,10 +25,10 @@
                     </div>
                 </div>
                 <hr>
-                <div class="action">
+                <!-- <div class="action">
                     <button class="save" @click="save">Save</button>
                     <button class="reset" @click="reset">Reset</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -38,6 +38,7 @@
 import Logo from "../components/icons/Logo.vue";
 import RadioChecked from "../components/icons/RadioChecked.vue"
 import RadioUncheck from "../components/icons/RadioUncheck.vue"
+import Food from "@/services/food"
 
 export default {
     components: {
@@ -58,8 +59,20 @@ export default {
         selectedFood(id) {
             this.categoriesResult.forEach(item => {
                 item.dishList.forEach(food => {
-                    if (food.id == id){
+                    if (food.id == id) {
+                        console.log(food);
                         food.active = !food.active;
+                        // call api
+                        const body = {
+                            active: food.active,
+                        }
+                        Food.updatedActive(food.id, body)
+                            .then(response => {
+                                this.$message({
+                                    message: 'Cập nhật thành công',
+                                    type: 'success'
+                                });
+                            })
                         return;
                     }
                 })
@@ -96,7 +109,8 @@ export default {
     min-width: 550px;
     width: 60%;
     max-width: 730px;
-    height: 780px;
+    height: 95%;
+    max-height: 620px;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -127,7 +141,7 @@ export default {
 }
 
 .menu {
-    height: 645px;
+    height: 520px;
     overflow: auto;
     width: 100%;
     padding-left: 7px;
