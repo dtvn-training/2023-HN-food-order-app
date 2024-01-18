@@ -74,7 +74,7 @@ public class VoteService {
     }
 
     public boolean deletePresentVote(long presentVoteId) {
-        if (presentVoteRepository.findByActiveTrueAndId(presentVoteId) != null) {
+        if (presentVoteRepository.findByActiveTrueAndId(presentVoteId) == null) {
             return false;
         }
         presentVoteRepository.setActiveFalse(presentVoteId);
