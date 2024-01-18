@@ -24,9 +24,9 @@ public class ExcelUtil {
             headerRow.createCell(3).setCellValue("Discount");
             headerRow.createCell(4).setCellValue("Ship Fee");
             headerRow.createCell(5).setCellValue("Final Cost");
-            headerRow.createCell(6).setCellValue("Created By ID");
+            headerRow.createCell(6).setCellValue("Created By");
             headerRow.createCell(7).setCellValue("Created Time");
-            headerRow.createCell(8).setCellValue("Updated By ID");
+            headerRow.createCell(8).setCellValue("Updated By");
             headerRow.createCell(9).setCellValue("Last Update Time");
 
             int rowNum = 1;
@@ -71,7 +71,7 @@ public class ExcelUtil {
                 row.createCell(1).setCellValue(user.getFullName());
                 row.createCell(2).setCellValue(user.getEmail());
                 row.createCell(3).setCellValue(user.getStatus().toString());
-                row.createCell(4).setCellValue(user.getRole().toString());
+                row.createCell(4).setCellValue(user.getRole().name());
                 row.createCell(5).setCellValue(user.getBalance());
             }
             workbook.write(fileOut);
@@ -82,13 +82,4 @@ public class ExcelUtil {
         return null;
     }
 
-    public static byte[] workbookToByteArray(XSSFWorkbook workbook) {
-        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-            workbook.write(bos);
-            return bos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
-        }
-    }
 }
