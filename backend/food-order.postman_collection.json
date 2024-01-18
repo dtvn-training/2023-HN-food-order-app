@@ -46,7 +46,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=278577",
+							"raw": "https://gappapi.deliverynow.vn/api/dish/get-delivery-dishes?id_type=2&request_id=278577",
 							"protocol": "https",
 							"host": [
 								"gappapi",
@@ -56,7 +56,7 @@
 							"path": [
 								"api",
 								"dish",
-								"get_delivery_dishes"
+								"get-delivery-dishes"
 							],
 							"query": [
 								{
@@ -108,22 +108,271 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "get user not approved",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"name": "Transaction",
+					"item": [
+						{
+							"name": "ADMIN APPROVE Transaction",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/api/v1/transaction/approve?id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"api",
+										"v1",
+										"transaction",
+										"approve"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get not approved transaction",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/api/v1/transaction/get-not-approved-transaction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"api",
+										"v1",
+										"transaction",
+										"get-not-approved-transaction"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "dish",
+					"item": [
+						{
+							"name": "approve dish",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/dish/approve?id=10264340",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"dish",
+										"approve"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "10264340"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Export",
+					"item": [
+						{
+							"name": "get BILL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/export/get-bills",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"export",
+										"get-bills"
+									]
+								}
+							},
+							"response": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwMzU3NDYxNSwiZXhwIjoxNzAzNTc2MDU1fQ.a_87aYZfw2QPLDmM-SPMZw-FYHgKZ-KOe9rnALCIwEQ",
-									"type": "string"
+									"name": "New Request",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/admin/export/get-bills",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"admin",
+												"export",
+												"get-bills"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "raw",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "POST, PUT, GET, DELETE"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Origin, X-Requested-With, Content-Type, Accept, Key, Authorization"
+										},
+										{
+											"key": "Content-Disposition",
+											"value": "attachment; filename=\"bill.xlsx\""
+										},
+										{
+											"key": "Accept-Ranges",
+											"value": "bytes"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/octet-stream"
+										},
+										{
+											"key": "Content-Length",
+											"value": "3634"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 17 Jan 2024 18:46:35 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0013\u0000\u0000\u0000[Content_Types].xml�S�n�0\u0010����*6�PU\u0015�C\u001f�\u0016��\u0003\\{�X�%����]\u00078�R�\nq�cfgfW�d�q�ZCB\u0013|��|�*�*h㻆},^�{Va�^K\u001b<4�\u00076�N\u0016�\bXQ�ǆ�9�\u0007!P��$�\u0010�\u0013҆�d�c�D�j);\u0010��ѝP�g��E�M'O�ʕ����H7L�h���R���G��^�'�\u0003\u0007{\u0013�\b�zސʮ\u001bB��3\u001c�\u000b˙��h.�h�W�жF�\u000ej娄CQՠ똈���}ιL�U:\u0012\u0014D�\u0013����%އ����,�B���[�\t��\u001e ;˱�\t�{N��~��X�p�\u001cykOL�\u0004\u0018�kN�V��ܿBZ~����q\u0018��\u000f �a\u0019\u001fr��{O�\u0001PK\u0007\bz��q;\u0001\u0000\u0000\u001c\u0004\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000b\u0000\u0000\u0000_rels/.rels���j�0\f�_���8�`�Q��2�m��\u00014[ILb��ږ���.[K\n\u001b�($}�\u0007�v?�I�Q.���uӂ�h���\u001bx>=��@\u0015��p�H\u0006\"�~�}�\t�n����*\"\u0016\u0003�H�׺؁\u0002��\u0013���8\u0007�Z�^'�#��7m{��O\u0006�3��\u0019�G�\u0006u�ܓ\u0018�'��y|a\u001e�����D�\t��\u000el_\u0003EYȾ�\u0000���vql\u001f3�ML�eh\u0016���*�\u0004��\\3�Y0���oJ׏�\u0003\t:\u0014��^\b�\u001f�}\u0002PK\u0007\b��z��\u0000\u0000\u0000I\u0002\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0010\u0000\u0000\u0000docProps/app.xmlM��\n�0\u0010D��\u0010ro�z\u0010�4� �'{�\u000f\b��\u0006�MHV�盓z�\u0019��T��E�1e\u0017�����\u0002Ɇ�ѳ����:�No7jH!bb�Y�\u0007�V���\u0004�����T�)$o���0M��9ؗGb�7�\u0001pe�\u0011�*~�R�>��Y�EB��\u0014�\u0018nW\u0005������\u0000PK\u0007\b6n�!�\u0000\u0000\u0000�\u0000\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0011\u0000\u0000\u0000docProps/core.xmlm�]K�0\u0014��J�}��-s��C���8���.$Ƕ�|�D;��i�\u0015Ի$�s\u001eN�jwR#z\u0007�\u0007�kL�\f#���Aw5~l��\u0016#\u001f��|4\u001aj�\r�5��L\u0018\u0007\u0007g,�0�GQ�=\u0013��}\b�\u0011�E\u000f��4\u0012:�/�)\u001e��u�r��; y�m���%\u000f���ĮF|VJ�*�\u001b\u0017�\u0014\u0004FP��'4��\r���w`IV�䇕��)����\u001bQr��}X�O\u0006=]\u0000n���\t\u0007<�DQ���|'O��u��M��e�ф^�t��\r+������_g��XH\u000f�p3s�sE���|\u0002PK\u0007\b��-�\u0006\u0001\u0000\u0000�\u0001\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0014\u0000\u0000\u0000xl/sharedStrings.xml���j�0\u0010��\u000b}��{͟k�h\u0016�\"\u0014\n-t�\u0001D�5��Mbi߾i���s�;g�a���8�Oi�2��$�\u0010HݚN�c\t\u000f�:�p+��\n�<hͬ}�R\bf�>fY��\u0010�]\t{�\u001c!��rl\\l&�C��ر�G�&+���R�q@\u0014�\u0014���P\u0014N��]��(�ouR^l'-X�V��R�)����֫\t�r��J7\u0003��[8����\u001dx��2���W�\"�0u���M8䉸j��&\u0011&\u0011!\u0000gy�r�\u0010'<!��!7��4Y��q��U���ͪ�I�1��e2��g\u0012��\u0012?PK\u0007\b��s�\t\u0001\u0000\u0000�\u0002\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\r\u0000\u0000\u0000xl/styles.xml���n� \u0010��J}\u0007���d���&C%W��J]�9ۨpX@\"�O_0N�L\u001d:����\u001f���n4���ye���UA\t`c�®�\u001f��iKw���aҰ�\u0001\u0002�\u000e�\u0015�C\u0018^\u0018�M\u000fF��\u001d\u0000�Ik�\u0011!��c~p �O&�٦(��\u0011\n)/�dj\u0013<i�\tCE\u000b�x�Z�*k�\u0005^�or\u0016:*i���Xm\u001dQ(a\u0004Y�m�P\u0018�]�B��S3O\u0018��,o�0O��\u0019��%��[��Ii�;Ćf���\b\u0001\u001cֱ K~�\u0006�(Z�������}�91�8�\u0010/>Z'�\u0016nߟ%^jhC48��)\u0006;�t\u0018�51�Jt\u0016�NȋcI\"�\u0001��iu��\u001d{lI���L����_�8ВfL.\u0012�����ƒ����hv���\u000fPK\u0007\b����E\u0001\u0000\u0000�\u0002\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u000f\u0000\u0000\u0000xl/workbook.xml��MO�0\f��H���w�\u0014\u0010���iBڍ���5�\u001a-\u001f�\u00136~>i�\u0002GN�+?~�6�/�ę8�\u00184T+\u0005�B\u0017�\rG\r��׻gX��7�%��\u0010�I\u0014>$\rC�c-e�\u0006�Vq�P6}d��D>�42�I\u0003Q�N�+�$=�\u0000WC��qľ�\u001dmc��)䫄�a.m�`�\u0004�O�7\u0016\u00063U/�QC�.\u0011ȶ�6\u001f�.�\u0017���.�3��AM��\u0003Ν�)\u0002zҰ�Ή-f\u0004��5\u001axg\u001e@�Ȯ�j�,�r��~\u0003PK\u0007\bU����\u0000\u0000\u0000a\u0001\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u001a\u0000\u0000\u0000xl/_rels/workbook.xml.rels��Mk�0\f@���}q��\u0018�n/c����\u0000c+qh\"\u0019K�迟���@\u0007;�$��{\u000f��~Γy�\"#���i� \u0005�#\r\u000e^�O7�`D=E?1�\u0003b�n��8y�?$�YLE�8H���Z\t\tg/\rg����^�\f6�p�\u0003�U���r΀%�좃��\u001d��/\u0003�\u0003I�`|�Rˤ��:f����~\f���mF�\u000bv����\u001c�:���ׯ�������p9HB�Sy\u001dݵK~\u0004�\u0018����\u000bPK\u0007\b�\u0003;��\u0000\u0000\u00003\u0002\u0000\u0000PK\u0003\u0004\u0014\u0000\b\b\b\u0000�\r2X\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0018\u0000\u0000\u0000xl/worksheets/sheet1.xml��]o�0\u0014��'�? �/6�IH\u0005Tm�| U��m�\u0004̇\n\u0018\u00197�ϟ�\u001d:�����9/�~ �w��*�3�m!j\u001f�\u000b�,^�\")��G��~��>��ͻ\b���+K\u0007��G�R�\u001d�m��*j\u0017��&��U�t)3�6�GI\u001f�J�\u0010��UT�(��u7ђ<�у}\u00172�\u0003���S�K\u000b�V7�$�{W\u001c\u0013\u001f�-����K\u001e+�k%?x�Ɠ����Oi%<�>J�*.\u0007^d��']��\u001f��T\u0014xR\\,���`�-\u001el=�G���\u0001��Y����#d�ɞ sL�����\u00192f�\u001ddK��![��\u0000��dG�\\���m\u0006���A�3�r�����Z��\u0015��1}��\u0011��q�\u0016vL�3��\u0012:n�\u0019\u0003�=��\u001b�\u001fӃ\u0003_�\b\u001eg��\u0011��k��F\n���h�؝h��v��G:���hLؐ+-{:+�B\u001b�\u001f�q6\u001a\u001aQz]$\u001bD2���\u0017�\b�f\"��\u0016�fE�[\"�m�lV$�6F7�q6\u001a\u001a��H$\u0006�a\u0013e�%�YQ��I(%*}�.�Kd�B(.�J��\\_�CQ�T�]Ȓ��l�V���v���O\u0012�\u0003PK\u0007\b\u0014ɰ|�\u0001\u0000\u0000}\u0006\u0000\u0000PK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2Xz��q;\u0001\u0000\u0000\u001c\u0004\u0000\u0000\u0013\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000[Content_Types].xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X��z��\u0000\u0000\u0000I\u0002\u0000\u0000\u000b\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000|\u0001\u0000\u0000_rels/.relsPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X6n�!�\u0000\u0000\u0000�\u0000\u0000\u0000\u0010\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0002\u0000\u0000docProps/app.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X��-�\u0006\u0001\u0000\u0000�\u0001\u0000\u0000\u0011\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000i\u0003\u0000\u0000docProps/core.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X��s�\t\u0001\u0000\u0000�\u0002\u0000\u0000\u0014\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0004\u0000\u0000xl/sharedStrings.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X����E\u0001\u0000\u0000�\u0002\u0000\u0000\r\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\u0005\u0000\u0000xl/styles.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2XU����\u0000\u0000\u0000a\u0001\u0000\u0000\u000f\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000y\u0007\u0000\u0000xl/workbook.xmlPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X�\u0003;��\u0000\u0000\u00003\u0002\u0000\u0000\u001a\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\b\u0000\u0000xl/_rels/workbook.xml.relsPK\u0001\u0002\u0014\u0000\u0014\u0000\b\b\b\u0000�\r2X\u0014ɰ|�\u0001\u0000\u0000}\u0006\u0000\u0000\u0018\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000�\t\u0000\u0000xl/worksheets/sheet1.xmlPK\u0005\u0006\u0000\u0000\u0000\u0000\t\u0000\t\u0000?\u0002\u0000\u0000�\u000b\u0000\u0000\u0000\u0000"
 								}
 							]
-						},
+						}
+					]
+				},
+				{
+					"name": "Bill",
+					"item": [
+						{
+							"name": "GET BILL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/bill/get-bills?user_id=7",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"bill",
+										"get-bills"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "7"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get user not approved",
+					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/get_user_not_approved",
+							"raw": "http://localhost:8080/admin/auth/get-user-not-approved",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -131,7 +380,8 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"get_user_not_approved"
+								"auth",
+								"get-user-not-approved"
 							]
 						}
 					},
@@ -153,7 +403,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/approved_user?email=cuong2905say2@gmail.com",
+							"raw": "http://localhost:8080/admin/approved-user?email=cuong2905say2@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -161,7 +411,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"approved_user"
+								"approved-user"
 							],
 							"query": [
 								{
@@ -179,7 +429,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/fetch_data?url=https://shopeefood.vn/ha-noi/com-gia-bao-trieu-khuc",
+							"raw": "http://localhost:8080/admin/fetch-data?url=https://shopeefood.vn/ha-noi/com-gia-bao-trieu-khuc",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -187,7 +437,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"fetch_data"
+								"fetch-data"
 							],
 							"query": [
 								{
@@ -215,7 +465,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/get_all_restaurant",
+							"raw": "http://localhost:8080/admin/get-all-restaurant",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -223,7 +473,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"get_all_restaurant"
+								"get-all-restaurant"
 							]
 						}
 					},
@@ -245,7 +495,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/verify_user?username=cuongcuong1",
+							"raw": "http://localhost:8080/admin/verify-user?username=cuongcuong1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -253,7 +503,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"verify_user"
+								"verify-user"
 							],
 							"query": [
 								{
@@ -281,7 +531,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/get_users?fullName=NGUYEN%20MANH%20CUONG&username=cuongcuong",
+							"raw": "http://localhost:8080/admin/get-users?fullName=NGUYEN%20MANH%20CUONG&username=cuongcuong",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -289,7 +539,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"get_users"
+								"get-users"
 							],
 							"query": [
 								{
@@ -311,7 +561,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/add_restaurant_from_vote_to_database?id=1",
+							"raw": "http://localhost:8080/admin/add-restaurant-from-vote-to-database?id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -319,7 +569,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"add_restaurant_from_vote_to_database"
+								"add-restaurant-from-vote-to-database"
 							],
 							"query": [
 								{
@@ -337,7 +587,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/add_restaurant_from_database_to_user_list?delivery_id=104796",
+							"raw": "http://localhost:8080/admin/add-restaurant-from-database-to-user-list?delivery_id=104796",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -345,7 +595,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"add_restaurant_from_database_to_user_list"
+								"add-restaurant-from-database-to-user-list"
 							],
 							"query": [
 								{
@@ -363,7 +613,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/remove_restaurant_from_user_list?delivery_id=104796",
+							"raw": "http://localhost:8080/admin/remove-restaurant-from-user-list?delivery_id=104796",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -371,7 +621,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"remove_restaurant_from_user_list"
+								"remove-restaurant-from-user-list"
 							],
 							"query": [
 								{
@@ -389,7 +639,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/remove_restaurant_from_database?delivery_id=104796",
+							"raw": "http://localhost:8080/admin/remove-restaurant-from-database?delivery_id=104796",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -397,7 +647,7 @@
 							"port": "8080",
 							"path": [
 								"admin",
-								"remove_restaurant_from_database"
+								"remove-restaurant-from-database"
 							],
 							"query": [
 								{
@@ -415,7 +665,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/order/get_list_order",
+							"raw": "http://localhost:8080/admin/order/get-list-order",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -424,7 +674,7 @@
 							"path": [
 								"admin",
 								"order",
-								"get_list_order"
+								"get-list-order"
 							]
 						}
 					},
@@ -437,7 +687,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"orderIds\":[7,8,9,10],\r\n    \"restaurantIds\":[109159],\r\n    \"restaurantFees\":[50000]\r\n}",
+							"raw": "{\r\n    \"orderIds\":[11,12],\r\n    \"restaurantIds\":[109159],\r\n    \"restaurantFees\":[13212]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -466,7 +716,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/order/delete_order_item?order_id=10",
+							"raw": "http://localhost:8080/admin/order/delete-order-item?order_id=10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -475,13 +725,34 @@
 							"path": [
 								"admin",
 								"order",
-								"delete_order_item"
+								"delete-order-item"
 							],
 							"query": [
 								{
 									"key": "order_id",
 									"value": "10"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/restaurant/get-by-criteria",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"restaurant",
+								"get-by-criteria"
 							]
 						}
 					},
@@ -498,7 +769,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/vote/vote_restaurant?url=asdas",
+							"raw": "http://localhost:8080/vote/vote-restaurant?url=asdas",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -506,7 +777,7 @@
 							"port": "8080",
 							"path": [
 								"vote",
-								"vote_restaurant"
+								"vote-restaurant"
 							],
 							"query": [
 								{
@@ -533,7 +804,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/vote/create_vote",
+							"raw": "http://localhost:8080/vote/create-vote",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -541,7 +812,7 @@
 							"port": "8080",
 							"path": [
 								"vote",
-								"create_vote"
+								"create-vote"
 							]
 						}
 					},
@@ -553,7 +824,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/vote/get_my_vote",
+							"raw": "http://localhost:8080/vote/get-my-vote",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -561,7 +832,27 @@
 							"port": "8080",
 							"path": [
 								"vote",
-								"get_my_vote"
+								"get-my-vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET vote present",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/vote/get-vote-present",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"vote",
+								"get-vote-present"
 							]
 						}
 					},
@@ -579,7 +870,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"cuong2905say2@gmail.com\",\r\n    \"password\":\"cuong123\",\r\n    \"fullName\":\"NGUYEN MANH CUONG\"\r\n}",
+							"raw": "{\r\n    \"email\":\"cuong2905say@gmail.com\",\r\n    \"password\":\"cuong123\",\r\n    \"fullName\":\"NGUYEN MANH CUONG\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -613,7 +904,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"cuong2905say@gmail.com\",\r\n    \"password\": \"cuong123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"cuong2905say@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -652,7 +943,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/auth/verify_register",
+							"raw": "http://localhost:8080/api/v1/auth/verify-register",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -662,7 +953,75 @@
 								"api",
 								"v1",
 								"auth",
-								"verify_register"
+								"verify-register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/reset-password?email=cuong2905say@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "cuong2905say@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"cuong2905say@gmail.com\",\r\n    \"otp\":\"632981\",\r\n    \"newPassword\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"reset-password"
 							]
 						}
 					},
@@ -679,7 +1038,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/user/get_detail_restaurant?id=82774",
+							"raw": "http://localhost:8080/user/get-detail-restaurant?id=109159",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -687,12 +1046,12 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"get_detail_restaurant"
+								"get-detail-restaurant"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "82774"
+									"value": "109159"
 								}
 							]
 						}
@@ -715,7 +1074,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/user/get_restaurant_displayed",
+							"raw": "http://localhost:8080/user/get-restaurant-displayed",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -723,7 +1082,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"get_restaurant_displayed"
+								"get-restaurant-displayed"
 							]
 						}
 					},
@@ -748,6 +1107,55 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"cuong2905say@gmail.com\",\r\n    \"oldPassword\":\"cuong1234\",\r\n    \"newPassword\":\"cuong123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET USER APPROVED",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/get-user-approved",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"get-user-approved"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -760,7 +1168,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/cart/get_cart",
+							"raw": "http://localhost:8080/cart/get-cart",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -768,7 +1176,7 @@
 							"port": "8080",
 							"path": [
 								"cart",
-								"get_cart"
+								"get-cart"
 							]
 						}
 					},
@@ -789,7 +1197,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/cart/add_to_cart",
+							"raw": "http://localhost:8080/cart/add-to-cart",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -797,7 +1205,7 @@
 							"port": "8080",
 							"path": [
 								"cart",
-								"add_to_cart"
+								"add-to-cart"
 							]
 						}
 					},
@@ -818,7 +1226,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/cart/change_quantity",
+							"raw": "http://localhost:8080/cart/change-quantity",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -826,7 +1234,7 @@
 							"port": "8080",
 							"path": [
 								"cart",
-								"change_quantity"
+								"change-quantity"
 							]
 						}
 					},
@@ -838,7 +1246,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/cart/delete_cart?cart_id=14",
+							"raw": "http://localhost:8080/cart/delete-cart?cart_id=14",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -846,7 +1254,7 @@
 							"port": "8080",
 							"path": [
 								"cart",
-								"delete_cart"
+								"delete-cart"
 							],
 							"query": [
 								{
@@ -865,7 +1273,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    10,11\r\n]",
+							"raw": "[\r\n    10,12\r\n]",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -897,6 +1305,142 @@
 					"request": {
 						"method": "GET",
 						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Request the transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\":3332123\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/transaction/transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my transaction",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/transaction/get-transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"get-transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Transaction",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/transaction/delete-transaction?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"delete-transaction"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "dish",
+			"item": [
+				{
+					"name": "get dish approved",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bill",
+			"item": [
+				{
+					"name": "GET MY BILL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/bill/get-bills",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bill",
+								"get-bills"
+							]
+						}
 					},
 					"response": []
 				}
@@ -972,7 +1516,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwNDg3MTI5OCwiZXhwIjoxNzM2NDA3Mjk4fQ.y9v89QwfnQBnXRLLnF5TPcqtIlZyUQ8UcIXJKq7UbL4",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6Miwic3ViIjoiY3VvbmcyOTA1c2F5QGdtYWlsLmNvbSIsImlhdCI6MTcwNTUxMzQ3MSwiZXhwIjoxNzA4MTA1NDcxfQ.jMrfOa2i3deT-orMKfZEBqNg9JlNOtY0V3pqhvSN9mM",
 				"type": "string"
 			}
 		]
