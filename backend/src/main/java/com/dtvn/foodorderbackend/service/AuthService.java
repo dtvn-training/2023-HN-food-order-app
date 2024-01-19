@@ -27,13 +27,10 @@ public class AuthService {
     final HttpServletRequest request;
     final OtpService otpService;
     final ResetPasswordOtpRepository resetPasswordOtpRepository;
-    Logger logger = LoggerFactory.getLogger(AuthService.class);
+    final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     public AuthResponse login(@NonNull UserLoginRequest request) {
         // TODO: let AuthenticationManager
-//        System.out.println("Before AuthenticationManager do auth");
-//        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-//        System.out.println("If AuthenticationManager auth success, this line will appear");
         User user = userRepository.findUserByEmailAndStatus(request.getEmail(), User.Status.VERIFIED);
         if (user == null || !encoder.matches(request.getPassword(), user.getPassword())) {
             logger.info("failed to load user {}", request);
@@ -45,9 +42,6 @@ public class AuthService {
 
     public boolean resetPassword(String email) {
 
-        // logger.info("request is: {}",request);
-        // logger.info("user mapped is; {}",user);
-        // check user exist
         if (!userRepository.existsByEmail(email)) {
             return false;
         }

@@ -33,7 +33,7 @@ public class RestaurantService {
         return mapper.mapList(restaurants, SimpleRestaurantResponse.class);
     }
 
-    public List<Restaurant> getByCategory(String name,Boolean selected){
+    public List<Restaurant> getByCriteria(String name, Boolean selected){
         return restaurantRepository.getByCategory(name,selected);
     }
 
@@ -58,6 +58,7 @@ public class RestaurantService {
     }
 
     public List<RestaurantTodayRes> getRestaurantToday(String name){
+        // TODO: PENDING
         List<Restaurant> restaurants = restaurantRepository.findRestaurantByName(name);
 
         List<RestaurantTodayRes> response = new ArrayList<>();

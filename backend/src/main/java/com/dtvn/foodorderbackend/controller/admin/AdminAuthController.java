@@ -36,18 +36,18 @@ public class AdminAuthController {
     @GetMapping("/get-users")
     @Operation
     public ResponseEntity<?> getUserNotVerify(
-            @RequestParam(value = "fullName", required = false) String fullName,
+            @RequestParam(value = "fullName", required = false) @ValidFullName String fullName,
             @RequestParam(value = "email", required = false) @Email(message = "EMAIL NOT VALID") String email,
             @RequestParam(value = "role", required = false) User.Role role,
             @RequestParam(value = "status", required = false) User.Status status
-    ) throws Exception {
+    ) {
         return ResponseEntity.ok().body(userService.getUserByCriteria(fullName, email, role, status));
     }
 
     @PostMapping("/approve-user")
     public ResponseEntity<?> approveUserByEmail(
             @RequestParam(value = "email") @Email(message = "EMAIL NOT VALID") String email
-    ) throws Exception {
+    )  {
         userService.changeApprovedByEmail(email, true);
         return BaseResponse.success();
     }
@@ -55,13 +55,13 @@ public class AdminAuthController {
     @PostMapping("/disapprove-user")
     public ResponseEntity<?> disapproveUserByEmail(
             @RequestParam(value = "email") @Email(message = "EMAIL NOT VALID") String email
-    ) throws Exception {
+    ) {
         userService.changeApprovedByEmail(email, false);
         return BaseResponse.success();
     }
 
     @GetMapping("/get-user-not-approved")
-    public ResponseEntity<?> getUserNotApproved() throws Exception {
+    public ResponseEntity<?> getUserNotApproved() {
         return ResponseEntity.ok().body(mapper.mapList(userService.getUserNotApproved(), UserDTO.class));
     }
 

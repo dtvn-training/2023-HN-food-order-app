@@ -11,7 +11,6 @@ import com.dtvn.foodorderbackend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.proxy.EntityNotFoundDelegate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +30,8 @@ public class UserController {
     @GetMapping("/get-detail-restaurant")
     public ResponseEntity<?> getDetailRestaurant(@RequestParam("id") long deliveryId) {
         Restaurant restaurant = restaurantService.getRestaurantById(deliveryId);
-        if(restaurant == null){
-            return createError(HttpStatus.NOT_FOUND,"Không có cửa hàng này");
+        if (restaurant == null) {
+            return createError(HttpStatus.NOT_FOUND, "Không có cửa hàng này");
         }
         return ResponseEntity.ok().body(restaurant);
     }

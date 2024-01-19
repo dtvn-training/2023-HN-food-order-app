@@ -40,11 +40,5 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
            """)
     List<Restaurant> getByCategory(String name, Boolean selected);
 
-    @Query(value = """
-            select * from restaurant where
-            (:name is null or name like %:name%) and
-            (selected = true) and
-            (deleted = false)
-            """, nativeQuery = true)
     List<Restaurant> findRestaurantByName(String name);
 }

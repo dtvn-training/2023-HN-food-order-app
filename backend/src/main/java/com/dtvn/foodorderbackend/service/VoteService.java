@@ -74,23 +74,23 @@ public class VoteService {
         List<PresentVote> presentVotes = presentVoteRepository.findAllByActiveTrue();
         List<PresentVoteResponse> response = new ArrayList<>();
 
-        for (PresentVote item : presentVotes){
+        for (PresentVote item : presentVotes) {
             User user = userRepository.findUserById(item.getCreatedById()).orElse(null);
+            if (user == null) return null;
             response.add(PresentVoteResponse.builder()
-                            .id(item.getId())
-                            .createdName(user.getFullName())
-                            .userIdCreated(user.getId())
-                            .totalVote(item.getTotalVote())
-                            .restaurantName(item.getRestaurantName())
-                            .description(item.getDescription())
-                            .restaurantUrl(item.getRestaurantUrl())
+                    .id(item.getId())
+                    .createdName(user.getFullName())
+                    .userIdCreated(user.getId())
+                    .totalVote(item.getTotalVote())
+                    .restaurantName(item.getRestaurantName())
+                    .description(item.getDescription())
+                    .restaurantUrl(item.getRestaurantUrl())
                     .build());
         }
         return response;
     }
 
     public List<PresentVote> getPresentVote(long userId) {
-        // Bug to dung
         return presentVoteRepository.findAllByCreatedById(userId);
     }
 
@@ -99,10 +99,6 @@ public class VoteService {
             return false;
         }
         presentVoteRepository.setActiveFalse(presentVoteId);
-        return true;
-    }
-
-    public boolean getVoteFromUser(long userId) {
         return true;
     }
 }

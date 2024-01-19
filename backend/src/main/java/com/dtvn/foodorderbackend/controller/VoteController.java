@@ -33,14 +33,6 @@ public class VoteController {
     public ResponseEntity<?> getVotingRestaurant() {
         return ResponseEntity.ok().body(voteService.getVotePresent());
     }
-//    @GetMapping("")
-//    public ResponseEntity<?> GetVoteFromUser(){
-//        long userId = Integer.parseInt(String.valueOf(request.getAttribute("user_id")));
-//        if (voteService.getVoteFromUser(userId)){
-//            return ResponseEntity.ok("success");
-//        }
-//        return ResponseEntity.ok("fail");
-//    }
 
     @PostMapping("/vote-restaurant")
     public ResponseEntity<?> voteRestaurant(@RequestParam("present_vote_id") int presentVoteId) {

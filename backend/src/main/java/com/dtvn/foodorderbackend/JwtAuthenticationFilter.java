@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.PathMatcher;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.util.Arrays;
@@ -21,11 +20,6 @@ import java.util.Arrays;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-    final PathMatcher pathMatcher;
-    final JwtService jwtService;
-    final UserService userService;
-
     public static final String[] WHITE_LIST = {
             "/test",
             "/api/v1/auth/**",
@@ -35,9 +29,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/v3/api-docs/**",
             "/admin/export/get-bills"
     };
+    final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    final PathMatcher pathMatcher;
+    final JwtService jwtService;
+    final UserService userService;
 
     @Override
-    protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) {
         try {
             String auth = request.getHeader("Authorization");
             if (auth == null) {

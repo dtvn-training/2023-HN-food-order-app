@@ -3,7 +3,6 @@ package com.dtvn.foodorderbackend.controller.admin;
 import com.dtvn.foodorderbackend.mapper.Mapper;
 import com.dtvn.foodorderbackend.model.dto.response.BaseResponse;
 import com.dtvn.foodorderbackend.model.dto.response.SimpleRestaurantResponse;
-import com.dtvn.foodorderbackend.model.entity.Restaurant;
 import com.dtvn.foodorderbackend.service.RestaurantService;
 import com.dtvn.foodorderbackend.service.ShopeeFoodService;
 import com.dtvn.foodorderbackend.service.UserService;
@@ -39,7 +38,7 @@ public class AdminRestaurantController {
     @GetMapping("/get-all-restaurant")
     public ResponseEntity<?> getAllRestaurant(
             @RequestParam(name = "name", required = false) String name,
-            @RequestParam(name = "selected", required = false) Boolean selected) throws Exception {
+            @RequestParam(name = "selected", required = false) Boolean selected) {
         List<SimpleRestaurantResponse> restaurants = restaurantService.getAllRestaurantInDatabase(name, selected);
         return ResponseEntity.ok().body(restaurants);
     }
@@ -47,8 +46,8 @@ public class AdminRestaurantController {
     @GetMapping("/get-by-criteria")
     public ResponseEntity<?> getRestaurantByCriteria(
             @RequestParam(name = "name", required = false) String name,
-            @RequestParam(name = "selected", required = false) Boolean selected) throws Exception {
-        return ResponseEntity.ok().body(restaurantService.getByCategory(name, selected));
+            @RequestParam(name = "selected", required = false) Boolean selected) {
+        return ResponseEntity.ok().body(restaurantService.getByCriteria(name, selected));
     }
 
     @PostMapping("/add-restaurant-from-vote-to-database")
@@ -60,7 +59,7 @@ public class AdminRestaurantController {
     }
 
     @PostMapping("/add-restaurant-from-database-to-user-list")
-    public ResponseEntity<?> addRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) throws Exception {
+    public ResponseEntity<?> addRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) {
         if (restaurantService.addRestaurantFromDatabaseToUserList(deliveryId)) {
             return BaseResponse.success("Đã thêm cửa hàng này vào danh sách đặt món của NV");
         }
@@ -68,7 +67,7 @@ public class AdminRestaurantController {
     }
 
     @DeleteMapping("/remove-restaurant-from-user-list")
-    public ResponseEntity<?> removeRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) throws Exception {
+    public ResponseEntity<?> removeRestaurantFromDatabaseToUserList(@RequestParam("delivery_id") long deliveryId) {
         if (restaurantService.removeRestaurantFromUserList(deliveryId)) {
             return BaseResponse.success("Đã xóa xửa hàng khỏi danh sách đặt món của NV");
         }
@@ -76,7 +75,7 @@ public class AdminRestaurantController {
     }
 
     @DeleteMapping("/remove-restaurant-from-database")
-    public ResponseEntity<?> setRestaurantDeleted(@RequestParam("delivery_id") long deliveryId) throws Exception {
+    public ResponseEntity<?> setRestaurantDeleted(@RequestParam("delivery_id") long deliveryId) {
         if (restaurantService.setRestaurantDeleted(deliveryId)) {
             return BaseResponse.success("Đã ẩn cửa hàng này, nếu muốn hiển thị lại, hãy gọi API khác");
         }
@@ -85,7 +84,7 @@ public class AdminRestaurantController {
 
     @PostMapping("/delete-present-vote")
 //    @Operation(description = "id: vote present id")
-    public ResponseEntity<?> deletePresentVote(@RequestParam("id") long presentVoteId) throws Exception {
+    public ResponseEntity<?> deletePresentVote(@RequestParam("id") long presentVoteId) {
         if (voteService.deletePresentVote(presentVoteId)) {
             return BaseResponse.success("Đã xóa cửa hàng này");
         }

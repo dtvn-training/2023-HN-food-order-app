@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ public class ShopeeFoodService {
         if (deliveryId == 0) return null;
         return deliveryId;
     }
+
     public static class HttpGetWithHeaderFoody extends HttpGet {
         public HttpGetWithHeaderFoody(String uri) {
             super(uri);
@@ -55,9 +57,11 @@ public class ShopeeFoodService {
         }
 
         public String execute() throws Exception {
-            HttpResponse httpResponse = HttpClients.createDefault().execute(this);
-            InputStream inputStream = httpResponse.getEntity().getContent();
-            return StringUtil.getFromInputStream(inputStream);
+            try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+                HttpResponse httpResponse = httpClient.execute(this);
+                InputStream inputStream = httpResponse.getEntity().getContent();
+                return StringUtil.getFromInputStream(inputStream);
+            }
         }
     }
 }

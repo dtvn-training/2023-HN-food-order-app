@@ -19,7 +19,7 @@ public class AdminTransactionController {
     final HttpServletRequest httpServletRequest;
 
     @PostMapping("/approve")
-    public ResponseEntity<?> approveTransaction(@RequestParam("id") long transactionId) throws Exception {
+    public ResponseEntity<?> approveTransaction(@RequestParam("id") long transactionId) {
         if (transactionService.approveTransaction(transactionId)) {
             return success("Thành công");
         }
@@ -27,17 +27,17 @@ public class AdminTransactionController {
     }
 
     @GetMapping("/get-not-approved-transaction")
-    public ResponseEntity<?> getNotApprovedTransaction() throws Exception {
+    public ResponseEntity<?> getNotApprovedTransaction() {
         return ResponseEntity.ok().body(transactionService.getTransactionNotApproved());
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<?> getAllTransaction() throws Exception {
+    public ResponseEntity<?> getAllTransaction() {
         return ResponseEntity.ok().body(transactionService.getAllTransaction());
     }
 
     @GetMapping("/get-transaction-approved-by-me")
-    public ResponseEntity<?> getTransactionApprovedByMe() throws Exception {
+    public ResponseEntity<?> getTransactionApprovedByMe() {
         long adminId = Integer.parseInt(String.valueOf(httpServletRequest.getAttribute("user_id")));
 
         return ResponseEntity.ok().body(transactionService.getTransactionApprovedBy(adminId));

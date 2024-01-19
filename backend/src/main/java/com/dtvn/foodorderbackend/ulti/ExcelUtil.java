@@ -2,15 +2,19 @@ package com.dtvn.foodorderbackend.ulti;
 
 import com.dtvn.foodorderbackend.model.dto.response.UserDTO;
 import com.dtvn.foodorderbackend.model.entity.Bill;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 public class ExcelUtil {
+    static Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
     public static byte[] writeExcelBill(List<Bill> data) {
         try (XSSFWorkbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream fileOut = new ByteArrayOutputStream()) {
@@ -46,7 +50,7 @@ public class ExcelUtil {
             workbook.write(fileOut);
             return fileOut.toByteArray();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("{}", ExceptionUtils.getStackTrace(e));
         }
         return null;
     }
@@ -77,7 +81,7 @@ public class ExcelUtil {
             workbook.write(fileOut);
             return fileOut.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("{}",ExceptionUtils.getStackTrace(e));
         }
         return null;
     }
