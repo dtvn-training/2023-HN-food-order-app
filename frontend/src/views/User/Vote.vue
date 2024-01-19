@@ -255,6 +255,9 @@
                 .then(response => {
                     return response;
                 })
+                votes.forEach(item => {
+                    item.selected = 0;
+                })
                 this.votes = votes;
                 console.log(this.votes);
             },

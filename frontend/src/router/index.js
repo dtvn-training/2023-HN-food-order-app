@@ -31,6 +31,10 @@ export const router  = new Router({
       component: Login
     },
     {
+      path: '/',
+      component: Login
+    },
+    {
       path: '/admin',
       component: HomeAdmin,
       children: [

@@ -308,6 +308,7 @@ export default {
             orders.forEach(item => {
                 item.selected = 0;
             });
+            console.log(orders);
             this.orders = orders;
         },
         selectAll() {
@@ -356,7 +357,7 @@ export default {
         handleValueInput(e){
             this.fees.forEach(item => {
                 if (item.id == e.id){
-                    item.fee = e.value;
+                    item.fee = +e.value;
                     return;
                 }
             })
@@ -366,6 +367,7 @@ export default {
             this.orders.forEach(item => {
                 if (item.selected == 1)orderIds.push(item.id);
             });
+            console.log(this.orders);
             let restaurantIds = [];
             let restaurantFees = [];
             this.fees.forEach(item => {
