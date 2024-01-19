@@ -115,6 +115,8 @@ export default {
                 () => {
                     if (this.$store.state.auth.user.role == "ADMIN") {
                         this.$router.push("/admin/restaurants");
+                    }else if (this.$store.state.auth.user.role == "USER"){
+                        this.$router.push("/restaurants");
                     }
                 },
                 (error) => {

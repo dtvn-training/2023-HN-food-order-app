@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     };
 
     @Override
-    protected void doFilterInternal(@NonNull @RequestHeader(name = "Authorization") HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) {
+    protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
         try {
             String auth = request.getHeader("Authorization");
             if (auth == null) {
@@ -68,6 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 filterChain.doFilter(request, response);
             } catch (Exception e) {
+//                System.out.println(e);
                 logger.error("{}", ExceptionUtils.getStackTrace(e));
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }

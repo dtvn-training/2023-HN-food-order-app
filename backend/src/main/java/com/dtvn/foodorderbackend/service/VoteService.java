@@ -1,15 +1,19 @@
 package com.dtvn.foodorderbackend.service;
 
+import com.dtvn.foodorderbackend.model.dto.response.PresentVoteResponse;
 import com.dtvn.foodorderbackend.model.entity.PresentVote;
+import com.dtvn.foodorderbackend.model.entity.User;
 import com.dtvn.foodorderbackend.model.entity.UserVote;
 import com.dtvn.foodorderbackend.repository.PresentVoteRepository;
 import com.dtvn.foodorderbackend.repository.RestaurantRepository;
+import com.dtvn.foodorderbackend.repository.UserRepository;
 import com.dtvn.foodorderbackend.repository.UserVoteRepository;
 import com.dtvn.foodorderbackend.ulti.TimeUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +22,7 @@ public class VoteService {
     final UserVoteRepository userVoteRepository;
     final RestaurantRepository restaurantRepository;
     final PresentVoteRepository presentVoteRepository;
+    final UserRepository userRepository;
 
     public boolean createVote(String restaurantUrl, long userId, String restaurantName, String description) {
         if (presentVoteRepository.existsByRestaurantUrl(restaurantUrl)) {
@@ -65,11 +70,27 @@ public class VoteService {
         userVoteRepository.save(userVote);
     }
 
-    public List<PresentVote> getVotePresent() {
-        return presentVoteRepository.findAllByActiveTrue();
+    public List<PresentVoteResponse> getVotePresent() {
+        List<PresentVote> presentVotes = presentVoteRepository.findAllByActiveTrue();
+        List<PresentVoteResponse> response = new ArrayList<>();
+
+        for (PresentVote item : presentVotes){
+            User user = userRepository.findUserById(item.getCreatedById()).orElse(null);
+            response.add(PresentVoteResponse.builder()
+                            .id(item.getId())
+                            .createdName(user.getFullName())
+                            .userIdCreated(user.getId())
+                            .totalVote(item.getTotalVote())
+                            .restaurantName(item.getRestaurantName())
+                            .description(item.getDescription())
+                            .restaurantUrl(item.getRestaurantUrl())
+                    .build());
+        }
+        return response;
     }
 
     public List<PresentVote> getPresentVote(long userId) {
+        // Bug to dung
         return presentVoteRepository.findAllByCreatedById(userId);
     }
 
@@ -78,6 +99,10 @@ public class VoteService {
             return false;
         }
         presentVoteRepository.setActiveFalse(presentVoteId);
+        return true;
+    }
+
+    public boolean getVoteFromUser(long userId) {
         return true;
     }
 }

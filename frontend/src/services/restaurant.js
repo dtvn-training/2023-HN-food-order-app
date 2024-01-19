@@ -4,9 +4,17 @@ import {config} from "./config"
 const API_URL = 'http://localhost:8080/admin/restaurant/';
 
 class Restaurant {
-    getAll(){
+    getAll(params){
+        let paramsResult = '';
+        params.forEach((key, value) => {
+            paramsResult = paramsResult + `${value}=${key}&`;
+        })
+        paramsResult = '?'+paramsResult;
+        paramsResult = paramsResult.slice(0, -1);
+        console.log('config',config);
+        console.log('token'+localStorage.getItem('user'));
         return axios
-        .get(API_URL + 'get-all-restaurant', config)
+        .get(API_URL + 'get-all-restaurant' + paramsResult, config)
         .then(response => {
             // console.log(response);
             return response.data;
@@ -14,7 +22,6 @@ class Restaurant {
     }
 
     async addFoodUserList(params){
-        console.log(params);
         let paramsResult = '';
         params.forEach((key, value) => {
             paramsResult = paramsResult + `${value}=${key}&`;
@@ -61,6 +68,21 @@ class Restaurant {
         return axios
         .get(url, config)
         .then(response => {
+            return response.data;
+        })
+    }
+
+    getRestaurantToday(params){
+        let paramsResult = '';
+        params.forEach((key, value) => {
+            paramsResult = paramsResult + `${value}=${key}&`;
+        })
+        paramsResult = '?'+paramsResult;
+        paramsResult = paramsResult.slice(0, -1);
+        return axios
+        .get('http://localhost:8080/restaurants' + paramsResult, config)
+        .then(response => {
+            // console.log(response);
             return response.data;
         })
     }

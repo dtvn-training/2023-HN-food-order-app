@@ -1,7 +1,7 @@
 <template>
     <div class="search">
         <img src="../../assets/search.png" alt="">
-        <input type="text" name="seach" :style="{'width': width}" :placeholder="placeholder" v-model="input">
+        <input type="text" name="seach" :style="{'width': width, 'border-radius': borderRadius, 'height': height}" :placeholder="placeholder" v-model="input">
     </div>
 </template>
 
@@ -41,7 +41,9 @@
         props: [
             'placeholder',
             'width',
-            'value'
+            'value',
+            'borderRadius',
+            'height'
         ],
         watch: {
             input () {

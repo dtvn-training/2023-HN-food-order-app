@@ -21,7 +21,7 @@
             return {
                 columns: [
                 {
-                    key: 'employee',
+                    key: 'createdName',
                     header: 'Nhân viên',
                     style: {
                         width: '20%',
@@ -213,7 +213,7 @@
                         })
                         break;
                 }
-                this.datas = this.datas.filter(item => item.id != e.id);
+                this.votes = this.votes.filter(item => item.id != e.id);
             }
         }
     }

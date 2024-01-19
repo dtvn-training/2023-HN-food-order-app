@@ -3,7 +3,7 @@
         <div class="restaurant-menu" @click.stop="">
             <div class="container">
                 <div class="header">
-                    <span>{{ header }}</span>
+                    <span>{{ restaurantName }}</span>
                 </div>
                 <hr>
                 <div class="menu">
@@ -17,18 +17,18 @@
                             <div style="display: flex;align-item:center">
                                 <span class="price">{{ food.price + 'đ' }}</span>
                                 <div class="radio-btn" @click="selectedFood(food.id)">
-                                    <RadioChecked v-if="food.active == true" />
-                                    <RadioUncheck v-if="food.active === false" />
+                                    <RadioChecked v-if="food.approved == true" />
+                                    <RadioUncheck v-if="food.approved === false" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <hr>
-                <div class="action">
+                <!-- <div class="action">
                     <button class="save" @click="save">Save</button>
                     <button class="reset" @click="reset">Reset</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -38,6 +38,7 @@
 import Logo from "../components/icons/Logo.vue";
 import RadioChecked from "../components/icons/RadioChecked.vue"
 import RadioUncheck from "../components/icons/RadioUncheck.vue"
+import Food from "@/services/food"
 
 export default {
     components: {
@@ -46,6 +47,7 @@ export default {
     },
     props: [
         'categories',
+        'restaurantName'
     ],
     data() {
         return {
@@ -57,8 +59,20 @@ export default {
         selectedFood(id) {
             this.categoriesResult.forEach(item => {
                 item.dishList.forEach(food => {
-                    if (food.id == id){
-                        food.active = !food.active;
+                    if (food.id == id) {
+                        console.log(food);
+                        food.approved = !food.approved;
+                        // call api
+                        const body = {
+                            approved: food.approved,
+                        }
+                        Food.update(food.id, body)
+                            .then(response => {
+                                this.$message({
+                                    message: 'Cập nhật thành công',
+                                    type: 'success'
+                                });
+                            })
                         return;
                     }
                 })
@@ -95,7 +109,8 @@ export default {
     min-width: 550px;
     width: 60%;
     max-width: 730px;
-    height: 780px;
+    height: 95%;
+    max-height: 620px;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -126,7 +141,7 @@ export default {
 }
 
 .menu {
-    height: 645px;
+    height: 520px;
     overflow: auto;
     width: 100%;
     padding-left: 7px;

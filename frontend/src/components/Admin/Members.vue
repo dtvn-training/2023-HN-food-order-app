@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="members">
         <div class="header">
             <Search width="476px" placeholder="Tên thành viên..." @textSearch="textSearchOnChange" />
         </div>
@@ -16,7 +16,7 @@
 </template>
 
 <style scoped>
-.container {
+.members {
     height: 100%;
     display: grid;
     grid-template-rows: 50px 1px auto;

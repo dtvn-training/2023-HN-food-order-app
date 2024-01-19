@@ -1,6 +1,7 @@
 package com.dtvn.foodorderbackend.model.entity;
 
 import com.dtvn.foodorderbackend.model.dto.response.ItemOrderDisplayResponse;
+import com.dtvn.foodorderbackend.ulti.TimeUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,10 +34,10 @@ public class ItemOrder extends BaseEntity implements RecordEntity {
     Integer quantity;
 
     @Column(name = "approved")
-    Boolean approved;
+    boolean approved;
 
     @Column(name = "deleted")
-    Boolean deleted;
+    boolean deleted;
 
     /**
      * Initial, approved set to false, when admin order this `ItemOrder` approved set to true
@@ -66,7 +67,7 @@ public class ItemOrder extends BaseEntity implements RecordEntity {
     public ItemOrderDisplayResponse toDisplayResponse() {
         return ItemOrderDisplayResponse.builder()
                 .id(id)
-                .createdTime(createdTime)
+                .createdTime(TimeUtil.formatToString(createdTime.toLocalDateTime(), "dd/MM/yyyy hh:mm"))
                 .dishName(dish.name)
                 .restaurantName(dish.getCategory().getRestaurant().name)
                 .restaurantId(dish.getCategory().getRestaurant().deliveryId)

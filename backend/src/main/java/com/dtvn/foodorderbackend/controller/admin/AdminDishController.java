@@ -1,23 +1,42 @@
 package com.dtvn.foodorderbackend.controller.admin;
 
+import com.dtvn.foodorderbackend.model.dto.request.DishUpdate;
+import com.dtvn.foodorderbackend.model.dto.response.DishRes;
 import com.dtvn.foodorderbackend.service.DishService;
-import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.createError;
 import static com.dtvn.foodorderbackend.model.dto.response.BaseResponse.success;
 
-@RequiredArgsConstructor
 @RestController
-@RequestMapping("/admin/dish")
+@RequestMapping("/admin/dishes")
+@CrossOrigin
 public class AdminDishController {
-    final DishService dishService;
+    @Autowired
+    private DishService dishService;
+    @GetMapping("")
+    public ResponseEntity<?> getDishSelected(){
+        List<DishRes> response = dishService.getDishes();
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(
+            @PathVariable Long id,
+            @RequestBody DishUpdate request) {
+
+        request.setId(id);
+        if (dishService.update(request)) {
+            return ResponseEntity.ok("Success");
+        }
+        return ResponseEntity.ok("Fail");
+    }
 
     @PostMapping("/approve")
     public ResponseEntity<?> approveDish(@RequestParam("id") long dishId) {

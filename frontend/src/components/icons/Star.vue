@@ -1,3 +1,3 @@
 <template>
-    <img src="../../assets/star.png" alt="" style="width:11px;height:11px">
+    <img src="../../assets/star.png" alt="" style="width:13px;height:13px">
 </template>

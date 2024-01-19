@@ -1,6 +1,7 @@
 package com.dtvn.foodorderbackend.service;
 
 import com.dtvn.foodorderbackend.mapper.Mapper;
+import com.dtvn.foodorderbackend.model.dto.response.RestaurantTodayRes;
 import com.dtvn.foodorderbackend.model.dto.response.SimpleRestaurantResponse;
 import com.dtvn.foodorderbackend.model.entity.Dish;
 import com.dtvn.foodorderbackend.model.entity.DishCategory;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,13 +28,13 @@ public class RestaurantService {
     final PresentVoteRepository presentVoteRepository;
     final Logger logger = LoggerFactory.getLogger(RestaurantService.class);
 
-    public List<SimpleRestaurantResponse> getAllRestaurantInDatabase() {
-        List<Restaurant> restaurants = restaurantRepository.findAllByDeletedFalse();
+    public List<SimpleRestaurantResponse> getAllRestaurantInDatabase(String name, Boolean selected) {
+        List<Restaurant> restaurants = restaurantRepository.getByCategory(name,selected);
         return mapper.mapList(restaurants, SimpleRestaurantResponse.class);
     }
 
-    public List<Restaurant> getByCategory(String name,Boolean selected,Boolean deleted){
-        return restaurantRepository.getByCategory(name,selected,deleted);
+    public List<Restaurant> getByCategory(String name,Boolean selected){
+        return restaurantRepository.getByCategory(name,selected);
     }
 
     public void fetchData(String url) throws Exception {
@@ -55,6 +57,21 @@ public class RestaurantService {
         return restaurantRepository.findById(deliveryId).orElse(null);
     }
 
+    public List<RestaurantTodayRes> getRestaurantToday(String name){
+        List<Restaurant> restaurants = restaurantRepository.findRestaurantByName(name);
+
+        List<RestaurantTodayRes> response = new ArrayList<>();
+        for(Restaurant item : restaurants){
+            response.add(RestaurantTodayRes.builder()
+                            .id(item.getDeliveryId())
+                            .img(item.getImage())
+                            .address(item.getAddress())
+                            .rating(item.getRating())
+                            .name(item.getName())
+                    .build());
+        }
+        return response;
+    }
 
     public boolean addRestaurantFromVotePresentToDatabase(long presentVoteId) throws Exception {
 

@@ -10,9 +10,11 @@ import GroupAdmin from '@/views/admin/GroupContent.vue'
 //User
 import Home from '@/views/user/Home.vue'
 import RestaurantUser from '@/views/user/Restaurants.vue'
+import RestaurantInfo from '@/views/user/RestaurantInfo.vue'
 import CompontTest from '@/components/ComponentTest.vue';
 import Payment from '@/views/user/Payment.vue'
 import Vote from '@/views/user/Vote.vue'
+import Cart from '@/views/user/Cart'
 
 import Login from '@/views/Login.vue'
 
@@ -26,6 +28,10 @@ export const router  = new Router({
     },
     {
       path: '/login',
+      component: Login
+    },
+    {
+      path: '/',
       component: Login
     },
     {
@@ -59,20 +65,30 @@ export const router  = new Router({
       component: Home,
       children: [
         {
-          name: 'restaurants',
+          name: 'userRestaurants',
           path: 'restaurants',
           component: RestaurantUser,
         },
         {
-          name: 'payments',
+          name: 'userPayments',
           path: 'payments',
           component: Payment,
         },
         {
-          name: 'votes',
+          name: 'userVotes',
           path: 'votes',
           component: Vote,
-        }
+        },
+        {
+          name: 'restaurantInfo',
+          path: 'restaurants/:id',
+          component: RestaurantInfo,
+        },
+        {
+          name: 'cart',
+          path: 'cart',
+          component: Cart,
+        },
       ],
     },
   ]

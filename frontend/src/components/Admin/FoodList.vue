@@ -1,11 +1,6 @@
 <template>
     <div class="food-list">
-        <Table 
-            :columns="columns"
-            :datas="foods"
-            :actions="actions"
-            @onClickAction="handleAction"
-        />
+        <Table :columns="columns" :datas="foods" :actions="actions" @onClickAction="handleAction" />
     </div>
 </template>
 
@@ -13,7 +8,7 @@
 .food-list {
     height: 100%;
     display: grid;
-    grid-auto-rows:  auto;
+    grid-auto-rows: auto;
 }
 </style>
 
@@ -191,24 +186,36 @@ export default {
     components: {
         Table,
     },
-    beforeMount(){
+    beforeMount() {
         this.getFoods();
     },
     methods: {
-        async getFoods(){
+        async getFoods() {
             const foods = await Food.getAll()
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                console.log(error);
-                return [];
-            })
+                .then(response => {
+                    return response;
+                })
+                .catch(error => {
+                    console.log(error);
+                    return [];
+                })
             this.foods = foods;
         },
         handleAction(e) {
             // call api remove food from food-group
-            this.datas = this.datas.filter(item => item.id != e.id)
+            const param = e.id;
+            const body = {
+                approved: false
+            }
+            Food.update(param, body)
+                .then(response => {
+                    this.$message({
+                        message: 'Cập nhật thành công',
+                        type: 'success'
+                    });
+                })
+            this.foods = this.foods.filter(item => item.id != e.id)
+
 
         }
     }

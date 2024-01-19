@@ -152,7 +152,7 @@ public class OrderService {
     }
 
     public List<ItemOrder> getAll() {
-        List<ItemOrder> itemOrderList = itemOrderRepository.findAll();
+        List<ItemOrder> itemOrderList = itemOrderRepository.findByApprovedAndDeleted(false, false);
         return itemOrderList;
     }
 
