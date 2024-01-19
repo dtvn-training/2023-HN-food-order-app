@@ -69,8 +69,13 @@ public class OrderService {
         long adminUserId = Integer.parseInt(String.valueOf(httpServletRequest.getAttribute("user_id")));
         // check exist
         List<ItemOrder> items = getAllItemOrderNotApproved();
-        for (ItemOrder order : items) {
-            if (!adminOrderRequest.getOrderIds().contains(order.getId())) {
+        List<Long> itemOrderNotApprovedIds = items.stream().map(ItemOrder::getId).toList();
+
+        logger.info("database : {}",itemOrderNotApprovedIds);
+        logger.info("request {}",adminOrderRequest.getOrderIds());
+
+        for(long id : adminOrderRequest.getOrderIds()){
+            if(!itemOrderNotApprovedIds.contains(id)){
                 return null;
             }
         }
@@ -86,6 +91,7 @@ public class OrderService {
         logger.info("restaurant item count : {}", restaurantItemOrderCount);
         try {
             // calculate fee for each ItemOrder
+            int discount = adminOrderRequest.getDiscount()/adminOrderRequest.getOrderIds().size();
             Map<Long, Integer> restaurantFeeByEachOrder = new HashMap<>();
             for (var restaurantCount : restaurantItemOrderCount.entrySet()) {
                 // TODO: CAN DELETE IN USER CART IF NEEDED
@@ -100,7 +106,6 @@ public class OrderService {
                     // calculate price
                     int feeShip = restaurantFeeByEachOrder.get(item.getDish().getCategory().getRestaurant().getDeliveryId());
                     int price = item.getQuantity() * item.getDish().getPrice();
-                    int discount = 0;// TODO: add discount
                     int finalPrice = price + feeShip - discount;
 
                     Bill bill = Bill.builder()

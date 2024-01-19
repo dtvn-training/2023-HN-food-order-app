@@ -101,4 +101,8 @@ public class VoteService {
         presentVoteRepository.setActiveFalse(presentVoteId);
         return true;
     }
+
+    public boolean getVoteFromUser(long userId) {
+        return true;
+    }
 }

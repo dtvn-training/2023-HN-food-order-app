@@ -42,6 +42,13 @@ class Vote {
             return response.data;
         })
     }
+    async create(body){
+        return await axios
+        .post(API_URL + 'create-vote', body, config)
+        .then(response => {
+            return response.data;
+        })
+    }
 }
 
 export default new Vote();

@@ -11,6 +11,8 @@ class Restaurant {
         })
         paramsResult = '?'+paramsResult;
         paramsResult = paramsResult.slice(0, -1);
+        console.log('config',config);
+        console.log('token'+localStorage.getItem('user'));
         return axios
         .get(API_URL + 'get-all-restaurant' + paramsResult, config)
         .then(response => {

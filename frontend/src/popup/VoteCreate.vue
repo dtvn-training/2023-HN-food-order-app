@@ -112,6 +112,8 @@ textarea {
 </style>
 
 <script>
+import Vote from "@/services/vote"
+
 export default {
     components: {
     },
@@ -124,9 +126,29 @@ export default {
     },
     methods: {
         save() {
+            if (this.url == "" || this.restaurantName == ""){
+                this.$message({
+                        message: "Không được để trống!",
+                        type: 'error'
+                    });
+            }
+            const body = {
+                restaurantUrl: this.url,
+                description: this.description,
+                restaurantName: this.restaurantName,
+            }
+            Vote.create(body)
+                .then(response => {
+                    this.$message({
+                        message: response.message,
+                        type: 'success'
+                    });
+                    if (response.message == 'success')this.$emit('resultEvent')
+                })
+
             this.$emit('onClickCancel');
         },
-        cancel(){
+        cancel() {
             this.$emit('onClickCancel');
         }
     }
